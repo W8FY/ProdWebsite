@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_21" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>widgets</string>
+   <object class="java.util.ArrayList">
+    <void method="add">
+     <object class="se.datadosen.jalbum.Widget">
+      <void property="active">
+       <boolean>false</boolean>
+      </void>
+      <void property="description">
+       <string>Let visitors know more about your album</string>
+      </void>
+      <void property="icon">
+       <string>http://jalbum.net/res/widgets/client/about_24px.png</string>
+      </void>
+      <void property="id">
+       <string>about</string>
+      </void>
+      <void property="name">
+       <string>About</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="se.datadosen.jalbum.Widget">
+      <void property="active">
+       <boolean>false</boolean>
+      </void>
+      <void property="description">
+       <string>Enable conversations about your pictures</string>
+      </void>
+      <void property="icon">
+       <string>http://jalbum.net/res/widgets/client/commenting_24px.png</string>
+      </void>
+      <void property="id">
+       <string>commenting</string>
+      </void>
+      <void property="name">
+       <string>Comments</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="se.datadosen.jalbum.Widget">
+      <void property="active">
+       <boolean>false</boolean>
+      </void>
+      <void property="description">
+       <string>Let viewers download all your images in the album as a zip-file.</string>
+      </void>
+      <void property="icon">
+       <string>http://jalbum.net/res/widgets/client/downloader_24px.png</string>
+      </void>
+      <void property="id">
+       <string>downloader</string>
+      </void>
+      <void property="name">
+       <string>Download</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="se.datadosen.jalbum.Widget">
+      <void property="active">
+       <boolean>false</boolean>
+      </void>
+      <void property="description">
+       <string>Show off your album&apos;s popularity</string>
+      </void>
+      <void property="icon">
+       <string>http://jalbum.net/res/widgets/client/pageviewcounter_24px.png</string>
+      </void>
+      <void property="id">
+       <string>pageviewcounter</string>
+      </void>
+      <void property="name">
+       <string>Counter</string>
+      </void>
+     </object>
+    </void>
+    <void method="add">
+     <object class="se.datadosen.jalbum.Widget">
+      <void property="active">
+       <boolean>false</boolean>
+      </void>
+      <void property="description">
+       <string>Make it easy to share your album on other sites</string>
+      </void>
+      <void property="icon">
+       <string>http://jalbum.net/res/widgets/client/share_24px.png</string>
+      </void>
+      <void property="id">
+       <string>share</string>
+      </void>
+      <void property="name">
+       <string>Share</string>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <string>imageSettingsHash</string>
+   <string>3403db218a6d832cd83b02d7569525ff</string>
+  </void>
+  <void method="put">
+   <string>lastMadeDate</string>
+   <long>1372976961815</long>
+  </void>
+  <void method="put">
+   <string>videoSettingsHash</string>
+   <string>49f9f2171afa25d737f70df6a5961ea8</string>
+  </void>
+  <void method="put">
+   <string>imageLinking</string>
+   <string>LinkScaled</string>
+  </void>
+  <void method="put">
+   <string>createdDate</string>
+   <long>1372976711246</long>
+  </void>
+ </object>
+</java>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+<head>
+  {{ partial "headers.html" . }}
+  {{ partial "custom_headers.html" . }}
+  <style>
+    .filter-button {
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="all">
+    {{ partial "top.html" . }}
+    {{ partial "nav.html" . }}
+    {{ partial "breadcrumbs.html" . }}
+
+    <div id="content">
+      <div class="container">
+        <div class="row">
+
+          <!-- Centered Column -->
+          <div class="col-md-8 col-md-offset-2" id="blog-listing-medium">
+
+            {{ $base := "meetings" }}
+            {{ $years := readDir (print "static/" $base) }}
+
+            <!-- Filter Buttons -->
+            <div class="mb-4">
+              <button class="btn btn-template-main filter-button" onclick="filterSelection('all')">All</button>
+              {{ range sort $years "Name" "desc" }}
+                {{ if .IsDir }}
+                  <button class="btn btn-template-main filter-button" onclick="filterSelection('{{ .Name }}')">
+                    {{ .Name }}
+                  </button>
+                {{ end }}
+              {{ end }}
+            </div>
+
+            {{ range sort $years "Name" "desc" }}
+              {{ if .IsDir }}
+                {{ $year := .Name }}
+
+                <h2 class="filter-header" data-tag="{{ $year }}">{{ $year }}</h2>
+
+                {{ $files := readDir (printf "static/%s/%s" $base $year) }}
+
+                {{ range sort $files "Name" }}
+                  {{ if not .IsDir }}
+                  {{ $ext := upper (replace (path.Ext .Name) "." "") }}
+                  {{ $cleanName := replace .Name "Meeting minutes " "" }}
+                  {{ $cleanName = replace $cleanName "meeting minutes " "" }}
+                  {{ $cleanName = replace $cleanName "Meeting Minutes " "" }}
+                  {{ $title := replace (replace (replace $cleanName (path.Ext $cleanName) "") "_" " ") "-" " " }}
+
+                  <section class="post filter-item" data-tag="{{ $year }}">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h2>
+                          <a href="/{{ $base }}/{{ $year }}/{{ .Name }}" target="_blank">
+                            {{ $title }}
+                          </a>
+                        </h2>
+                        <p class="intro">
+                          Meeting document from {{ $year }}.
+                        </p>
+                        <p class="read-more">
+                          <a href="/{{ $base }}/{{ $year }}/{{ .Name }}" target="_blank" class="btn btn-template-main">
+                            View {{ $ext }}
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                  {{ end }}
+                {{ end }}
+
+                <!-- 🔥 HR at the end of each year block -->
+                <hr class="filter-header" data-tag="{{ $year }}">
+
+              {{ end }}
+            {{ end }}
+
+          </div>
+          <!-- /.col-md-8 -->
+
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /#content -->
+
+    {{ partial "footer.html" . }}
+  </div>
+  <!-- /#all -->
+
+  {{ partial "scripts.html" . }}
+
+  <script>
+    function filterSelection(tag) {
+      const items = document.getElementsByClassName("filter-item");
+      const headers = document.getElementsByClassName("filter-header");
+      if (tag === "all") tag = "";
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (item.getAttribute("data-tag").indexOf(tag) > -1 || tag === "") {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      }
+
+      for (let i = 0; i < headers.length; i++) {
+        const header = headers[i];
+        if (header.getAttribute("data-tag").indexOf(tag) > -1 || tag === "") {
+          header.classList.remove("hidden");
+        } else {
+          header.classList.add("hidden");
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

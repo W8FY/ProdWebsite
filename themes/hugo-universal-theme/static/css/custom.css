@@ -1,0 +1,54 @@
+.box-image-text .image {
+  min-height: 190px;
+  max-height: 190px;
+}
+
+.box-image-text .image img {
+  max-height: 190px;
+  margin: auto;
+}
+
+.box-simple {
+  min-height: 230px;
+}
+
+.image-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gallery-item {
+  text-align: center;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.image-title {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .navbar-header,
+  .navbar-brand {
+    height: 60px; /* or whatever height fits your design */
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-brand img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+  }
+}

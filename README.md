@@ -1,2 +1,3 @@
-# ProdWebsite
-This is the production website for W8FY
+# w8fy.brantlab.com
+
+Van Wert County Amatuer Radio Club

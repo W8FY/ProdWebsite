@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+<head>
+  {{ partial "headers.html" . }}
+  {{ partial "custom_headers.html" . }}
+
+  <style>
+    table {
+      border-collapse: collapse;
+      margin: 0 auto 2rem auto;
+      width: auto;
+    }
+
+    th,
+    td {
+      padding: 2px 24px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+      font-size: 16;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .centered-content {
+      max-width: 1000px;
+    }
+
+    h1 {
+      text-align: left;
+      margin-bottom: 1rem;
+      margin-left: 50px;
+    }
+
+    p.description {
+      text-align: left;
+      margin-bottom: 2rem;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="all">
+
+    {{ partial "top.html" . }}
+
+    {{ partial "nav.html" . }}
+
+    {{ partial "breadcrumbs.html" . }}
+
+    <div id="content">
+      <div class="container centered-content">
+
+
+        <div id="post-content">
+          {{ .Content }}
+        </div>
+        <!-- /#post-content -->
+
+        {{ if .Site.Config.Services.Disqus.Shortname }}
+        <div id="comments">
+          {{ template "_internal/disqus.html" . }}
+        </div>
+        {{ end }}
+
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /#content -->
+
+    {{ partial "footer.html" . }}
+
+  </div>
+  <!-- /#all -->
+
+  {{ partial "scripts.html" . }}
+
+</body>
+
+</html>

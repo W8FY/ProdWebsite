@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_21" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <string>imageSettingsHash</string>
+   <string>d92f41f8639cc69f7bd9d874ba812dd4</string>
+  </void>
+  <void method="put">
+   <string>lastMadeDate</string>
+   <long>1371075928879</long>
+  </void>
+  <void method="put">
+   <string>videoSettingsHash</string>
+   <string>49f9f2171afa25d737f70df6a5961ea8</string>
+  </void>
+  <void method="put">
+   <string>imageLinking</string>
+   <string>LinkScaled</string>
+  </void>
+  <void method="put">
+   <string>createdDate</string>
+   <long>1371075928879</long>
+  </void>
+ </object>
+</java>
