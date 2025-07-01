@@ -1,31 +1,32 @@
-name: Deploy Hugo to FTP
+name: Build and Deploy Hugo to FTP
 
 on:
   push:
     branches:
-      - main  # Or your deployment branch
+      - main   # Or your deployment branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source
+    - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install Hugo
+    - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: 'latest'
 
-    - name: Build site
+    - name: Build Hugo site
       run: hugo --minify
 
-    - name: Upload via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4
+    - name: Deploy to FTP server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /public_html/
         local-dir: ./public
-        server-dir: ./public_html/ # Or `/public_html/` depending on your FTP path
+        dangerous-clean-slate: true  # Optional: deletes everything on server-dir before upload
