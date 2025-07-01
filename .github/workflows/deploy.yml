@@ -19,7 +19,7 @@ jobs:
         hugo-version: 'latest'
 
     - name: Build Hugo site
-      run: hugo --minify
+      run: hugo --baseURL https://w8fy.org/
 
     - name: Deploy to FTP server
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
