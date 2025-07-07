@@ -37,8 +37,8 @@ Camping fee is required by the fair board.
 
 ## 🛍️ Tables
 
-- Vendor tables: **$10.00 each**
-- Tables include one admission
+- Vendor tables: **$10.00 each**/
+- You will need to purchase a ticket at the front gate **$5.00**
 
 Reserve your table early! Email us at [info@w8fy.org](mailto:info@w8fy.org)
 
