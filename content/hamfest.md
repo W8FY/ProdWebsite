@@ -47,7 +47,7 @@ Reserve your table early! Email us at [info@w8fy.org](mailto:info@w8fy.org)
 
 ## 🛍️ Outdoor Trunk Sales
 
- - **5.00**
+ - **$5.00**
 
 ---
 
