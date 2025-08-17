@@ -9,7 +9,7 @@ The Van Wert Amateur Radio Club hosts an annual **Hamfest** for amateur radio op
 
 ## 📅 Date & Time
 
-**Sunday, July 20th, 2025**  
+**Sunday, July 19th, 2026**  
 Doors open at **8:00 AM**
 
 ---
@@ -23,7 +23,7 @@ Van Wert, OH 45891
 ---
 
 ## 🚐 Camping available
-Camping is available at the fairgrounds for: **$35.00** <br>
+Camping is available at the fairgrounds for: **$40.00** <br>
 Camping fee is required by the fair board. 
 
 ---
@@ -37,10 +37,17 @@ Camping fee is required by the fair board.
 
 ## 🛍️ Tables
 
-- Vendor tables: **$10.00 each**/
+- Vendor tables: **$10.00 each**/ 8 FT Table / Air Conditioned!
 - You will need to purchase a ticket at the front gate **$5.00**
+- Setup is at 6:00 AM
 
 Reserve your table early! Email us at [info@w8fy.org](mailto:info@w8fy.org)
+
+---
+
+## 🛍️ Outdoor Trunk Sales
+
+ - **5.00**
 
 ---
 
