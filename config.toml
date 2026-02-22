@@ -182,6 +182,14 @@ pluralizelisttitles = false
     weight     = 1
     parent     = "section.county"
 
+[[menu.main]]
+   name       = "Net Control Information"
+   identifier = "section.nc"
+   weight     = 1
+   parent     = "menu.links"
+   post       = 4
+
+
 
 
 #
