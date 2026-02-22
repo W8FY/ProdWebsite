@@ -187,8 +187,14 @@ pluralizelisttitles = false
    identifier = "section.nc"
    weight     = 1
    parent     = "menu.links"
-   post       = 4
+   post       = 3
 
+[[menu.main]]
+    name       = "2026 Net Roster"
+#    identifier = "menu.club"
+    url        = "/docs/2026_net_roster.pdf"
+    weight     = 1
+    parent     = "section.nc"
 
 
 
