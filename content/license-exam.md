@@ -14,7 +14,7 @@ Interested in getting your amateur radio license or upgrading to a higher class?
 
 Exams are generally offered **quarterly** or as needed. Please reach out to confirm the next available session or to request an individual appointment.
 
-> **Next Scheduled Session:** _TBD — Contact us to express interest._
+> **Next Scheduled Session: March 7th at Lima, Ohio 11am** _TBD — Contact us to express interest._
 
 ---
 
@@ -56,7 +56,7 @@ Van Wert, Ohio 45891
 
 ## 📩 Questions or Ready to Sign Up?
 
-Contact us at [info@w8fy.org](mailto:info@w8fy.org) to pre-register or ask questions. Walk-ins are welcome, but pre-registration is appreciated.
+Contact us at [ka8zge@w8fy.org](mailto:ka8zge@w8fy.org) or 419-771-2061 call or text, to pre-register or ask questions. Walk-ins are welcome, but pre-registration is appreciated.
 
 ---
 
