@@ -53,6 +53,7 @@ Most exam sessions are held at:
 610 S Collett Street
 Lima, Oh 45805
 
+
 None in Van Wert
 
 **Van Wert County Emergency Management Office**  
