@@ -47,13 +47,6 @@ Not sure where to begin? Check out these resources:
 
 ## 📍 Location
 
-Most exam sessions are held at:
-
-**March 7th at Red Cross building in Lima OH**
-610 S Collett Street
-Lima Oh 45805
-
-
 None in Van Wert
 
 **Van Wert County Emergency Management Office**  
