@@ -51,7 +51,7 @@ Most exam sessions are held at:
 
 **March 7th at Red Cross building in Lima OH**
 610 S Collett Street
-Lima, Oh 45805
+Lima Oh 45805
 
 
 None in Van Wert
