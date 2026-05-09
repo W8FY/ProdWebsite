@@ -55,7 +55,7 @@ Van Wert, Ohio 45891
 
 ---
 **Red Cross Lima Ohio after the NWOH radio club meeting** 
-610 South Collett
+610 South Collett  
 Lima, Ohio 45805
 ## 📩 Questions or Ready to Sign Up?
 
