@@ -96,7 +96,7 @@ pluralizelisttitles = false
     parent     = "section.Events"
 
 [[menu.main]]
-    name       = "Summer Field Day 2025"
+    name       = "Summer Field Day 2026"
 #    identifier = "menu.club"
     url        = "/sfieldday25/"
     weight     = 2
