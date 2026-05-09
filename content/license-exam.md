@@ -14,8 +14,8 @@ Interested in getting your amateur radio license or upgrading to a higher class?
 
 Exams are generally offered **quarterly** or as needed. Please reach out to confirm the next available session or to request an individual appointment.
 
-> **Next Scheduled Session: March 7th at Lima, Ohio 11am**
-      _TBD — Contact us to express interest._
+> **Next Scheduled Session: June 6th at Lima, Ohio 11am**
+         Will be held at the Red Cross building
 
 ---
 
