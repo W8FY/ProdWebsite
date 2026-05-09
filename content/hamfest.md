@@ -74,9 +74,12 @@ W8FY will have water, soda, donuts, and fruit available with donation.
 ## 🧪 VE License Testing
 
 - **Exam session begins at 9:00 AM**
+- You will need to have an FRN number. If you don't go to the FCC website to get one
+- 📘 [FCC.gov FRN number](https://apps.fcc.gov/cores/userLogin.do) This takes you to the registration page.
+
 - Walk-ins welcome
 - Bring your **photo ID**, **FRN**, and **$15 exam fee**
-
+- 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede8d34e61325a13c22bf6/1) This takes you to the registration page.
 ---
 
 ## 📞 Contact Us
