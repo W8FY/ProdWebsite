@@ -1,5 +1,5 @@
 ---
-title: "📡 W8FY Summer Field Day 2025"
+title: "📡 W8FY Summer Field Day 2026"
 date: 2025-06-08
 draft: false
 ---
