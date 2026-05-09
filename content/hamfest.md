@@ -1,6 +1,6 @@
 ---
 title: "W8FY Hamfest"
-date: 2026-07-19
+date: 2025-06-19
 draft: false
 ---
 The Van Wert Amateur Radio Club hosts an annual **Hamfest** for amateur radio operators, hobbyists, and the general public. Join us for a day of radio, gear, networking, and community!
