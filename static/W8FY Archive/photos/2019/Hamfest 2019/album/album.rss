@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:jalbum="http://jalbum.net/jalbumrss">
+    <channel>
+        <title>Hamfest 2019</title>
+   	<link>.</link>
+        <generator>jAlbum 19.0</generator>
+   		<description></description>
+        <jalbum:absolutePath></jalbum:absolutePath>
+        <item>
+            <title>_DSC7021</title>
+            <link>slides/_DSC7021.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7021.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7021.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:49:51 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7021.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6990</title>
+            <link>slides/_DSC6990.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6990.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6990.jpg" width="534" height="800"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:22:00 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6990.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_070059</title>
+            <link>slides/20190721_070059.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_070059.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_070059.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:00:59 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_070059.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074903</title>
+            <link>slides/20190721_074903.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074903.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074903.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:49:03 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074903.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_065842</title>
+            <link>slides/20190721_065842.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_065842.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_065842.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 06:58:42 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_065842.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074446</title>
+            <link>slides/20190721_074446.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074446.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074446.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:44:46 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074446.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_081020</title>
+            <link>slides/20190721_081020.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_081020.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_081020.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:10:20 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_081020.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20190721_090458</title>
+            <link>slides/MVIMG_20190721_090458.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20190721_090458.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20190721_090458.jpg" width="1000" height="750"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 09:04:58 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/MVIMG_20190721_090458.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7024</title>
+            <link>slides/_DSC7024.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7024.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7024.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:50:14 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7024.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6992</title>
+            <link>slides/_DSC6992.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6992.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6992.jpg" width="1000" height="509"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:31:29 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6992.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_070357</title>
+            <link>slides/20190721_070357.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_070357.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_070357.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:03:57 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_070357.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_065920</title>
+            <link>slides/20190721_065920.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_065920.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_065920.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 06:59:20 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_065920.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_081225</title>
+            <link>slides/20190721_081225.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_081225.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_081225.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:12:25 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_081225.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074516</title>
+            <link>slides/20190721_074516.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074516.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074516.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:45:16 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074516.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_075003</title>
+            <link>slides/20190721_075003.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_075003.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_075003.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:50:03 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_075003.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20190721_131858</title>
+            <link>slides/MVIMG_20190721_131858.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20190721_131858.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20190721_131858.jpg" width="1000" height="750"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 13:18:58 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/MVIMG_20190721_131858.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6975</title>
+            <link>slides/_DSC6975.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6975.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6975.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:11:37 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6975.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6994</title>
+            <link>slides/_DSC6994.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6994.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6994.jpg" width="1000" height="608"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:31:37 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6994.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7026</title>
+            <link>slides/_DSC7026.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7026.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7026.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:51:41 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7026.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_081359</title>
+            <link>slides/20190721_081359.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_081359.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_081359.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:13:59 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_081359.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_065934</title>
+            <link>slides/20190721_065934.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_065934.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_065934.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 06:59:34 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_065934.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074541</title>
+            <link>slides/20190721_074541.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074541.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074541.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:45:41 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074541.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_075049</title>
+            <link>slides/20190721_075049.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_075049.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_075049.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:50:49 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_075049.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_070649</title>
+            <link>slides/20190721_070649.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_070649.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_070649.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:06:49 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_070649.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6979</title>
+            <link>slides/_DSC6979.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6979.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6979.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:13:18 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6979.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7027</title>
+            <link>slides/_DSC7027.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7027.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7027.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:51:59 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7027.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6997</title>
+            <link>slides/_DSC6997.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6997.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6997.jpg" width="966" height="768"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:36:26 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6997.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_081404</title>
+            <link>slides/20190721_081404.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_081404.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_081404.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:14:04 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_081404.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_075129</title>
+            <link>slides/20190721_075129.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_075129.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_075129.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:51:29 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_075129.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_065940</title>
+            <link>slides/20190721_065940.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_065940.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_065940.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 06:59:40 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_065940.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074610</title>
+            <link>slides/20190721_074610.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074610.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074610.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:46:10 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074610.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6980</title>
+            <link>slides/_DSC6980.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6980.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6980.jpg" width="1000" height="416"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:14:14 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6980.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_072931</title>
+            <link>slides/20190721_072931.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_072931.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_072931.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:29:31 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_072931.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7030</title>
+            <link>slides/_DSC7030.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7030.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7030.jpg" width="574" height="800"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:52:11 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7030.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7001</title>
+            <link>slides/_DSC7001.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7001.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7001.jpg" width="1000" height="724"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:39:09 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7001.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6981</title>
+            <link>slides/_DSC6981.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6981.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6981.jpg" width="640" height="800"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:14:25 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6981.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_075935</title>
+            <link>slides/20190721_075935.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_075935.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_075935.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:59:35 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_075935.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_131918</title>
+            <link>slides/20190721_131918.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_131918.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_131918.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 13:19:18 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_131918.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_065948</title>
+            <link>slides/20190721_065948.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_065948.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_065948.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 06:59:48 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_065948.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074619</title>
+            <link>slides/20190721_074619.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074619.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074619.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:46:19 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074619.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7031</title>
+            <link>slides/_DSC7031.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7031.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7031.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:53:19 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7031.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7003</title>
+            <link>slides/_DSC7003.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7003.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7003.jpg" width="1000" height="635"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:40:27 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7003.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_073152</title>
+            <link>slides/20190721_073152.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_073152.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_073152.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:31:52 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_073152.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6983</title>
+            <link>slides/_DSC6983.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6983.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6983.jpg" width="534" height="800"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:15:41 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6983.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_080831</title>
+            <link>slides/20190721_080831.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_080831.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_080831.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:08:31 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_080831.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7007</title>
+            <link>slides/_DSC7007.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7007.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7007.jpg" width="1000" height="657"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:40:46 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7007.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_131925</title>
+            <link>slides/20190721_131925.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_131925.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_131925.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 13:19:25 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_131925.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7034</title>
+            <link>slides/_DSC7034.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7034.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7034.jpg" width="960" height="768"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:54:32 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7034.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074629</title>
+            <link>slides/20190721_074629.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074629.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074629.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:46:29 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074629.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_070005</title>
+            <link>slides/20190721_070005.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_070005.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_070005.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:00:05 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_070005.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6985</title>
+            <link>slides/_DSC6985.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6985.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6985.jpg" width="534" height="800"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:18:55 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6985.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7016</title>
+            <link>slides/_DSC7016.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7016.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7016.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:43:55 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7016.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_073238</title>
+            <link>slides/20190721_073238.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_073238.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_073238.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:32:38 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_073238.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_080834</title>
+            <link>slides/20190721_080834.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_080834.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_080834.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:08:34 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_080834.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7039</title>
+            <link>slides/_DSC7039.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7039.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7039.jpg" width="960" height="768"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 09:51:53 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7039.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20190721_060759</title>
+            <link>slides/MVIMG_20190721_060759.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20190721_060759.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20190721_060759.jpg" width="1000" height="750"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 06:07:59 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/MVIMG_20190721_060759.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074633</title>
+            <link>slides/20190721_074633.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074633.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074633.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:46:33 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074633.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7018</title>
+            <link>slides/_DSC7018.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7018.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7018.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:44:48 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7018.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6986</title>
+            <link>slides/_DSC6986.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6986.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6986.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:19:17 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6986.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7043</title>
+            <link>slides/_DSC7043.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7043.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7043.jpg" width="960" height="768"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 10:13:05 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7043.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_070027</title>
+            <link>slides/20190721_070027.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_070027.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_070027.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:00:27 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_070027.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_073249</title>
+            <link>slides/20190721_073249.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_073249.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_073249.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:32:49 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_073249.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_080838</title>
+            <link>slides/20190721_080838.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_080838.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_080838.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:08:38 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_080838.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7019</title>
+            <link>slides/_DSC7019.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7019.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7019.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:48:16 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7019.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC7046</title>
+            <link>slides/_DSC7046.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC7046.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC7046.jpg" width="960" height="768"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 10:14:15 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC7046.jpg</guid>
+        </item>
+        <item>
+            <title>_DSC6988</title>
+            <link>slides/_DSC6988.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/_DSC6988.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/_DSC6988.jpg" width="1000" height="667"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:19:29 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/_DSC6988.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20190721_075859</title>
+            <link>slides/MVIMG_20190721_075859.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20190721_075859.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20190721_075859.jpg" width="1000" height="750"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:58:59 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/MVIMG_20190721_075859.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074644</title>
+            <link>slides/20190721_074644.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074644.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074644.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:46:44 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074644.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_070030</title>
+            <link>slides/20190721_070030.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_070030.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_070030.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:00:30 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_070030.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_080853</title>
+            <link>slides/20190721_080853.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_080853.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_080853.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:08:53 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_080853.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_073308</title>
+            <link>slides/20190721_073308.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_073308.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_073308.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:33:08 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_073308.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_073600</title>
+            <link>slides/20190721_073600.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_073600.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_073600.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:36:00 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_073600.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074653</title>
+            <link>slides/20190721_074653.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074653.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074653.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:46:53 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074653.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20190721_090226</title>
+            <link>slides/MVIMG_20190721_090226.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20190721_090226.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20190721_090226.jpg" width="1000" height="750"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 09:02:27 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/MVIMG_20190721_090226.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_070033</title>
+            <link>slides/20190721_070033.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_070033.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_070033.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:00:33 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_070033.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_080904</title>
+            <link>slides/20190721_080904.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_080904.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_080904.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 08:09:04 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_080904.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_073348</title>
+            <link>slides/20190721_073348.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_073348.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_073348.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:33:48 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_073348.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_074838</title>
+            <link>slides/20190721_074838.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_074838.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_074838.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:48:38 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_074838.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_070041</title>
+            <link>slides/20190721_070041.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_070041.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_070041.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:00:41 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_070041.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20190721_090249</title>
+            <link>slides/MVIMG_20190721_090249.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20190721_090249.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20190721_090249.jpg" width="1000" height="750"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 09:02:49 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/MVIMG_20190721_090249.jpg</guid>
+        </item>
+        <item>
+            <title>20190721_073400</title>
+            <link>slides/20190721_073400.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:47:27 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190721_073400.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190721_073400.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 21 Jul 2019 07:34:00 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190721_073400.jpg</guid>
+        </item>
+    </channel>
+</rss>

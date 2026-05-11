@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:jalbum="http://jalbum.net/jalbumrss">
+    <channel>
+        <title>Hamfest 2018</title>
+   	<link>.</link>
+        <generator>jAlbum 16.2</generator>
+   		<description></description>
+        <jalbum:absolutePath></jalbum:absolutePath>
+        <item>
+            <title>KIMG0630</title>
+            <link>slides/KIMG0630.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/KIMG0630.jpg" width="200" height="150"/>
+            <media:content  url="slides/KIMG0630.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/KIMG0630.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_070449</title>
+            <link>slides/IMG_20180722_070449.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_070449.jpg" width="200" height="150"/>
+            <media:content  url="slides/IMG_20180722_070449.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_070449.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180721_193317</title>
+            <link>slides/IMG_20180721_193317.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180721_193317.jpg" width="200" height="150"/>
+            <media:content  url="slides/IMG_20180721_193317.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180721_193317.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_061242</title>
+            <link>slides/MVIMG_20180722_061242.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_061242.jpg" width="200" height="150"/>
+            <media:content  url="slides/MVIMG_20180722_061242.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_061242.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_092730</title>
+            <link>slides/IMG_20180722_092730.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_092730.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_092730.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_092730.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_061635</title>
+            <link>slides/IMG_20180722_061635.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_061635.jpg" width="200" height="150"/>
+            <media:content  url="slides/IMG_20180722_061635.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_061635.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_073230</title>
+            <link>slides/IMG_20180722_073230.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_073230.jpg" width="200" height="150"/>
+            <media:content  url="slides/IMG_20180722_073230.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_073230.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_090522</title>
+            <link>slides/MVIMG_20180722_090522.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_090522.jpg" width="200" height="150"/>
+            <media:content  url="slides/MVIMG_20180722_090522.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_090522.jpg</guid>
+        </item>
+        <item>
+            <title>KIMG0631</title>
+            <link>slides/KIMG0631.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/KIMG0631.jpg" width="200" height="150"/>
+            <media:content  url="slides/KIMG0631.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/KIMG0631.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_070457</title>
+            <link>slides/IMG_20180722_070457.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_070457.jpg" width="200" height="150"/>
+            <media:content  url="slides/IMG_20180722_070457.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_070457.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_061503</title>
+            <link>slides/MVIMG_20180722_061503.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_061503.jpg" width="200" height="150"/>
+            <media:content  url="slides/MVIMG_20180722_061503.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_061503.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_073319_1</title>
+            <link>slides/IMG_20180722_073319_1.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_073319_1.jpg" width="200" height="150"/>
+            <media:content  url="slides/IMG_20180722_073319_1.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_073319_1.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_102928</title>
+            <link>slides/IMG_20180722_102928.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_102928.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_102928.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_102928.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_064254</title>
+            <link>slides/IMG_20180722_064254.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_064254.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_064254.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_064254.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180721_190123</title>
+            <link>slides/IMG_20180721_190123.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180721_190123.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180721_190123.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180721_190123.jpg</guid>
+        </item>
+        <item>
+            <title>KIMG0632</title>
+            <link>slides/KIMG0632.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/KIMG0632.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/KIMG0632.jpg" width="540" height="720"/>
+            <guid isPermaLink="false">slides/KIMG0632.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_070458</title>
+            <link>slides/IMG_20180722_070458.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_070458.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_070458.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_070458.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_073321</title>
+            <link>slides/IMG_20180722_073321.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_073321.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_073321.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_073321.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_064257</title>
+            <link>slides/IMG_20180722_064257.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_064257.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_064257.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_064257.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180721_193012</title>
+            <link>slides/IMG_20180721_193012.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180721_193012.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180721_193012.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180721_193012.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_061702</title>
+            <link>slides/MVIMG_20180722_061702.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_061702.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_061702.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_061702.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_102936</title>
+            <link>slides/IMG_20180722_102936.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_102936.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_102936.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_102936.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_075534</title>
+            <link>slides/IMG_20180722_075534.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_075534.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_075534.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_075534.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180721_201248</title>
+            <link>slides/MVIMG_20180721_201248.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180721_201248.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180721_201248.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180721_201248.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_055737</title>
+            <link>slides/IMG_20180722_055737.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_055737.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_055737.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_055737.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180721_193018</title>
+            <link>slides/IMG_20180721_193018.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180721_193018.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180721_193018.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180721_193018.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_065314</title>
+            <link>slides/IMG_20180722_065314.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_065314.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_065314.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_065314.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_073054</title>
+            <link>slides/IMG_20180722_073054.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_073054.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_073054.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_073054.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_062105</title>
+            <link>slides/MVIMG_20180722_062105.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_062105.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_062105.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_062105.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_082628</title>
+            <link>slides/IMG_20180722_082628.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_082628.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_082628.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_082628.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_055400</title>
+            <link>slides/MVIMG_20180722_055400.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_055400.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_055400.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_055400.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_110750</title>
+            <link>slides/IMG_20180722_110750.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_110750.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_110750.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_110750.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_060056</title>
+            <link>slides/IMG_20180722_060056.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_060056.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_060056.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_060056.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180721_193021</title>
+            <link>slides/IMG_20180721_193021.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180721_193021.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180721_193021.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180721_193021.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_065410</title>
+            <link>slides/IMG_20180722_065410.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_065410.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_065410.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_065410.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_062117</title>
+            <link>slides/MVIMG_20180722_062117.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_062117.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_062117.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_062117.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_073148</title>
+            <link>slides/IMG_20180722_073148.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_073148.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_073148.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_073148.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_055751</title>
+            <link>slides/MVIMG_20180722_055751.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_055751.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_055751.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_055751.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_060218</title>
+            <link>slides/IMG_20180722_060218.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_060218.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_060218.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_060218.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_091413</title>
+            <link>slides/IMG_20180722_091413.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_091413.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_091413.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_091413.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_110849</title>
+            <link>slides/IMG_20180722_110849.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_110849.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_110849.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_110849.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180721_193107</title>
+            <link>slides/IMG_20180721_193107.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180721_193107.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180721_193107.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180721_193107.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_070643</title>
+            <link>slides/MVIMG_20180722_070643.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_070643.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_070643.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_070643.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_070339</title>
+            <link>slides/IMG_20180722_070339.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_070339.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_070339.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_070339.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_073156</title>
+            <link>slides/IMG_20180722_073156.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_073156.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_073156.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_073156.jpg</guid>
+        </item>
+        <item>
+            <title>KIMG0627</title>
+            <link>slides/KIMG0627.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/KIMG0627.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/KIMG0627.jpg" width="540" height="720"/>
+            <guid isPermaLink="false">slides/KIMG0627.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_060045</title>
+            <link>slides/MVIMG_20180722_060045.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_060045.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_060045.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_060045.jpg</guid>
+        </item>
+        <item>
+            <title>KIMG0628</title>
+            <link>slides/KIMG0628.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/KIMG0628.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/KIMG0628.jpg" width="540" height="720"/>
+            <guid isPermaLink="false">slides/KIMG0628.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180721_193133</title>
+            <link>slides/IMG_20180721_193133.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180721_193133.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180721_193133.jpg" width="540" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180721_193133.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_060227</title>
+            <link>slides/IMG_20180722_060227.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_060227.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_060227.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_060227.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_091630</title>
+            <link>slides/IMG_20180722_091630.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_091630.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_091630.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_091630.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_082623</title>
+            <link>slides/MVIMG_20180722_082623.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_082623.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_082623.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_082623.jpg</guid>
+        </item>
+        <item>
+            <title>KIMG0629</title>
+            <link>slides/KIMG0629.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/KIMG0629.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/KIMG0629.jpg" width="540" height="720"/>
+            <guid isPermaLink="false">slides/KIMG0629.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_070344</title>
+            <link>slides/IMG_20180722_070344.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_070344.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_070344.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_070344.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_073213</title>
+            <link>slides/IMG_20180722_073213.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_073213.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_073213.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_073213.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_060604</title>
+            <link>slides/MVIMG_20180722_060604.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_060604.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_060604.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_060604.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180721_193246</title>
+            <link>slides/IMG_20180721_193246.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180721_193246.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180721_193246.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180721_193246.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_060643</title>
+            <link>slides/IMG_20180722_060643.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_060643.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_060643.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_060643.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_091637</title>
+            <link>slides/IMG_20180722_091637.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_091637.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_091637.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_091637.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_070421</title>
+            <link>slides/IMG_20180722_070421.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_070421.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_070421.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_070421.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20180722_082829</title>
+            <link>slides/MVIMG_20180722_082829.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20180722_082829.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20180722_082829.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/MVIMG_20180722_082829.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180722_073227</title>
+            <link>slides/IMG_20180722_073227.jpg</link>
+            <pubDate>Mon, 17 Sep 2018 16:48:44 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180722_073227.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180722_073227.jpg" width="960" height="720"/>
+            <guid isPermaLink="false">slides/IMG_20180722_073227.jpg</guid>
+        </item>
+    </channel>
+</rss>

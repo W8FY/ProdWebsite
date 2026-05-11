@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:jalbum="http://jalbum.net/jalbumrss">
+    <channel>
+        <title>Spring Banquet 2019</title>
+   	<link>.</link>
+        <generator>jAlbum 18.2</generator>
+   		<description></description>
+        <jalbum:absolutePath></jalbum:absolutePath>
+        <item>
+            <title>20190406_175752</title>
+            <link>slides/20190406_175752.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_175752.jpg" width="240" height="180"/>
+            <media:content  url="slides/20190406_175752.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 17:54:06 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_175752.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_175503</title>
+            <link>slides/20190406_175503.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_175503.jpg" width="240" height="180"/>
+            <media:content  url="slides/20190406_175503.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 17:55:03 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_175503.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_175508</title>
+            <link>slides/20190406_175508.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_175508.jpg" width="240" height="180"/>
+            <media:content  url="slides/20190406_175508.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 17:55:08 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_175508.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_175406</title>
+            <link>slides/20190406_175406.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_175406.jpg" width="240" height="180"/>
+            <media:content  url="slides/20190406_175406.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 17:54:06 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_175406.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_175414</title>
+            <link>slides/20190406_175414.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_175414.jpg" width="240" height="180"/>
+            <media:content  url="slides/20190406_175414.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 17:54:14 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_175414.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_175442</title>
+            <link>slides/20190406_175442.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_175442.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190406_175442.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 17:54:42 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_175442.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_175525</title>
+            <link>slides/20190406_175525.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_175525.jpg" width="240" height="180"/>
+            <media:content  url="slides/20190406_175525.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 17:55:25 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_175525.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_175426</title>
+            <link>slides/20190406_175426.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_175426.jpg" width="240" height="180"/>
+            <media:content  url="slides/20190406_175426.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 17:54:26 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_175426.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_181405</title>
+            <link>slides/20190406_181405.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_181405.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190406_181405.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 18:14:05 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_181405.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_180628</title>
+            <link>slides/20190406_180628.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_180628.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190406_180628.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 18:06:28 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_180628.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_182216</title>
+            <link>slides/20190406_182216.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_182216.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190406_182216.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 18:22:16 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_182216.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_190047</title>
+            <link>slides/20190406_190047.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_190047.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190406_190047.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 19:00:47 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_190047.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_190119</title>
+            <link>slides/20190406_190119.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_190119.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190406_190119.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 19:01:19 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_190119.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_190143</title>
+            <link>slides/20190406_190143.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_190143.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190406_190143.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 19:01:43 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_190143.jpg</guid>
+        </item>
+        <item>
+            <title>20190406_190131</title>
+            <link>slides/20190406_190131.jpg</link>
+            <pubDate>Fri, 21 Jun 2019 20:15:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190406_190131.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190406_190131.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sat, 06 Apr 2019 19:01:31 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190406_190131.jpg</guid>
+        </item>
+    </channel>
+</rss>

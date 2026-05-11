@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:jalbum="http://jalbum.net/jalbumrss">
+    <channel>
+        <title>Spring Banquet 2016</title>
+   	<link>.</link>
+        <generator>jAlbum 13.1</generator>
+   		<description></description>
+        <jalbum:absolutePath></jalbum:absolutePath>
+        <item>
+            <title>DSC_0001</title>
+            <link>slides/DSC_0001.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0001.JPG" width="200" height="150"/>
+            <media:content  url="slides/DSC_0001.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0001.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0003</title>
+            <link>slides/DSC_0003.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0003.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0003.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0003.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0004</title>
+            <link>slides/DSC_0004.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0004.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0004.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0004.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0006</title>
+            <link>slides/DSC_0006.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0006.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0006.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0006.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0007</title>
+            <link>slides/DSC_0007.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0007.JPG" width="200" height="150"/>
+            <media:content  url="slides/DSC_0007.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0007.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0009</title>
+            <link>slides/DSC_0009.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0009.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0009.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0009.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0010</title>
+            <link>slides/DSC_0010.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0010.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0010.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0010.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0011</title>
+            <link>slides/DSC_0011.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0011.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0011.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0011.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0012</title>
+            <link>slides/DSC_0012.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0012.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0012.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0012.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0014</title>
+            <link>slides/DSC_0014.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0014.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0014.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0014.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0015</title>
+            <link>slides/DSC_0015.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0015.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0015.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0015.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0016</title>
+            <link>slides/DSC_0016.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0016.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0016.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0016.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0017</title>
+            <link>slides/DSC_0017.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0017.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0017.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0017.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0019</title>
+            <link>slides/DSC_0019.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0019.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0019.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0019.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0020</title>
+            <link>slides/DSC_0020.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0020.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0020.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0020.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0021</title>
+            <link>slides/DSC_0021.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0021.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0021.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0021.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0022</title>
+            <link>slides/DSC_0022.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0022.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0022.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0022.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0024</title>
+            <link>slides/DSC_0024.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0024.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0024.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0024.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0025</title>
+            <link>slides/DSC_0025.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0025.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0025.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0025.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0027</title>
+            <link>slides/DSC_0027.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0027.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0027.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0027.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0029</title>
+            <link>slides/DSC_0029.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0029.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0029.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0029.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0030</title>
+            <link>slides/DSC_0030.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0030.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0030.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0030.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0033</title>
+            <link>slides/DSC_0033.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0033.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0033.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0033.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0034</title>
+            <link>slides/DSC_0034.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0034.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0034.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0034.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0036</title>
+            <link>slides/DSC_0036.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0036.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0036.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0036.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0037</title>
+            <link>slides/DSC_0037.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0037.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0037.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0037.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0038</title>
+            <link>slides/DSC_0038.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0038.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0038.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0038.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0039</title>
+            <link>slides/DSC_0039.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0039.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0039.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0039.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0040</title>
+            <link>slides/DSC_0040.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0040.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0040.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0040.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0042</title>
+            <link>slides/DSC_0042.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0042.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0042.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0042.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0043</title>
+            <link>slides/DSC_0043.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0043.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0043.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0043.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0044</title>
+            <link>slides/DSC_0044.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0044.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0044.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0044.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0045</title>
+            <link>slides/DSC_0045.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0045.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0045.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0045.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0046</title>
+            <link>slides/DSC_0046.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0046.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0046.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0046.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0047</title>
+            <link>slides/DSC_0047.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0047.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0047.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0047.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0048</title>
+            <link>slides/DSC_0048.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0048.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0048.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0048.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0049</title>
+            <link>slides/DSC_0049.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0049.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0049.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0049.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0050</title>
+            <link>slides/DSC_0050.JPG</link>
+            <pubDate>Sun, 17 Apr 2016 17:13:05 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0050.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0050.JPG" width="717" height="480"/>
+            <guid isPermaLink="false">slides/DSC_0050.JPG</guid>
+        </item>
+    </channel>
+</rss>

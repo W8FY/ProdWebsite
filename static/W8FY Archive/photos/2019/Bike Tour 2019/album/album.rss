@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:jalbum="http://jalbum.net/jalbumrss">
+    <channel>
+        <title>Bike Tour 2019</title>
+   	<link>.</link>
+        <generator>jAlbum 18.3</generator>
+   		<description></description>
+        <jalbum:absolutePath></jalbum:absolutePath>
+        <item>
+            <title>output</title>
+            <link>slides/output.jpg</link>
+            <pubDate>Sun, 14 Jul 2019 16:35:07 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/output.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/output.jpg" width="1000" height="750"/>
+            <guid isPermaLink="false">slides/output.jpg</guid>
+        </item>
+        <item>
+            <title>output1</title>
+            <link>slides/output1.jpg</link>
+            <pubDate>Sun, 14 Jul 2019 16:35:07 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/output1.jpg" width="240" height="180"/>
+            <media:content  url="slides/output1.jpg" width="1000" height="750"/>
+            <guid isPermaLink="false">slides/output1.jpg</guid>
+        </item>
+        <item>
+            <title>20190704_095046</title>
+            <link>slides/20190704_095046.jpg</link>
+            <pubDate>Sun, 14 Jul 2019 16:35:07 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190704_095046.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190704_095046.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Thu, 04 Jul 2019 09:50:46 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190704_095046.jpg</guid>
+        </item>
+        <item>
+            <title>output2</title>
+            <link>slides/output2.jpg</link>
+            <pubDate>Sun, 14 Jul 2019 16:35:07 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/output2.jpg" width="240" height="180"/>
+            <media:content  url="slides/output2.jpg" width="1000" height="750"/>
+            <guid isPermaLink="false">slides/output2.jpg</guid>
+        </item>
+        <item>
+            <title>output3</title>
+            <link>slides/output3.jpg</link>
+            <pubDate>Sun, 14 Jul 2019 16:35:07 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/output3.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/output3.jpg" width="1000" height="750"/>
+            <guid isPermaLink="false">slides/output3.jpg</guid>
+        </item>
+        <item>
+            <title>20190704_122637</title>
+            <link>slides/20190704_122637.jpg</link>
+            <pubDate>Sun, 14 Jul 2019 16:35:07 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190704_122637.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190704_122637.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Thu, 04 Jul 2019 12:26:37 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190704_122637.jpg</guid>
+        </item>
+        <item>
+            <title>20190704_090859</title>
+            <link>slides/20190704_090859.jpg</link>
+            <pubDate>Sun, 14 Jul 2019 16:35:07 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190704_090859.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190704_090859.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Thu, 04 Jul 2019 09:08:59 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190704_090859.jpg</guid>
+        </item>
+        <item>
+            <title>20190704_090903</title>
+            <link>slides/20190704_090903.jpg</link>
+            <pubDate>Sun, 14 Jul 2019 16:35:07 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190704_090903.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190704_090903.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Thu, 04 Jul 2019 09:09:03 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190704_090903.jpg</guid>
+        </item>
+        <item>
+            <title>20190704_123139</title>
+            <link>slides/20190704_123139.jpg</link>
+            <pubDate>Sun, 14 Jul 2019 16:35:07 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190704_123139.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190704_123139.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Thu, 04 Jul 2019 12:31:39 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190704_123139.jpg</guid>
+        </item>
+    </channel>
+</rss>

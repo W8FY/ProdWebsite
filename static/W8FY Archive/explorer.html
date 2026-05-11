@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<blockquote>
+  <p> In this case it depends upon encountering malicious Web content with IE&rsquo;s ActiveScripting and ActiveX enabled (which is the default in both cases). That will load an Adobe SWF (Shockwave FLASH) file which first prepares the machine for exploitation, then uses JavaScript against the vulnerable version of IE (presently <em>all</em> versions of IE) to exploit a subtle flaw in the age-old and long-ago deprecated VML (vector markup language) rendering library. (Which is, nonetheless, still hanging around &ldquo;just in case.&rdquo;)</p>
+  <p>To immediately protect any use of Internet Explorer. You must first open a command prompt window with administrative privileges. This is done by right-clicking on the Command Prompt icon in the start menu and selecting &ldquo;Run As Administrator.&rdquo; Commands issued within this window will have the privilege required to make system level changes.</p>
+  <p>32-bit systems only require the first command. But since 64-bit systems have both a 32-bit and 64-bit version of the vulnerable file, both commands must be used with them</p>
+  <p>regsvr32 -u &quot;%CommonProgramFiles%\Microsoft Shared\VGX\vgx.dll&quot;</p>
+  <p>  regsvr32 -u &quot;%CommonProgramFiles(x86)%\Microsoft Shared\VGX\vgx.dll&quot;</p>
+  <p>These commands unregister (-u) the VML renderer, making it inaccessible to the exploit attempt.  Your IE browser will no longer be able to render vector markup language content, but it&rsquo;s been unused on the web for many years.</p>
+  <p>Microsoft has issued patches for this flaw.</p>
+  <p>Just go to windows updates and run that.</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</blockquote>
+</body>
+</html>

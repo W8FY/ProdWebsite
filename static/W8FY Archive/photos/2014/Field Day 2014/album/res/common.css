@@ -1,0 +1,60 @@
+/*
+ * Combined style sheet for the index pages and the slide pages, with classes that are common to both styles
+ */
+
+body {
+	font-family: Verdana, Arial, sans-serif;
+	margin: 8px;
+	text-align: center;
+}
+a {
+	outline: 0;
+}
+a:link, a:visited, a:active {
+	text-decoration: none
+}
+div {
+	margin: 8px;
+}
+img {
+	border: none;
+}
+.albumtitle {
+	font-size: 16px;
+	font-weight: normal;
+}
+.thumbtable {
+	margin: 8px auto;
+	border-spacing: 10px;
+	*border-collapse: expression('separate', cellSpacing = '10px'); /* for IE6 & IE7 */
+}
+.thumbtable td {
+	text-align: center;
+	vertical-align: middle;
+	font-size: 14px;
+	width: 124px;
+}
+.thumbtable td img {
+	padding: 0px;
+}
+.noborder {
+	border: none !important;
+}
+.thumbnav img {
+	padding: 0px;
+}
+.slideimage {
+	font-size: 14px;
+}
+.slideimage img {
+	padding: 0px;
+}
+video {
+	padding: 0px;
+}
+.homepagelink {
+	font-size: 14px;
+}
+.creditlink {
+	font-size: 10px;
+}

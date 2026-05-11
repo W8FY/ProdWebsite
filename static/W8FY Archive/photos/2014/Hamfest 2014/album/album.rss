@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:jalbum="http://jalbum.net/jalbumrss">
+    <channel>
+        <title>Hamfest 2014</title>
+   	<link>.</link>
+        <generator>jAlbum 12</generator>
+   		<description></description>
+        <jalbum:absolutePath></jalbum:absolutePath>
+        <item>
+            <title>DSC_0001</title>
+            <link>slides/DSC_0001.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0001.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0001.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:20 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0001.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0002</title>
+            <link>slides/DSC_0002.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0002.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0002.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:20 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0002.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0003</title>
+            <link>slides/DSC_0003.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0003.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0003.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:22 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0003.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0004</title>
+            <link>slides/DSC_0004.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0004.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0004.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:23 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0004.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0005</title>
+            <link>slides/DSC_0005.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0005.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0005.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:23 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0005.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0006</title>
+            <link>slides/DSC_0006.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0006.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0006.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:24 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0006.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0007</title>
+            <link>slides/DSC_0007.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0007.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0007.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:34 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0007.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0008</title>
+            <link>slides/DSC_0008.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0008.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0008.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:35 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0008.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0009</title>
+            <link>slides/DSC_0009.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0009.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0009.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:37 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0009.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0010</title>
+            <link>slides/DSC_0010.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0010.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0010.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:40 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0010.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0011</title>
+            <link>slides/DSC_0011.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0011.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0011.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:40 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0011.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0012</title>
+            <link>slides/DSC_0012.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0012.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0012.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:45 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0012.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0013</title>
+            <link>slides/DSC_0013.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0013.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0013.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 6:54 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0013.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0014</title>
+            <link>slides/DSC_0014.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0014.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0014.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:02 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0014.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0015</title>
+            <link>slides/DSC_0015.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0015.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0015.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:02 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0015.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0016</title>
+            <link>slides/DSC_0016.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0016.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0016.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:03 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0016.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0017</title>
+            <link>slides/DSC_0017.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0017.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0017.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:05 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0017.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0018</title>
+            <link>slides/DSC_0018.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0018.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0018.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:11 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0018.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0019</title>
+            <link>slides/DSC_0019.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0019.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0019.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:13 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0019.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0020</title>
+            <link>slides/DSC_0020.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0020.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0020.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:17 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0020.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0021</title>
+            <link>slides/DSC_0021.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0021.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0021.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:25 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0021.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0022</title>
+            <link>slides/DSC_0022.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0022.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0022.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:29 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0022.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0023</title>
+            <link>slides/DSC_0023.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0023.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0023.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:31 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0023.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0024</title>
+            <link>slides/DSC_0024.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0024.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0024.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:31 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0024.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0025</title>
+            <link>slides/DSC_0025.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0025.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0025.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:32 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0025.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0026</title>
+            <link>slides/DSC_0026.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0026.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0026.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:34 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0026.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0027</title>
+            <link>slides/DSC_0027.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0027.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0027.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:35 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0027.JPG</guid>
+        </item>
+        <item>
+            <title>20140720_073830</title>
+            <link>slides/20140720_073830.jpg</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20140720_073830.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/20140720_073830.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="7/20/14 7:38 AM" cameraMake="SAMSUNG" cameraModel="SCH-I535"/>
+            <guid isPermaLink="false">slides/20140720_073830.jpg</guid>
+        </item>
+        <item>
+            <title>DSC_0028</title>
+            <link>slides/DSC_0028.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0028.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0028.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 8:18 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0028.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0029</title>
+            <link>slides/DSC_0029.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0029.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0029.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 8:21 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0029.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0030</title>
+            <link>slides/DSC_0030.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0030.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0030.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 9:32 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0030.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0031</title>
+            <link>slides/DSC_0031.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0031.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0031.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 9:40 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0031.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0032</title>
+            <link>slides/DSC_0032.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0032.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0032.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 9:40 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0032.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0033</title>
+            <link>slides/DSC_0033.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0033.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0033.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 9:41 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0033.JPG</guid>
+        </item>
+        <item>
+            <title>DSC_0034</title>
+            <link>slides/DSC_0034.JPG</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/DSC_0034.JPG" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/DSC_0034.JPG" width="725" height="480"/>
+            <jalbum:exif originalDate="7/20/14 10:02 AM" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5100"/>
+            <guid isPermaLink="false">slides/DSC_0034.JPG</guid>
+        </item>
+        <item>
+            <title>20140720_101344</title>
+            <link>slides/20140720_101344.jpg</link>
+            <pubDate>Fri, 25 Jul 2014 07:01:53 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20140720_101344.jpg" width="200" height="150"/>
+            <media:content type="image/jpeg" url="slides/20140720_101344.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="7/20/14 10:13 AM" cameraMake="SAMSUNG" cameraModel="SCH-I535"/>
+            <guid isPermaLink="false">slides/20140720_101344.jpg</guid>
+        </item>
+    </channel>
+</rss>

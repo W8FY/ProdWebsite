@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+body {
+	background: #000;
+	color: #bba;
+}
+
+a:link,
+a:visited {
+	color: #6da53c;
+}
+
+a:active,
+a:hover {
+	color: #FFFFFF;
+}
+
+.description,
+#index ul.folders li .folder_info p {
+	color: #6b6f64;	
+}
+
+#bottom_container {
+	border-top-color: #111;	
+}
+
+#index ul.thumbnails li img {
+	background: #fff;
+}
+
+#slide #main_img,
+#index ul.folders li img,
+#slide ul.thumbnails li img {
+	border-color: #fff;
+}
+
+
+#index ul.folders li a,
+#slide ul.thumbnails li a {
+	background: #333;
+	color: #6da53c;
+}
+
+#index ul.folders li a:hover,
+#slide ul.thumbnails li a:hover {
+	color: #6da53c;
+}

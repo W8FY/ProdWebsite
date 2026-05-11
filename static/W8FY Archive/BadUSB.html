@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>&nbsp;</p>
+<p align="center">&nbsp;</p>
+<h1 align="center"><a href="https://srlabs.de/badusb/">Turning USB peripherals into BadUSB</a></h1>
+<p>USB devices are connected to – and in many cases even built into – virtually all computers. The interface standard conquered the world over the past two decades thanks to its versatility: Almost any computer peripheral, from storage and input gadgets to healthcare devices, can connect over the ubiquitous technology. And many more device classes connect over USB to charge their batteries.</p>
+<p>This versatility is also USB&rsquo;s Achilles heel: Since different device classes can plug into the same connectors, one type of device can turn into a more capable or malicious type without the user noticing.</p>
+<p><strong>Reprogramming USB peripherals.</strong> To turn one device type into another, USB controller chips in peripherals need to be reprogrammed. Very widely spread USB controller chips, including those in thumb drives, have no protection from such reprogramming.</p>
+<p><strong>BadUSB – Turning devices evil. </strong>Once reprogrammed, benign devices can turn malicious in many ways, including:</p>
+<ol>
+  <li>A device can emulate a keyboard and issue commands on behalf of the logged-in user, for example to exfiltrate files or install malware. Such malware, in turn, can infect the controller chips of other USB devices connected to the computer.</li>
+  <li>The device can also spoof a network card and change the computer&rsquo;s DNS setting to redirect traffic.</li>
+  <li>A modified thumb drive or external hard disk can – when it detects that the computer is starting up – boot a small virus, which infects the computer&rsquo;s operating system prior to boot.</li>
+</ol>
+<p><strong>Defenses?</strong><br />
+  No effective defenses from USB attacks are known. Malware scanners cannot access the firmware running on USB devices. USB firewalls that block certain device classes do not (yet) exist. And behavioral detection is difficult, since a BadUSB device&rsquo;s behavior when it changes its persona looks as though a user has simply plugged in a new device.</p>
+<p>To make matters worse, cleanup after an incident is hard: Simply reinstalling the operating system – the standard response to otherwise ineradicable malware – does not address BadUSB infections at their root. The USB thumb drive, from which the operating system is reinstalled, may already be infected, as may the hardwired webcam or other USB components inside the computer. A BadUSB device may even have replaced the computer&rsquo;s BIOS – again by emulating a keyboard and unlocking a hidden file on the USB thumb drive.</p>
+<p>Once infected, computers and their USB peripherals can never be trusted again.</p>
+<p>&nbsp;</p>
+</body>
+</html>

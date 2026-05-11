@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:jalbum="http://jalbum.net/jalbumrss">
+    <channel>
+        <title>Field Day 2018</title>
+   	<link>.</link>
+        <generator>jAlbum 16.1</generator>
+   		<description></description>
+        <jalbum:absolutePath></jalbum:absolutePath>
+        <item>
+            <title>20180623_103603</title>
+            <link>slides/20180623_103603.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20180623_103603.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20180623_103603.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 10:36:03 -0400" cameraMake="samsung" cameraModel="SM-N950U"/>
+            <guid isPermaLink="false">slides/20180623_103603.jpg</guid>
+        </item>
+        <item>
+            <title>20180623_182642</title>
+            <link>slides/20180623_182642.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20180623_182642.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20180623_182642.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 18:26:41 -0400" cameraMake="samsung" cameraModel="SM-N950U"/>
+            <guid isPermaLink="false">slides/20180623_182642.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_173907</title>
+            <link>slides/IMG_20180623_173907.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_173907.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_173907.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 17:39:07 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_173907.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_154512</title>
+            <link>slides/IMG_20180624_154512.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_154512.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_154512.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 15:45:12 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_154512.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_124137</title>
+            <link>slides/IMG_20180624_124137.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_124137.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_124137.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 12:41:37 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_124137.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_074346</title>
+            <link>slides/IMG_20180624_074346.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_074346.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_074346.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 07:43:46 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_074346.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_145818</title>
+            <link>slides/IMG_20180624_145818.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_145818.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_145818.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 14:58:18 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_145818.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_101810695</title>
+            <link>slides/IMG_20180624_101810695.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_101810695.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_101810695.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 10:18:11 -0400" cameraMake="Motorola" cameraModel="XT1585"/>
+            <guid isPermaLink="false">slides/IMG_20180624_101810695.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_161024</title>
+            <link>slides/IMG_20180624_161024.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_161024.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_161024.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 16:10:24 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_161024.jpg</guid>
+        </item>
+        <item>
+            <title>20180623_103605</title>
+            <link>slides/20180623_103605.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20180623_103605.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20180623_103605.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 10:36:05 -0400" cameraMake="samsung" cameraModel="SM-N950U"/>
+            <guid isPermaLink="false">slides/20180623_103605.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_124220</title>
+            <link>slides/IMG_20180624_124220.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_124220.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_124220.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 12:42:20 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_124220.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_134911</title>
+            <link>slides/IMG_20180623_134911.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_134911.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_134911.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 13:49:11 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_134911.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_180815</title>
+            <link>slides/IMG_20180623_180815.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_180815.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_180815.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 18:08:15 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_180815.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_074350</title>
+            <link>slides/IMG_20180624_074350.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_074350.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_074350.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 07:43:50 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_074350.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_145820</title>
+            <link>slides/IMG_20180624_145820.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_145820.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_145820.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 14:58:20 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_145820.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_101838233</title>
+            <link>slides/IMG_20180624_101838233.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_101838233.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_101838233.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 10:18:39 -0400" cameraMake="Motorola" cameraModel="XT1585"/>
+            <guid isPermaLink="false">slides/IMG_20180624_101838233.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_161028</title>
+            <link>slides/IMG_20180624_161028.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_161028.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_161028.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 16:10:28 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_161028.jpg</guid>
+        </item>
+        <item>
+            <title>20180623_103615</title>
+            <link>slides/20180623_103615.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20180623_103615.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20180623_103615.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 10:36:15 -0400" cameraMake="samsung" cameraModel="SM-N950U"/>
+            <guid isPermaLink="false">slides/20180623_103615.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_134946</title>
+            <link>slides/IMG_20180623_134946.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_134946.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_134946.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 13:49:46 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_134946.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_142837</title>
+            <link>slides/IMG_20180624_142837.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_142837.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_142837.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 14:28:37 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_142837.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_181052</title>
+            <link>slides/IMG_20180623_181052.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_181052.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_181052.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 18:10:52 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_181052.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_123256</title>
+            <link>slides/IMG_20180624_123256.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_123256.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_123256.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 12:32:56 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_123256.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_150828</title>
+            <link>slides/IMG_20180624_150828.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_150828.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_150828.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 15:08:28 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_150828.jpg</guid>
+        </item>
+        <item>
+            <title>20180623_103623</title>
+            <link>slides/20180623_103623.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20180623_103623.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20180623_103623.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 10:36:23 -0400" cameraMake="samsung" cameraModel="SM-N950U"/>
+            <guid isPermaLink="false">slides/20180623_103623.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_161108</title>
+            <link>slides/IMG_20180624_161108.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_161108.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_161108.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 16:11:08 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_161108.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_135010_1</title>
+            <link>slides/IMG_20180623_135010_1.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_135010_1.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_135010_1.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 13:50:10 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_135010_1.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_142840</title>
+            <link>slides/IMG_20180624_142840.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_142840.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_142840.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 14:28:40 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_142840.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_123304</title>
+            <link>slides/IMG_20180624_123304.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_123304.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_123304.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 12:33:04 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_123304.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_182224</title>
+            <link>slides/IMG_20180623_182224.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_182224.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_182224.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 18:22:24 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_182224.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_102037758</title>
+            <link>slides/IMG_20180624_102037758.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_102037758.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_102037758.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 10:20:38 -0400" cameraMake="Motorola" cameraModel="XT1585"/>
+            <guid isPermaLink="false">slides/IMG_20180624_102037758.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_150830</title>
+            <link>slides/IMG_20180624_150830.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_150830.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_150830.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 15:08:30 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_150830.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_150101297</title>
+            <link>slides/IMG_20180623_150101297.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_150101297.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_150101297.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 15:01:02 -0400" cameraMake="Motorola" cameraModel="XT1585"/>
+            <guid isPermaLink="false">slides/IMG_20180623_150101297.jpg</guid>
+        </item>
+        <item>
+            <title>20180623_182637</title>
+            <link>slides/20180623_182637.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20180623_182637.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20180623_182637.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 18:26:37 -0400" cameraMake="samsung" cameraModel="SM-N950U"/>
+            <guid isPermaLink="false">slides/20180623_182637.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_173848</title>
+            <link>slides/IMG_20180623_173848.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_173848.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_173848.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 17:38:48 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_173848.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_145817</title>
+            <link>slides/IMG_20180624_145817.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_145817.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_145817.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 14:58:17 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_145817.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_123341</title>
+            <link>slides/IMG_20180624_123341.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_123341.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_123341.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 12:33:41 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_123341.jpg</guid>
+        </item>
+        <item>
+            <title>20180623_103334</title>
+            <link>slides/20180623_103334.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20180623_103334.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20180623_103334.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 10:33:34 -0400" cameraMake="samsung" cameraModel="SM-N950U"/>
+            <guid isPermaLink="false">slides/20180623_103334.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_101707969</title>
+            <link>slides/IMG_20180624_101707969.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_101707969.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_101707969.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 10:17:08 -0400" cameraMake="Motorola" cameraModel="XT1585"/>
+            <guid isPermaLink="false">slides/IMG_20180624_101707969.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180624_152358</title>
+            <link>slides/IMG_20180624_152358.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180624_152358.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180624_152358.jpg" width="360" height="480"/>
+            <jalbum:exif originalDate="Sun, 24 Jun 2018 15:23:58 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180624_152358.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_173855</title>
+            <link>slides/IMG_20180623_173855.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_173855.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_173855.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 17:38:55 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_173855.jpg</guid>
+        </item>
+        <item>
+            <title>20180623_103341</title>
+            <link>slides/20180623_103341.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20180623_103341.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20180623_103341.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 10:33:41 -0400" cameraMake="samsung" cameraModel="SM-N950U"/>
+            <guid isPermaLink="false">slides/20180623_103341.jpg</guid>
+        </item>
+        <item>
+            <title>IMG_20180623_173905</title>
+            <link>slides/IMG_20180623_173905.jpg</link>
+            <pubDate>Sun, 15 Jul 2018 20:26:54 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/IMG_20180623_173905.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/IMG_20180623_173905.jpg" width="640" height="480"/>
+            <jalbum:exif originalDate="Sat, 23 Jun 2018 17:39:05 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/IMG_20180623_173905.jpg</guid>
+        </item>
+    </channel>
+</rss>

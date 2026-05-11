@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:jalbum="http://jalbum.net/jalbumrss">
+    <channel>
+        <title>Fair 2019</title>
+   	<link>.</link>
+        <generator>jAlbum 19.0</generator>
+   		<description></description>
+        <jalbum:absolutePath></jalbum:absolutePath>
+        <item>
+            <title>FB_IMG_1567446488041</title>
+            <link>slides/FB_IMG_1567446488041.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:48:50 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/FB_IMG_1567446488041.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/FB_IMG_1567446488041.jpg" width="1000" height="619"/>
+            <guid isPermaLink="false">slides/FB_IMG_1567446488041.jpg</guid>
+        </item>
+        <item>
+            <title>20190829_145426</title>
+            <link>slides/20190829_145426.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:48:50 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190829_145426.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190829_145426.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Thu, 29 Aug 2019 14:54:26 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190829_145426.jpg</guid>
+        </item>
+        <item>
+            <title>20190829_145437</title>
+            <link>slides/20190829_145437.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:48:50 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190829_145437.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190829_145437.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Thu, 29 Aug 2019 14:54:37 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190829_145437.jpg</guid>
+        </item>
+        <item>
+            <title>20190829_145448</title>
+            <link>slides/20190829_145448.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:48:50 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190829_145448.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190829_145448.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Thu, 29 Aug 2019 14:54:48 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190829_145448.jpg</guid>
+        </item>
+        <item>
+            <title>20190901_131154</title>
+            <link>slides/20190901_131154.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:48:50 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190901_131154.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190901_131154.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Sun, 01 Sep 2019 13:11:54 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190901_131154.jpg</guid>
+        </item>
+        <item>
+            <title>20190829_145430</title>
+            <link>slides/20190829_145430.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:48:50 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/20190829_145430.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/20190829_145430.jpg" width="1000" height="486"/>
+            <jalbum:exif originalDate="Thu, 29 Aug 2019 14:54:30 -0400" cameraMake="samsung" cameraModel="SM-N960U"/>
+            <guid isPermaLink="false">slides/20190829_145430.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20190829_135032</title>
+            <link>slides/MVIMG_20190829_135032.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:48:50 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20190829_135032.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20190829_135032.jpg" width="1000" height="750"/>
+            <jalbum:exif originalDate="Thu, 29 Aug 2019 13:50:32 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/MVIMG_20190829_135032.jpg</guid>
+        </item>
+        <item>
+            <title>MVIMG_20190901_150829</title>
+            <link>slides/MVIMG_20190901_150829.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:48:50 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/MVIMG_20190901_150829.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/MVIMG_20190901_150829.jpg" width="1000" height="750"/>
+            <jalbum:exif originalDate="Sun, 01 Sep 2019 15:08:29 -0400" cameraMake="Google" cameraModel="Pixel 2 XL"/>
+            <guid isPermaLink="false">slides/MVIMG_20190901_150829.jpg</guid>
+        </item>
+        <item>
+            <title>WD8MLV_DSC9663</title>
+            <link>slides/WD8MLV_DSC9663.jpg</link>
+            <pubDate>Thu, 03 Oct 2019 16:48:50 -0400</pubDate>
+            <description></description>
+            <media:description type="html"></media:description>
+            <media:thumbnail url="thumbs/WD8MLV_DSC9663.jpg" width="240" height="180"/>
+            <media:content type="image/jpeg" url="slides/WD8MLV_DSC9663.jpg" width="606" height="800"/>
+            <jalbum:exif originalDate="Mon, 02 Sep 2019 13:41:09 -0400" cameraMake="NIKON CORPORATION" cameraModel="NIKON D5"/>
+            <guid isPermaLink="false">slides/WD8MLV_DSC9663.jpg</guid>
+        </item>
+    </channel>
+</rss>
