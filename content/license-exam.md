@@ -14,7 +14,8 @@ Interested in getting your amateur radio license or upgrading to a higher class?
 
 Exams are generally offered **quarterly** or as needed. Please reach out to confirm the next available session or to request an individual appointment.
 
-> **Next Scheduled Session:** _TBD — Contact us to express interest._
+> **Next Scheduled Session: June 6th at Lima, Ohio 11am**
+         Will be held at the Red Cross building
 
 ---
 
@@ -46,17 +47,21 @@ Not sure where to begin? Check out these resources:
 
 ## 📍 Location
 
-Most exam sessions are held at:
+None in Van Wert
 
 **Van Wert County Emergency Management Office**  
 1220 Lincoln Highway  
 Van Wert, Ohio 45891
 
 ---
+**Red Cross Lima Ohio after the NWOH radio club meeting**   
+610 South Collett  
+Lima, Ohio 45805
 
 ## 📩 Questions or Ready to Sign Up?
 
-Contact us at [info@w8fy.org](mailto:info@w8fy.org) to pre-register or ask questions. Walk-ins are welcome, but pre-registration is appreciated.
+Contact us at [ka8zge@w8fy.org](mailto:ka8zge@w8fy.org) or 419-771-2061 call or text, to pre-register or ask questions. Walk-ins are welcome, but pre-registration is appreciated.
+- 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede74134f91989ffe5724b/1) This takes you to the registration page.
 
 ---
 

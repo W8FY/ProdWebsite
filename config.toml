@@ -89,14 +89,14 @@ pluralizelisttitles = false
    post       = 1
 
 [[menu.main]]
-    name       = "Hamfest 2025"
+    name       = "Hamfest 2026"
 #    identifier = "menu.club"
     url        = "/hamfest/"
     weight     = 1
     parent     = "section.Events"
 
 [[menu.main]]
-    name       = "Summer Field Day 2025"
+    name       = "Summer Field Day 2026"
 #    identifier = "menu.club"
     url        = "/sfieldday25/"
     weight     = 2
