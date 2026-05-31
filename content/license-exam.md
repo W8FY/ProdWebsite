@@ -17,6 +17,10 @@ Exams are generally offered **quarterly** or as needed. Please reach out to conf
 > **Next Scheduled Session: June 6th at Lima, Ohio 11am**
          Will be held at the Red Cross building
 
+In July there will be NO exams in Lima, OH. I will be offering them at the Van Wert County Hamfest.
+Pre-registration will not be required. If you would atleast get your FRN number.
+The hamfest will be July 19th at 9AM.
+
 ---
 
 ## 📝 What to Bring
