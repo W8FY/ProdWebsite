@@ -14,7 +14,7 @@ Interested in getting your amateur radio license or upgrading to a higher class?
 
 Exams are generally offered **quarterly** or as needed. Please reach out to confirm the next available session or to request an individual appointment.
 
-> **Next Scheduled Session: June 6th at Lima, Ohio 11am**
+> **Next Scheduled Session: August 1st at Lima, Ohio 11am**
          Will be held at the Red Cross building
 
 In July there will be NO exams in Lima, OH. I will be offering them at the Van Wert County Hamfest.
@@ -51,7 +51,7 @@ Not sure where to begin? Check out these resources:
 
 ## 📍 Location
 
-None in Van Wert
+At the Van Wert County Hamfest
 
 **Van Wert County Emergency Management Office**  
 1220 Lincoln Highway  
