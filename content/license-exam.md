@@ -16,11 +16,13 @@ Exams are generally offered **quarterly** or as needed. Please reach out to conf
 
 > **Next Scheduled Session: August 1st at Lima, Ohio 11am**
          Will be held at the Red Cross building
+- 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede770ac4de0f8f63ca99e/1) This takes you to the registration page.
 
 In July there will be NO exams in Lima, OH.
 
 **I will be offering them at the Van Wert County Hamfest.**
 Pre-registration will not be required. If you would atleast get your FRN number.
+- 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede8d34e61325a13c22bf6/1) This takes you to the registration page.
 
 **The hamfest will be July 19th at 9AM.**
 
@@ -68,7 +70,7 @@ Lima, Ohio 45805
 ## 📩 Questions or Ready to Sign Up?
 
 Contact us at [ka8zge@w8fy.org](mailto:ka8zge@w8fy.org) or 419-771-2061 call or text, to pre-register or ask questions. Walk-ins are welcome, but pre-registration is appreciated.
-- 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede74134f91989ffe5724b/1) This takes you to the registration page.
+- 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede8d34e61325a13c22bf6/1) This takes you to the registration page.
 
 ---
 
