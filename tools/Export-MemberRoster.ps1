@@ -105,7 +105,8 @@ if (-not (Test-Path -LiteralPath $workbookFullPath)) {
     throw "Workbook not found: $workbookFullPath"
 }
 
-$tempRoot = Join-Path $env:TEMP ("w8fy-member-roster-" + [guid]::NewGuid().ToString())
+$systemTemp = [System.IO.Path]::GetTempPath()
+$tempRoot = Join-Path $systemTemp ("w8fy-member-roster-" + [guid]::NewGuid().ToString())
 New-Item -ItemType Directory -Path $tempRoot | Out-Null
 
 try {
@@ -195,7 +196,7 @@ try {
     Write-Host "Exported $($sortedMembers.Count) members to $outputFullPath"
 } finally {
     $resolvedTemp = [System.IO.Path]::GetFullPath($tempRoot)
-    $resolvedSystemTemp = [System.IO.Path]::GetFullPath($env:TEMP)
+    $resolvedSystemTemp = [System.IO.Path]::GetFullPath($systemTemp)
     if ($resolvedTemp.StartsWith($resolvedSystemTemp, [System.StringComparison]::OrdinalIgnoreCase) -and (Test-Path -LiteralPath $resolvedTemp)) {
         Remove-Item -LiteralPath $resolvedTemp -Recurse -Force
     }
