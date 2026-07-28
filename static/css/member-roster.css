@@ -124,9 +124,106 @@
   margin: 22px 0 0;
 }
 
+.dues-payment {
+  padding-top: 28px;
+}
+
+.dues-payment-inner {
+  align-items: center;
+  background: #f8f5ed;
+  border: 1px solid var(--roster-line);
+  border-radius: 4px;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 16px;
+}
+
+.dues-payment-text {
+  display: grid;
+  gap: 4px;
+}
+
+.dues-payment-text strong {
+  color: var(--roster-blue);
+  font-size: 16px;
+}
+
+.dues-payment-text span {
+  color: var(--roster-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.dues-payment-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.dues-years {
+  align-items: center;
+  color: var(--roster-muted);
+  display: flex;
+  font-size: 13px;
+  font-weight: 700;
+  gap: 8px;
+  margin: 0;
+}
+
+.dues-years select {
+  background: #ffffff;
+  border: 1px solid var(--roster-line);
+  border-radius: 4px;
+  color: var(--roster-ink);
+  font-weight: 700;
+  height: 38px;
+  padding: 0 28px 0 10px;
+}
+
+.dues-button {
+  border-radius: 4px;
+  color: #ffffff;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 800;
+  justify-content: center;
+  line-height: 1.2;
+  min-width: 138px;
+  padding: 11px 13px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dues-button:hover,
+.dues-button:focus {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.dues-button.cashapp {
+  background: #00a83a;
+}
+
+.dues-button.cashapp:hover,
+.dues-button.cashapp:focus {
+  background: #008f32;
+}
+
+.dues-button.paypal {
+  background: var(--roster-blue);
+}
+
+.dues-button.paypal:hover,
+.dues-button.paypal:focus {
+  background: var(--roster-blue-light);
+}
+
 .roster-controls {
   padding-bottom: 18px;
-  padding-top: 28px;
+  padding-top: 18px;
 }
 
 .roster-search {
@@ -313,6 +410,14 @@
       "unpaid"
       "paid";
     grid-template-columns: 1fr;
+  }
+
+  .dues-payment-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .dues-payment-actions {
+    justify-content: flex-start;
   }
 
   .member-row {

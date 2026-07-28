@@ -11,8 +11,14 @@
     updated: document.getElementById("updatedLine"),
     columns: document.getElementById("rosterColumns"),
     officerSection: document.getElementById("officerSection"),
-    officerGrid: document.getElementById("officerGrid")
+    officerGrid: document.getElementById("officerGrid"),
+    yearsSelect: document.getElementById("yearsSelect"),
+    cashappLink: document.getElementById("cashappLink"),
+    paypalLink: document.getElementById("paypalLink")
   };
+
+  var DUES_PER_YEAR = 10;
+  var PROCESSING_FEE = 1;
 
   function escapeHtml(value) {
     return String(value || "")
@@ -134,6 +140,20 @@
     }
   }
 
+  function updatePaymentLinks() {
+    if (!els.yearsSelect || !els.cashappLink || !els.paypalLink) {
+      return;
+    }
+
+    var years = parseInt(els.yearsSelect.value, 10) || 1;
+    var amount = (years * DUES_PER_YEAR + PROCESSING_FEE).toFixed(2);
+
+    els.cashappLink.href = "https://cash.app/$drfziggy/" + amount;
+    els.cashappLink.textContent = "Cash App - $" + amount;
+    els.paypalLink.href = "https://www.paypal.com/myaccount/transfer/homepage/pay?recipient=ka8zge@w8fy.org&amount=" + amount;
+    els.paypalLink.textContent = "PayPal - $" + amount;
+  }
+
   fetch("/data/member-roster.json", { cache: "no-store" })
     .then(function (response) {
       if (!response.ok) {
@@ -154,4 +174,8 @@
     });
 
   els.search.addEventListener("input", render);
+  if (els.yearsSelect) {
+    els.yearsSelect.addEventListener("change", updatePaymentLinks);
+    updatePaymentLinks();
+  }
 }());
