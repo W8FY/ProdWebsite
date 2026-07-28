@@ -154,8 +154,9 @@
     var years = parseInt(els.yearsSelect.value, 10) || 1;
     var amount = (years * DUES_PER_YEAR + PROCESSING_FEE).toFixed(2);
     var callsign = els.duesCallsign ? els.duesCallsign.value.trim().toUpperCase() : "";
+    var paymentNote = callsign ? "Call sign: " + callsign : "";
 
-    els.cashappLink.href = "https://cash.app/$drfziggy/" + amount;
+    els.cashappLink.href = "https://cash.app/$drfziggy/" + amount + (paymentNote ? "?note=" + encodeURIComponent(paymentNote) : "");
     els.cashappLink.textContent = "Cash App - $" + amount;
     els.paypalAmount.value = amount;
     els.paypalButton.textContent = "PayPal - $" + amount;
@@ -164,11 +165,21 @@
       els.paypalCallsign.value = callsign;
     }
     if (els.paypalCustom) {
-      els.paypalCustom.value = callsign ? "Call sign: " + callsign : "";
+      els.paypalCustom.value = paymentNote;
     }
     if (els.paypalItemNumber) {
       els.paypalItemNumber.value = callsign;
     }
+  }
+
+  function copyCashAppNote() {
+    var callsign = els.duesCallsign ? els.duesCallsign.value.trim().toUpperCase() : "";
+
+    if (!callsign || !navigator.clipboard || !navigator.clipboard.writeText) {
+      return;
+    }
+
+    navigator.clipboard.writeText("Call sign: " + callsign).catch(function () {});
   }
 
   fetch("/data/member-roster.json", { cache: "no-store" })
@@ -197,6 +208,9 @@
   }
   if (els.duesCallsign) {
     els.duesCallsign.addEventListener("input", updatePaymentLinks);
+  }
+  if (els.cashappLink) {
+    els.cashappLink.addEventListener("click", copyCashAppNote);
   }
   if (els.paypalForm) {
     els.paypalForm.addEventListener("submit", updatePaymentLinks);
