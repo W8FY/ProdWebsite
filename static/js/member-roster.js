@@ -12,10 +12,15 @@
     columns: document.getElementById("rosterColumns"),
     officerSection: document.getElementById("officerSection"),
     officerGrid: document.getElementById("officerGrid"),
+    duesCallsign: document.getElementById("duesCallsign"),
     yearsSelect: document.getElementById("yearsSelect"),
     cashappLink: document.getElementById("cashappLink"),
+    paypalForm: document.querySelector(".dues-paypal-form"),
     paypalAmount: document.getElementById("paypalAmount"),
-    paypalButton: document.getElementById("paypalButton")
+    paypalButton: document.getElementById("paypalButton"),
+    paypalCallsign: document.getElementById("paypalCallsign"),
+    paypalCustom: document.getElementById("paypalCustom"),
+    paypalItemNumber: document.getElementById("paypalItemNumber")
   };
 
   var DUES_PER_YEAR = 10;
@@ -148,11 +153,22 @@
 
     var years = parseInt(els.yearsSelect.value, 10) || 1;
     var amount = (years * DUES_PER_YEAR + PROCESSING_FEE).toFixed(2);
+    var callsign = els.duesCallsign ? els.duesCallsign.value.trim().toUpperCase() : "";
 
     els.cashappLink.href = "https://cash.app/$drfziggy/" + amount;
     els.cashappLink.textContent = "Cash App - $" + amount;
     els.paypalAmount.value = amount;
     els.paypalButton.textContent = "PayPal - $" + amount;
+
+    if (els.paypalCallsign) {
+      els.paypalCallsign.value = callsign;
+    }
+    if (els.paypalCustom) {
+      els.paypalCustom.value = callsign ? "Call sign: " + callsign : "";
+    }
+    if (els.paypalItemNumber) {
+      els.paypalItemNumber.value = callsign;
+    }
   }
 
   fetch("/data/member-roster.json", { cache: "no-store" })
@@ -178,5 +194,11 @@
   if (els.yearsSelect) {
     els.yearsSelect.addEventListener("change", updatePaymentLinks);
     updatePaymentLinks();
+  }
+  if (els.duesCallsign) {
+    els.duesCallsign.addEventListener("input", updatePaymentLinks);
+  }
+  if (els.paypalForm) {
+    els.paypalForm.addEventListener("submit", updatePaymentLinks);
   }
 }());

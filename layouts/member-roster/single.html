@@ -52,6 +52,10 @@
                 <span>Dues are $10.00 per year plus a $1.00 processing fee. Include your name, call sign, and any address or phone changes in the note.</span>
               </div>
               <div class="dues-payment-actions">
+                <label class="dues-callsign" for="duesCallsign">
+                  Call sign
+                  <input id="duesCallsign" type="text" autocomplete="off" placeholder="W8FY">
+                </label>
                 <label class="dues-years" for="yearsSelect">
                   Years
                   <select id="yearsSelect">
@@ -69,6 +73,10 @@
                   <input type="hidden" name="item_name" value="W8FY Membership Dues">
                   <input type="hidden" name="currency_code" value="USD">
                   <input type="hidden" name="amount" id="paypalAmount" value="11.00">
+                  <input type="hidden" name="on0" value="Call sign">
+                  <input type="hidden" name="os0" id="paypalCallsign" value="">
+                  <input type="hidden" name="custom" id="paypalCustom" value="">
+                  <input type="hidden" name="item_number" id="paypalItemNumber" value="">
                   <button class="dues-button paypal" id="paypalButton" type="submit">PayPal - $11.00</button>
                 </form>
               </div>

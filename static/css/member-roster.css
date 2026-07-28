@@ -163,7 +163,8 @@
   justify-content: flex-end;
 }
 
-.dues-years {
+.dues-years,
+.dues-callsign {
   align-items: center;
   color: var(--roster-muted);
   display: flex;
@@ -173,7 +174,8 @@
   margin: 0;
 }
 
-.dues-years select {
+.dues-years select,
+.dues-callsign input {
   background: #ffffff;
   border: 1px solid var(--roster-line);
   border-radius: 4px;
@@ -181,6 +183,12 @@
   font-weight: 700;
   height: 38px;
   padding: 0 28px 0 10px;
+}
+
+.dues-callsign input {
+  padding-right: 10px;
+  text-transform: uppercase;
+  width: 96px;
 }
 
 .dues-button {
