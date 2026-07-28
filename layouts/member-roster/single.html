@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+  <head>
+    {{ partial "headers.html" . }}
+    {{ partial "custom_headers.html" . }}
+    <link href="{{ "css/member-roster.css" | relURL }}?{{ now.Unix }}" rel="stylesheet">
+  </head>
+  <body>
+    <div id="all">
+      {{ partial "top.html" . }}
+      {{ partial "nav.html" . }}
+      {{ partial "breadcrumbs.html" . }}
+
+      <div id="content">
+        <div class="member-roster-page">
+          <section class="roster-hero">
+            <div class="container">
+              <p class="roster-eyebrow">Member Roster</p>
+              <h1>Membership Status</h1>
+              <p class="roster-subtitle">Current club roster with dues status, officer listings, ARRL membership flags, and roster search.</p>
+
+              <div class="roster-summary" aria-live="polite">
+                <div class="summary-gauge" style="--pct:0">
+                  <div class="gauge-arc"></div>
+                  <div class="gauge-center">
+                    <strong id="currentPercent">0%</strong>
+                    <span>current</span>
+                  </div>
+                </div>
+                <div class="summary-stat paid">
+                  <strong id="paidCount">0</strong>
+                  <span>Paid</span>
+                </div>
+                <div class="summary-stat unpaid">
+                  <strong id="unpaidCount">0</strong>
+                  <span>Open</span>
+                </div>
+                <div class="summary-stat">
+                  <strong id="totalCount">0</strong>
+                  <span>Total</span>
+                </div>
+              </div>
+
+              <p class="roster-updated" id="updatedLine">Loading roster...</p>
+            </div>
+          </section>
+
+          <section class="container roster-controls">
+            <label class="sr-only" for="memberSearch">Search members</label>
+            <input id="memberSearch" class="roster-search" type="search" placeholder="Search by name, call sign, or officer title" autocomplete="off">
+          </section>
+
+          <section class="container officer-section" id="officerSection" hidden>
+            <h2>Club Officers</h2>
+            <div class="officer-grid" id="officerGrid"></div>
+          </section>
+
+          <section class="container roster-columns" id="rosterColumns" aria-live="polite">
+            <p class="roster-loading">Loading roster data...</p>
+          </section>
+        </div>
+      </div>
+
+      {{ partial "footer.html" . }}
+    </div>
+
+    {{ partial "scripts.html" . }}
+    <script src="{{ "js/member-roster.js" | relURL }}?{{ now.Unix }}"></script>
+  </body>
+</html>

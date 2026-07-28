@@ -1,0 +1,429 @@
+{
+  "generatedAt": "2026-07-28T13:10:01.2677442-04:00",
+  "sourceWorkbook": "W8FY-Membership-List-2026-With-Officers-1.xlsx",
+  "members": [
+    {
+      "name": "CLIFF BARBER",
+      "lastName": "BARBER",
+      "call": "KE8NRP",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "KAY BARNES",
+      "lastName": "BARNES",
+      "call": "N8VHS",
+      "paidThrough": 2027,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "ROBERT BARNES",
+      "lastName": "BARNES",
+      "call": "WD8LPY",
+      "paidThrough": 2027,
+      "paid": true,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "RYAN G BEACHER",
+      "lastName": "BEACHER",
+      "call": "NE8Y",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "MATT BOLLENBACHER",
+      "lastName": "BOLLENBACHER",
+      "call": "KD8EXQ",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "JUSTIN BRANT",
+      "lastName": "BRANT",
+      "call": "KF8CRX",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "JENNIFER BUEHRER",
+      "lastName": "BUEHRER",
+      "call": "KF8BIA",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "JOSHUA D BUEHRER",
+      "lastName": "BUEHRER",
+      "call": "KE8VCH",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "JOSHUA D BURTCH",
+      "lastName": "BURTCH",
+      "call": "KE8QOC",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "RICK BUSCH",
+      "lastName": "BUSCH",
+      "call": "W8BDC",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "NATHAN CARNAHAN",
+      "lastName": "CARNAHAN",
+      "call": "KF8BMF",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "GARY DAVIS",
+      "lastName": "DAVIS",
+      "call": "KC8BMK",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "RUTH DAVIS",
+      "lastName": "DAVIS",
+      "call": "ASSOC.",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "MARK DILLER",
+      "lastName": "DILLER",
+      "call": "KD8KPG",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "SHARON FALK",
+      "lastName": "FALK",
+      "call": "KE8WTE",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "BRETT FEASBY",
+      "lastName": "FEASBY",
+      "call": "KC8UNU",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "FRED FISHER",
+      "lastName": "FISHER",
+      "call": "KE8LNQ",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "DAVID FREELS",
+      "lastName": "FREELS",
+      "call": "KA8ZGE",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": true,
+      "officer": "Treasurer / Lead Volunteer Examiner"
+    },
+    {
+      "name": "DIANA FREELS",
+      "lastName": "FREELS",
+      "call": "ASSOC.",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "MARK GILLETTE",
+      "lastName": "GILLETTE",
+      "call": "KF8EIW",
+      "paidThrough": 2027,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "STEVEN M HARVEY",
+      "lastName": "HARVEY",
+      "call": "N8RLW",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "DALE HESSELING",
+      "lastName": "HESSELING",
+      "call": "N8PCN",
+      "paidThrough": 2028,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "BARBARA HIGH",
+      "lastName": "HIGH",
+      "call": "N8GFK",
+      "paidThrough": 2027,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "MATTHEW HOLTSBERRY",
+      "lastName": "HOLTSBERRY",
+      "call": "KD8WKR",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "JIM KNEBEL",
+      "lastName": "KNEBEL",
+      "call": "W8BHA",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "STEPHEN KOUTS",
+      "lastName": "KOUTS",
+      "call": "WA8WKF",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "RICK MCCOY",
+      "lastName": "MCCOY",
+      "call": "KB8LFJ",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "FRED PIEPER",
+      "lastName": "PIEPER",
+      "call": "N8OXQ",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "DAN RILEY",
+      "lastName": "RILEY",
+      "call": "WD8ASG",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "JERRY RYAN",
+      "lastName": "RYAN",
+      "call": "K8VGL",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "ERIC SCARE",
+      "lastName": "SCARE",
+      "call": "KE8DCN",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "JOSEPH SHELDON",
+      "lastName": "SHELDON",
+      "call": "KB8JYW",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "RALPH SHIELDS",
+      "lastName": "SHIELDS",
+      "call": "WB8YIH",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "BILL SNEAD",
+      "lastName": "SNEAD",
+      "call": "NU8P",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "JACK SNYDER",
+      "lastName": "SNYDER",
+      "call": "WD8MLV",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "BONNIE SWANEY",
+      "lastName": "SWANEY",
+      "call": "KB5BLS",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "LARRY SWANEY",
+      "lastName": "SWANEY",
+      "call": "KI8CP",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "CHERYL TAYLOR",
+      "lastName": "TAYLOR",
+      "call": "ASSOC.",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "CHRIS TAYLOR",
+      "lastName": "TAYLOR",
+      "call": "KA8WFA",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "DAVE M TAYLOR",
+      "lastName": "TAYLOR",
+      "call": "KC8QHK",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": true,
+      "officer": ""
+    },
+    {
+      "name": "DAVID W TAYLOR",
+      "lastName": "TAYLOR",
+      "call": "KB8JYV",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "PHILIP TAYLOR",
+      "lastName": "TAYLOR",
+      "call": "KA9LAA",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "MICHELE THOMAS",
+      "lastName": "THOMAS",
+      "call": "KB8YXO",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "THAD TURNER",
+      "lastName": "TURNER",
+      "call": "KD9YVI",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "BOB ULM",
+      "lastName": "ULM",
+      "call": "W8ULM",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "MICHAEL ULRICH",
+      "lastName": "ULRICH",
+      "call": "W8YND",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "officer": ""
+    },
+    {
+      "name": "ANN VOGEL",
+      "lastName": "VOGEL",
+      "call": "WB8GPB",
+      "paidThrough": null,
+      "paid": false,
+      "arrl": true,
+      "officer": ""
+    }
+  ]
+}

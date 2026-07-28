@@ -59,6 +59,7 @@ pluralizelisttitles = false
     weight     = 1
     parent     = "section.memberships"
 
+
 [[menu.main]]
     name       = "RF information"
     identifier = "section.RF"

@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Member Roster — W8FY Van Wert Amateur Radio Club</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  :root{
+    --paper:#F3EEE2;
+    --panel:#0B2545;
+    --panel-2:#123061;
+    --ink:#221F1A;
+    --ink-soft:#5B564C;
+    --green:#2E7D46;
+    --green-soft:#DCE8DC;
+    --amber:#B3261E;
+    --amber-soft:#F2E2CC;
+    --line:#D8D0BE;
+    --track:#26406E;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#FFFFFF;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'Space Mono',monospace;}
+
+  /* ---------- Site header (matches w8fy.org) ---------- */
+  .site-navbar{
+    background:var(--panel);
+    padding:10px 0;
+  }
+  .site-navbar .navbar-brand img{height:48px;}
+  .site-navbar .nav-link{
+    color:#D9E2F1 !important;
+    font-size:14px;
+    font-weight:500;
+  }
+  .site-navbar .nav-link.active, .site-navbar .nav-link:hover{
+    color:#ffffff !important;
+  }
+  .site-navbar .dropdown-menu{
+    background:var(--panel-2);
+    border:none;
+  }
+  .site-navbar .dropdown-item{color:#D9E2F1;}
+  .site-navbar .dropdown-item:hover{background:var(--panel);color:#fff;}
+
+  /* ---------- Hero panel ---------- */
+  .hero{
+    background:var(--panel);
+    color:var(--paper);
+    padding:36px 24px 28px;
+    position:relative;
+    overflow:hidden;
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background-image:repeating-linear-gradient(180deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 4px);
+    pointer-events:none;
+  }
+  .hero-inner{
+    max-width:920px;
+    margin:0 auto;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:#8FB4E8;
+    margin:0 0 8px;
+  }
+  .hero h1{
+    margin:0 0 4px;
+    font-size:clamp(26px,4vw,36px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .hero p.sub{
+    margin:0;
+    color:#BFCBDE;
+    font-size:14px;
+  }
+
+  .dash{
+    display:flex;
+    flex-wrap:wrap;
+    gap:28px;
+    align-items:center;
+    margin-top:28px;
+  }
+
+  /* S-meter gauge */
+  .gauge-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:230px;
+  }
+  .gauge{
+    width:220px;
+    height:112px;
+    position:relative;
+    overflow:hidden;
+  }
+  .gauge .arc{
+    position:absolute;
+    top:0; left:0;
+    width:220px; height:220px;
+    border-radius:50%;
+    background:conic-gradient(from 180deg,
+      var(--green) 0deg,
+      var(--green) calc(var(--pct,0) * 1.8deg),
+      var(--track) calc(var(--pct,0) * 1.8deg),
+      var(--track) 180deg,
+      transparent 180deg 360deg);
+  }
+  .gauge .arc-mask{
+    position:absolute;
+    top:16px; left:16px;
+    width:188px; height:188px;
+    border-radius:50%;
+    background:var(--panel);
+  }
+  .needle{
+    position:absolute;
+    bottom:0; left:50%;
+    width:2px; height:92px;
+    background:var(--paper);
+    transform-origin:bottom center;
+    transform:translateX(-50%) rotate(calc(-90deg + var(--pct,0) * 1.8deg));
+    transition:transform 0.6s cubic-bezier(.34,1.56,.64,1);
+  }
+  .needle::after{
+    content:'';
+    position:absolute;
+    bottom:-5px; left:50%;
+    width:10px; height:10px;
+    background:var(--paper);
+    border-radius:50%;
+    transform:translateX(-50%);
+  }
+  .gauge-ticks{
+    display:flex;
+    justify-content:space-between;
+    width:210px;
+    margin-top:2px;
+    font-family:'Space Mono',monospace;
+    font-size:9px;
+    color:#8A9187;
+    letter-spacing:0.02em;
+  }
+  .gauge-readout{
+    margin-top:6px;
+    font-family:'Space Mono',monospace;
+    font-size:22px;
+    font-weight:700;
+    color:var(--paper);
+  }
+  .gauge-label{
+    font-size:11px;
+    color:#8A9187;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+  }
+
+  .stats{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  .stat{
+    min-width:110px;
+  }
+  .stat .n{
+    font-family:'Space Mono',monospace;
+    font-size:30px;
+    font-weight:700;
+    line-height:1;
+  }
+  .stat.paid .n{color:var(--green);}
+  .stat.unpaid .n{color:var(--amber);}
+  .stat .l{
+    margin-top:6px;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#8A9187;
+  }
+
+  .updated{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    color:#8A9187;
+    margin-top:22px;
+  }
+
+
+  /* ---------- Club officers ---------- */
+  .officers-section{
+    max-width:920px;
+    margin:28px auto 0;
+    padding:0 24px;
+  }
+  .officers-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 8px 24px rgba(0,0,0,.04);
+  }
+  .officers-card h2{
+    margin:0 0 14px;
+    font-size:18px;
+    color:var(--ink);
+  }
+  .officers-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:12px;
+  }
+  .officer-card{
+    border-left:4px solid var(--green);
+    background:var(--green-soft);
+    border-radius:8px;
+    padding:12px 14px;
+  }
+  .officer-role{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--panel);}
+  .officer-name{margin-top:5px;font-size:16px;font-weight:700;color:var(--ink);}
+  .officer-call{margin-top:2px;font-family:'Space Mono',monospace;font-size:13px;color:var(--ink-soft);}
+  .officers-empty{font-size:13px;color:var(--ink-soft);}
+
+  /* ---------- Pay dues bar ---------- */
+  .pay-bar{
+    background:var(--green-soft);
+    border-bottom:1px solid var(--line);
+  }
+  .pay-inner{
+    max-width:920px;
+    margin:0 auto;
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .pay-text{display:flex; flex-direction:column; gap:2px;}
+  .pay-label{font-size:14px; font-weight:600; color:var(--ink);}
+  .pay-sub{font-size:12px; color:var(--ink-soft);}
+  .pay-inline-link{color:var(--panel); font-weight:600; text-decoration:underline;}
+  .pay-links{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+  .years-picker{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    color:var(--ink);
+    font-weight:600;
+  }
+  .years-picker select{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    padding:7px 8px;
+    border-radius:3px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+  }
+  .pay-btn{
+    display:inline-flex;
+    align-items:center;
+    padding:9px 16px;
+    border-radius:3px;
+    font-size:13px;
+    font-weight:600;
+    text-decoration:none;
+    color:#fff;
+    white-space:nowrap;
+  }
+  .pay-btn.cashapp{background:#00C244;}
+  .pay-btn.cashapp:hover{background:#00A83A;}
+  .pay-btn.paypal{background:#0B2545;}
+  .pay-btn.paypal:hover{background:#123061;}
+
+  /* ---------- Upload bar ---------- */
+  .upload-bar{
+    max-width:920px;
+    margin:0 auto;
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .upload-left{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .file-label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--panel);
+    color:var(--paper);
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+    padding:10px 16px;
+    border-radius:3px;
+    cursor:pointer;
+    border:1px solid var(--panel);
+    transition:background 0.15s;
+  }
+  .file-label:hover{background:var(--panel-2);}
+  .file-label input{display:none;}
+  .file-status{
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .file-status.error{color:#A8432F;}
+  .file-status.ok{color:var(--green);}
+  .clear-btn{
+    background:none;
+    border:none;
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    color:var(--ink-soft);
+    text-decoration:underline;
+    cursor:pointer;
+    padding:0;
+  }
+
+
+  /* ---------- Search ---------- */
+  .search-bar{
+    max-width:920px;
+    margin:0 auto;
+    padding:16px 24px 0;
+  }
+  .search-wrap{
+    position:relative;
+    max-width:460px;
+  }
+  .search-input{
+    width:100%;
+    padding:11px 42px 11px 14px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:#fff;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+  }
+  .search-input:focus{
+    border-color:var(--green);
+    outline:2px solid rgba(46,125,70,0.18);
+    outline-offset:1px;
+  }
+  .search-clear{
+    position:absolute;
+    right:8px;
+    top:50%;
+    transform:translateY(-50%);
+    width:30px;
+    height:30px;
+    border:0;
+    background:transparent;
+    color:var(--ink-soft);
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+    display:none;
+  }
+  .search-help{
+    margin-top:6px;
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- Roster ---------- */
+  .roster{
+    max-width:920px;
+    margin:0 auto;
+    padding:28px 24px 60px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  @media (max-width:720px){
+    .roster{grid-template-columns:1fr;}
+  }
+  .col h2{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    margin:0 0 12px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--ink);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .col.paid h2{border-color:var(--green);}
+  .col.unpaid h2{border-color:var(--amber);}
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .col.paid .dot{background:var(--green);}
+  .col.unpaid .dot{background:var(--amber);}
+
+  .member{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 96px 86px;
+    align-items:center;
+    padding:10px 8px;
+    border-bottom:1px solid var(--line);
+    gap:12px;
+  }
+  .member:nth-child(odd){background:rgba(11,37,69,0.035);}
+  .member:hover{background:rgba(46,125,70,0.08);}
+  .member.officer{border-left:3px solid var(--panel);padding-left:10px;}
+
+  .member .name{font-size:14px; font-weight:500; min-width:0;}
+  .member .call{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    text-align:left;
+    justify-self:start;
+  }
+  .member .through{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    color:var(--green);
+    white-space:nowrap;
+    text-align:left;
+    justify-self:start;
+  }
+  .officer-badge{
+    display:inline-block;
+    margin-left:6px;
+    padding:1px 6px;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    color:#fff;
+    background:var(--panel);
+    border-radius:3px;
+    vertical-align:middle;
+  }
+
+  @media (max-width:520px){
+    .member{grid-template-columns:minmax(0,1fr) 78px;}
+    .member .through{grid-column:2; font-size:10px;}
+  }
+  .arrl-badge{
+    display:inline-block;
+    margin-left:6px;
+    padding:1px 6px;
+    font-family:'Inter',sans-serif;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    color:var(--panel);
+    background:#D9E2F1;
+    border-radius:3px;
+    vertical-align:middle;
+  }
+  .empty-list{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+    padding:12px 0;
+  }
+
+  .empty-state{
+    max-width:920px;
+    margin:0 auto;
+    padding:60px 24px;
+    text-align:center;
+    color:var(--ink-soft);
+  }
+  .empty-state .big{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin-bottom:8px;
+  }
+
+  .col-count{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-left:auto;
+  }
+
+  .site-footer{
+    background:var(--panel);
+    color:#BFCBDE;
+    text-align:center;
+    padding:22px 24px;
+    font-size:13px;
+    margin-top:20px;
+  }
+
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+
+  input:focus-visible, label:focus-within, button:focus-visible{
+    outline:2px solid var(--green);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg site-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="https://www.w8fy.org/">
+      <img src="https://www.w8fy.org/img/logobanner.png" alt="W8FY Van Wert Amateur Radio Club">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navMain">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="https://www.w8fy.org/">Home</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Club Information</a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="https://www.w8fy.org/">Meeting Info</a></li>
+            <li><a class="dropdown-item" href="https://www.w8fy.org/">Committees</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link active" href="#">Member Roster</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Member Roster</p>
+    <h1>Membership Status</h1>
+    <p class="sub">Current membership roster with search, dues status, and online payment options.</p>
+
+    <div class="dash">
+      <div class="gauge-wrap">
+        <div class="gauge">
+          <div class="arc" id="arc" style="--pct:0;"></div>
+          <div class="arc-mask"></div>
+          <div class="needle" id="needle" style="--pct:0;"></div>
+        </div>
+        <div class="gauge-ticks"><span>0%</span><span>50%</span><span>100%</span></div>
+        <div class="gauge-readout" id="pctReadout">—</div>
+        <div class="gauge-label">Membership current</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat paid">
+          <div class="n" id="paidCount">—</div>
+          <div class="l">Current</div>
+        </div>
+        <div class="stat unpaid">
+          <div class="n" id="unpaidCount">—</div>
+          <div class="l">Past Due</div>
+        </div>
+        <div class="stat">
+          <div class="n" id="totalCount">—</div>
+          <div class="l">Total Members</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="updated" id="updatedLine">No roster uploaded yet.</p>
+  </div>
+</div>
+
+
+<div class="officers-section" id="officersSection" style="display:none;">
+  <div class="officers-card">
+    <h2>Club Officers</h2>
+    <div class="officers-grid" id="officersGrid"></div>
+  </div>
+</div>
+
+<div class="pay-bar">
+  <div class="pay-inner">
+    <div class="pay-text">
+      <span class="pay-label">Past due or renewing? Dues are $10.00/year + $1.00 processing fee.</span>
+      <span class="pay-sub">Pay your dues online — include your name, call sign, and any changes to your address or phone number in the note.</span>
+    </div>
+    <div class="pay-links">
+      <label class="years-picker">
+        Years:
+        <select id="yearsSelect">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </label>
+      <a class="pay-btn cashapp" id="cashappLink" href="https://cash.app/$drfziggy/11.00" target="_blank" rel="noopener">Pay with Cash App — $11.00</a>
+      <a class="pay-btn paypal" id="paypalLink" href="https://www.paypal.com/myaccount/transfer/homepage/pay?recipient=ka8zge@w8fy.org&amount=11.00" target="_blank" rel="noopener">Pay with PayPal — $11.00</a>
+    </div>
+  </div>
+</div>
+
+<div class="upload-bar">
+  <div class="upload-left">
+    <label class="file-label">
+      <span>⇪ Upload roster (.xlsx)</span>
+      <input type="file" id="fileInput" accept=".xlsx,.xls">
+    </label>
+    <span class="file-status" id="fileStatus"></span>
+  </div>
+  <button class="clear-btn" id="clearBtn" style="display:none;">Clear roster</button>
+</div>
+
+
+<div class="search-bar" id="searchBar" style="display:none;">
+  <div class="search-wrap">
+    <label class="sr-only" for="memberSearch">Search members by name or call sign</label>
+    <input class="search-input" id="memberSearch" type="search" placeholder="Search by name, call sign, or officer title" autocomplete="off">
+    <button class="search-clear" id="searchClear" type="button" aria-label="Clear search">×</button>
+  </div>
+  <div class="search-help" id="searchHelp">Type a member name, call sign, or officer title.</div>
+</div>
+
+<div id="rosterSection"></div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="mb-1">W8FY Van Wert Amateur Radio Club · Van Wert, Ohio</p>
+    <p class="mb-0 small">Names and call signs shown only · dues year compared against the current year on load</p>
+  </div>
+</footer>
+
+<script>
+const els = {
+  arc: document.getElementById('arc'),
+  needle: document.getElementById('needle'),
+  pctReadout: document.getElementById('pctReadout'),
+  paidCount: document.getElementById('paidCount'),
+  unpaidCount: document.getElementById('unpaidCount'),
+  totalCount: document.getElementById('totalCount'),
+  updatedLine: document.getElementById('updatedLine'),
+  fileInput: document.getElementById('fileInput'),
+  fileStatus: document.getElementById('fileStatus'),
+  clearBtn: document.getElementById('clearBtn'),
+  rosterSection: document.getElementById('rosterSection'),
+  searchBar: document.getElementById('searchBar'),
+  memberSearch: document.getElementById('memberSearch'),
+  searchClear: document.getElementById('searchClear'),
+  searchHelp: document.getElementById('searchHelp'),
+  officersSection: document.getElementById('officersSection'),
+  officersGrid: document.getElementById('officersGrid'),
+};
+
+let allMembers = [];
+let rosterUpdatedAt = null;
+
+const STORAGE_KEY = 'roster-data';
+const INITIAL_MEMBERS = [{"name": "CLIFF BARBER", "lastName": "BARBER", "call": "KE8NRP", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": true, "officer": ""}, {"name": "KAY BARNES", "lastName": "BARNES", "call": "N8VHS", "paidThrough": 2027, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "ROBERT BARNES", "lastName": "BARNES", "call": "WD8LPY", "paidThrough": 2027, "hasDuesDate": true, "paid": true, "arrl": true, "officer": ""}, {"name": "RYAN G BEACHER", "lastName": "BEACHER", "call": "NE8Y", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "MATT BOLLENBACHER", "lastName": "BOLLENBACHER", "call": "KD8EXQ", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "JUSTIN BRANT", "lastName": "BRANT", "call": "KF8CRX", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "JOSHUA D BUEHRER", "lastName": "BUEHRER", "call": "KE8VCH", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "JENNIFER BUEHRER", "lastName": "BUEHRER", "call": "KF8BIA", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "JOSHUA D BURTCH", "lastName": "BURTCH", "call": "KE8QOC", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "RICK BUSCH", "lastName": "BUSCH", "call": "W8BDC", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "NATHAN CARNAHAN", "lastName": "CARNAHAN", "call": "KF8BMF", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "GARY DAVIS", "lastName": "DAVIS", "call": "KC8BMK", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "RUTH DAVIS", "lastName": "DAVIS", "call": "ASSOC.", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "MARK DILLER", "lastName": "DILLER", "call": "KD8KPG", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "SHARON FALK", "lastName": "FALK", "call": "KE8WTE", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "BRETT FEASBY", "lastName": "FEASBY", "call": "KC8UNU", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": true, "officer": ""}, {"name": "FRED FISHER", "lastName": "FISHER", "call": "KE8LNQ", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "DIANA FREELS", "lastName": "FREELS", "call": "ASSOC.", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "DAVID FREELS", "lastName": "FREELS", "call": "KA8ZGE", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": true, "officer": "Treasurer / Lead Volunteer Examiner"}, {"name": "MARK GILLETTE", "lastName": "GILLETTE", "call": "KF8EIW", "paidThrough": 2027, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "STEVEN M HARVEY", "lastName": "HARVEY", "call": "N8RLW", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": true, "officer": ""}, {"name": "DALE HESSELING", "lastName": "HESSELING", "call": "N8PCN", "paidThrough": 2028, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "BARBARA HIGH", "lastName": "HIGH", "call": "N8GFK", "paidThrough": 2027, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "MATTHEW HOLTSBERRY", "lastName": "HOLTSBERRY", "call": "KD8WKR", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "JIM KNEBEL", "lastName": "KNEBEL", "call": "W8BHA", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "STEPHEN KOUTS", "lastName": "KOUTS", "call": "WA8WKF", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": true, "officer": ""}, {"name": "RICK MCCOY", "lastName": "MCCOY", "call": "KB8LFJ", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "FRED PIEPER", "lastName": "PIEPER", "call": "N8OXQ", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "DAN RILEY", "lastName": "RILEY", "call": "WD8ASG", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": true, "officer": ""}, {"name": "JERRY RYAN", "lastName": "RYAN", "call": "K8VGL", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": true, "officer": ""}, {"name": "ERIC SCARE", "lastName": "SCARE", "call": "KE8DCN", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "JOSEPH SHELDON", "lastName": "SHELDON", "call": "KB8JYW", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "RALPH SHIELDS", "lastName": "SHIELDS", "call": "WB8YIH", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": true, "officer": ""}, {"name": "BILL SNEAD", "lastName": "SNEAD", "call": "NU8P", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "JACK SNYDER", "lastName": "SNYDER", "call": "WD8MLV", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "BONNIE SWANEY", "lastName": "SWANEY", "call": "KB5BLS", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "LARRY SWANEY", "lastName": "SWANEY", "call": "KI8CP", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": true, "officer": ""}, {"name": "CHERYL TAYLOR", "lastName": "TAYLOR", "call": "ASSOC.", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "DAVID W TAYLOR", "lastName": "TAYLOR", "call": "KB8JYV", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "DAVE M TAYLOR", "lastName": "TAYLOR", "call": "KC8QHK", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": true, "officer": ""}, {"name": "PHILIP TAYLOR", "lastName": "TAYLOR", "call": "KA9LAA", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "CHRIS TAYLOR", "lastName": "TAYLOR", "call": "KA8WFA", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "MICHELE THOMAS", "lastName": "THOMAS", "call": "KB8YXO", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "THAD TURNER", "lastName": "TURNER", "call": "KD9YVI", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "BOB ULM", "lastName": "ULM", "call": "W8ULM", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": false, "officer": ""}, {"name": "MICHAEL ULRICH", "lastName": "ULRICH", "call": "W8YND", "paidThrough": 2026, "hasDuesDate": true, "paid": true, "arrl": false, "officer": ""}, {"name": "ANN VOGEL", "lastName": "VOGEL", "call": "WB8GPB", "paidThrough": null, "hasDuesDate": false, "paid": false, "arrl": true, "officer": ""}];
+const INITIAL_UPDATED_AT = '2026-07-28T12:27:00-04:00';
+
+function findKey(row, patterns){
+  const keys = Object.keys(row);
+  for(const k of keys){
+    const norm = k.trim().toLowerCase();
+    if(patterns.some(p => p.test(norm))) return k;
+  }
+  return null;
+}
+
+function parseWorkbook(arrayBuffer){
+  const wb = XLSX.read(arrayBuffer, {type:'array', cellDates:true});
+  const sheet = wb.Sheets[wb.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet, {defval:null});
+  if(!rows.length) throw new Error('No rows found in the first sheet.');
+
+  const sample = rows[0];
+  const lastKey = findKey(sample, [/^last$/, /last.?name/]);
+  const firstKey = findKey(sample, [/^first$/, /first.?name/]);
+  const callKey = findKey(sample, [/^call$/, /call.?sign/]);
+  const yearKey = findKey(sample, [/^year$/, /paid.?through/, /dues.?year/]);
+  const duesDateKey = findKey(sample, [/dues.?paid/]);
+  const arrlKey = findKey(sample, [/^arrl$/, /arrl.?member/]);
+  const officerKey = findKey(sample, [/^officer$/, /^title$/, /club.?office/, /position/]);
+
+  if(!lastKey && !firstKey) throw new Error('Could not find name columns (expected LAST / FIRST).');
+
+  const currentYear = new Date().getFullYear();
+  const members = rows
+    .filter(r => ((lastKey && r[lastKey]) || (firstKey && r[firstKey])) && (callKey && r[callKey]))
+    .map(r => {
+      const last = lastKey ? String(r[lastKey]).trim() : '';
+      const first = firstKey ? String(r[firstKey]).trim() : '';
+      const call = callKey && r[callKey] ? String(r[callKey]).trim() : '';
+      let yearVal = yearKey ? r[yearKey] : null;
+      yearVal = yearVal ? parseInt(yearVal, 10) : null;
+      const hasDuesDate = duesDateKey ? Boolean(r[duesDateKey]) : false;
+      const paid = Boolean(yearVal && yearVal >= currentYear);
+      const arrl = arrlKey ? Boolean(r[arrlKey]) && String(r[arrlKey]).trim() !== '0' : false;
+      const officer = officerKey && r[officerKey] ? String(r[officerKey]).trim() : '';
+      return {
+        name: [first, last].filter(Boolean).join(' '),
+        lastName: last,
+        call,
+        paidThrough: yearVal || null,
+        hasDuesDate,
+        paid,
+        arrl,
+        officer,
+      };
+    })
+    .filter(m => m.name);
+
+  members.sort((a,b) => (a.lastName || a.name).localeCompare(b.lastName || b.name));
+  return members;
+}
+
+function renderGauge(paid, total){
+  const pct = total ? Math.round((paid/total) * 100) : 0;
+  els.arc.style.setProperty('--pct', pct);
+  els.needle.style.setProperty('--pct', pct);
+  els.pctReadout.textContent = total ? pct + '%' : '—';
+}
+
+function memberRow(m, kind){
+  const right = kind === 'paid'
+    ? `<span class="through">${m.paidThrough ? 'thru ' + m.paidThrough : ''}</span>`
+    : '';
+  const arrlBadge = m.arrl ? `<span class="arrl-badge" title="ARRL member">ARRL</span>` : '';
+  const officerBadge = m.officer ? `<span class="officer-badge" title="Club officer">${escapeHtml(m.officer)}</span>` : '';
+  return `<div class="member${m.officer ? ' officer' : ''}">
+    <span class="name">${escapeHtml(m.name)}${officerBadge}</span>
+    <span class="call">${escapeHtml(m.call)}${arrlBadge}</span>
+    ${right}
+  </div>`;
+}
+
+function escapeHtml(str){
+  return String(str || '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+
+function renderOfficers(members){
+  const officers = members.filter(m => m.officer && String(m.officer).trim());
+  if(!officers.length){
+    els.officersSection.style.display = 'none';
+    els.officersGrid.innerHTML = '';
+    return;
+  }
+  els.officersSection.style.display = 'block';
+  els.officersGrid.innerHTML = officers.map(m => `
+    <div class="officer-card">
+      <div class="officer-role">${escapeHtml(m.officer)}</div>
+      <div class="officer-name">${escapeHtml(m.name)}</div>
+      <div class="officer-call">${escapeHtml(m.call)}</div>
+    </div>`).join('');
+}
+
+function renderRoster(members, updatedAt, isFiltered = false){
+  const paid = members.filter(m => m.paid);
+  const unpaid = members.filter(m => !m.paid);
+
+  if(!isFiltered){
+    renderOfficers(members);
+    renderGauge(paid.length, members.length);
+    els.paidCount.textContent = paid.length;
+    els.unpaidCount.textContent = unpaid.length;
+    els.totalCount.textContent = members.length;
+  }
+  els.updatedLine.textContent = updatedAt
+    ? 'Last updated ' + new Date(updatedAt).toLocaleString()
+    : '';
+  els.clearBtn.style.display = 'inline';
+  els.searchBar.style.display = 'block';
+
+  els.rosterSection.innerHTML = `
+    <div class="roster">
+      <div class="col paid">
+        <h2><span class="dot"></span>Current<span class="col-count">${paid.length}</span></h2>
+        ${paid.length ? paid.map(m => memberRow(m,'paid')).join('') : '<div class="empty-list">No matching current members.</div>'}
+      </div>
+      <div class="col unpaid">
+        <h2><span class="dot"></span>Past Due<span class="col-count">${unpaid.length}</span></h2>
+        ${unpaid.length ? unpaid.map(m => memberRow(m,'unpaid')).join('') : '<div class="empty-list">No matching past-due members.</div>'}
+      </div>
+    </div>
+  `;
+}
+
+function applySearch(){
+  const query = els.memberSearch.value.trim().toLowerCase();
+  els.searchClear.style.display = query ? 'block' : 'none';
+
+  if(!query){
+    els.searchHelp.textContent = 'Type a member name, call sign, or officer title.';
+    renderRoster(allMembers, rosterUpdatedAt);
+    return;
+  }
+
+  const matches = allMembers.filter(member =>
+    member.name.toLowerCase().includes(query) ||
+    member.call.toLowerCase().includes(query) ||
+    String(member.officer || '').toLowerCase().includes(query)
+  );
+  els.searchHelp.textContent = `${matches.length} match${matches.length === 1 ? '' : 'es'} found.`;
+  renderRoster(matches, rosterUpdatedAt, true);
+}
+
+function renderEmpty(){
+  els.rosterSection.innerHTML = `
+    <div class="empty-state">
+      <div class="big">No signal yet</div>
+      <div>Upload a roster spreadsheet above to populate this page.</div>
+    </div>
+  `;
+  els.clearBtn.style.display = 'none';
+  els.searchBar.style.display = 'none';
+  els.officersSection.style.display = 'none';
+  els.officersGrid.innerHTML = '';
+  els.memberSearch.value = '';
+  els.searchClear.style.display = 'none';
+  allMembers = [];
+  rosterUpdatedAt = null;
+  els.updatedLine.textContent = 'No roster uploaded yet.';
+}
+
+async function loadFromStorage(){
+  try{
+    if(window.storage){
+      const res = await window.storage.get(STORAGE_KEY, true);
+      if(res && res.value){
+        const data = JSON.parse(res.value);
+        allMembers = data.members || [];
+        rosterUpdatedAt = data.updatedAt || null;
+        renderRoster(allMembers, rosterUpdatedAt);
+        return;
+      }
+    }
+    const local = localStorage.getItem(STORAGE_KEY);
+    if(local){
+      const data = JSON.parse(local);
+      allMembers = data.members || [];
+      rosterUpdatedAt = data.updatedAt || null;
+      renderRoster(allMembers, rosterUpdatedAt);
+      return;
+    }
+  }catch(e){}
+  allMembers = INITIAL_MEMBERS;
+  rosterUpdatedAt = INITIAL_UPDATED_AT;
+  renderRoster(allMembers, rosterUpdatedAt);
+}
+
+async function saveToStorage(members){
+  const payload = { members, updatedAt: new Date().toISOString() };
+  if(window.storage){
+    await window.storage.set(STORAGE_KEY, JSON.stringify(payload), true);
+  }else{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  }
+  return payload;
+}
+
+
+els.memberSearch.addEventListener('input', applySearch);
+els.searchClear.addEventListener('click', () => {
+  els.memberSearch.value = '';
+  applySearch();
+  els.memberSearch.focus();
+});
+
+els.fileInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  els.fileStatus.textContent = 'Reading ' + file.name + '...';
+  els.fileStatus.className = 'file-status';
+  try{
+    const buf = await file.arrayBuffer();
+    const members = parseWorkbook(buf);
+    const payload = await saveToStorage(members);
+    allMembers = payload.members;
+    rosterUpdatedAt = payload.updatedAt;
+    els.memberSearch.value = '';
+    renderRoster(allMembers, rosterUpdatedAt);
+    els.fileStatus.textContent = 'Updated from ' + file.name + ' (' + members.length + ' members).';
+    els.fileStatus.className = 'file-status ok';
+  }catch(err){
+    els.fileStatus.textContent = 'Could not read that file: ' + err.message;
+    els.fileStatus.className = 'file-status error';
+  }
+  els.fileInput.value = '';
+});
+
+els.clearBtn.addEventListener('click', async () => {
+  if(!confirm('Clear the roster for all visitors?')) return;
+  try{
+    if(window.storage){ await window.storage.delete(STORAGE_KEY, true); }
+    localStorage.removeItem(STORAGE_KEY);
+  }catch(e){}
+  renderEmpty();
+  els.fileStatus.textContent = '';
+});
+
+const DUES_PER_YEAR = 10;
+const PROCESSING_FEE = 1;
+const yearsSelect = document.getElementById('yearsSelect');
+const cashappLink = document.getElementById('cashappLink');
+const paypalLink = document.getElementById('paypalLink');
+
+function updatePayLinks(){
+  const years = parseInt(yearsSelect.value, 10) || 1;
+  const amount = (years * DUES_PER_YEAR + PROCESSING_FEE).toFixed(2);
+  cashappLink.href = `https://cash.app/$drfziggy/${amount}`;
+  cashappLink.textContent = `Pay with Cash App — $${amount}`;
+  paypalLink.href = `https://www.paypal.com/myaccount/transfer/homepage/pay?recipient=ka8zge@w8fy.org&amount=${amount}`;
+  paypalLink.textContent = `Pay with PayPal — $${amount}`;
+}
+yearsSelect.addEventListener('change', updatePayLinks);
+updatePayLinks();
+
+loadFromStorage();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

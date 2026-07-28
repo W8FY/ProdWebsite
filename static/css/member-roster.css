@@ -1,0 +1,326 @@
+.member-roster-page {
+  --roster-blue: #0b2545;
+  --roster-blue-light: #123061;
+  --roster-paper: #f6f1e6;
+  --roster-ink: #221f1a;
+  --roster-muted: #666052;
+  --roster-line: #ded7c6;
+  --roster-green: #2f7d46;
+  --roster-red: #b3261e;
+  background: #ffffff;
+  color: var(--roster-ink);
+}
+
+.roster-hero {
+  background: var(--roster-blue);
+  color: var(--roster-paper);
+  padding: 34px 0 30px;
+}
+
+.roster-eyebrow {
+  color: #9dc2f5;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.roster-hero h1 {
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 8px;
+}
+
+.roster-subtitle {
+  color: #cbd6e8;
+  font-size: 16px;
+  margin: 0;
+  max-width: 720px;
+}
+
+.roster-summary {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.summary-gauge {
+  height: 112px;
+  position: relative;
+  width: 112px;
+}
+
+.gauge-arc {
+  background: conic-gradient(var(--roster-green) calc(var(--pct, 0) * 1%), #29466f 0);
+  border-radius: 50%;
+  height: 112px;
+  position: absolute;
+  width: 112px;
+}
+
+.gauge-arc::after {
+  background: var(--roster-blue);
+  border-radius: 50%;
+  content: "";
+  height: 78px;
+  left: 17px;
+  position: absolute;
+  top: 17px;
+  width: 78px;
+}
+
+.gauge-center {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+}
+
+.gauge-center strong {
+  color: #ffffff;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.gauge-center span,
+.summary-stat span {
+  color: #9ba7ba;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+.summary-stat {
+  min-width: 94px;
+}
+
+.summary-stat strong {
+  color: #ffffff;
+  display: block;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.summary-stat.paid strong {
+  color: #65b77a;
+}
+
+.summary-stat.unpaid strong {
+  color: #f07b72;
+}
+
+.roster-updated {
+  color: #9ba7ba;
+  font-size: 13px;
+  margin: 22px 0 0;
+}
+
+.roster-controls {
+  padding-bottom: 18px;
+  padding-top: 28px;
+}
+
+.roster-search {
+  border: 1px solid var(--roster-line);
+  border-radius: 4px;
+  box-shadow: none;
+  color: var(--roster-ink);
+  font-size: 16px;
+  max-width: 520px;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+.roster-search:focus {
+  border-color: var(--roster-blue-light);
+  box-shadow: 0 0 0 3px rgba(18, 48, 97, 0.14);
+  outline: 0;
+}
+
+.officer-section {
+  padding-bottom: 8px;
+}
+
+.officer-section h2,
+.roster-column h2 {
+  color: var(--roster-blue);
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 14px;
+}
+
+.officer-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.officer-card,
+.member-row {
+  background: #ffffff;
+  border: 1px solid var(--roster-line);
+  border-radius: 4px;
+}
+
+.officer-card {
+  padding: 14px;
+}
+
+.officer-role {
+  color: var(--roster-blue);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.officer-name {
+  font-size: 17px;
+  font-weight: 800;
+  margin-top: 5px;
+}
+
+.officer-call {
+  color: var(--roster-muted);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.roster-columns {
+  align-items: start;
+  display: grid;
+  grid-template-areas: "unpaid paid";
+  gap: 22px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-bottom: 42px;
+}
+
+.roster-column {
+  align-self: start;
+  min-width: 0;
+}
+
+.roster-column.unpaid {
+  grid-area: unpaid;
+}
+
+.roster-column.paid {
+  grid-area: paid;
+}
+
+.roster-column h2 {
+  align-items: center;
+  border-bottom: 3px solid var(--roster-line);
+  display: flex;
+  gap: 8px;
+  padding-bottom: 8px;
+}
+
+.roster-column.paid h2 {
+  border-color: var(--roster-green);
+}
+
+.roster-column.unpaid h2 {
+  border-color: var(--roster-red);
+}
+
+.member-list {
+  display: grid;
+  gap: 8px;
+}
+
+.member-row {
+  align-items: center;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 12px 14px;
+}
+
+.member-row.officer {
+  border-left: 4px solid var(--roster-blue);
+}
+
+.member-name {
+  font-weight: 800;
+  min-width: 0;
+}
+
+.member-meta {
+  color: var(--roster-muted);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.member-right {
+  color: var(--roster-muted);
+  font-size: 13px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.badge-roster {
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .6px;
+  margin-left: 6px;
+  padding: 3px 5px;
+  text-transform: uppercase;
+}
+
+.badge-arrl {
+  background: #e6f0fb;
+  color: #164a7a;
+}
+
+.badge-officer {
+  background: #f1ead7;
+  color: var(--roster-blue);
+}
+
+.empty-column,
+.roster-loading {
+  border: 1px dashed var(--roster-line);
+  color: var(--roster-muted);
+  margin: 0;
+  padding: 18px;
+}
+
+@media (max-width: 767px) {
+  .roster-hero {
+    padding: 28px 0 26px;
+  }
+
+  .roster-hero h1 {
+    font-size: 30px;
+  }
+
+  .roster-columns {
+    grid-template-areas:
+      "unpaid"
+      "paid";
+    grid-template-columns: 1fr;
+  }
+
+  .member-row {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .member-right {
+    text-align: left;
+  }
+}
