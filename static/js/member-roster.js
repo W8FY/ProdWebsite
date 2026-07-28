@@ -14,7 +14,8 @@
     officerGrid: document.getElementById("officerGrid"),
     yearsSelect: document.getElementById("yearsSelect"),
     cashappLink: document.getElementById("cashappLink"),
-    paypalLink: document.getElementById("paypalLink")
+    paypalAmount: document.getElementById("paypalAmount"),
+    paypalButton: document.getElementById("paypalButton")
   };
 
   var DUES_PER_YEAR = 10;
@@ -141,7 +142,7 @@
   }
 
   function updatePaymentLinks() {
-    if (!els.yearsSelect || !els.cashappLink || !els.paypalLink) {
+    if (!els.yearsSelect || !els.cashappLink || !els.paypalAmount || !els.paypalButton) {
       return;
     }
 
@@ -150,8 +151,8 @@
 
     els.cashappLink.href = "https://cash.app/$drfziggy/" + amount;
     els.cashappLink.textContent = "Cash App - $" + amount;
-    els.paypalLink.href = "https://www.paypal.com/myaccount/transfer/homepage/pay?recipient=ka8zge@w8fy.org&amount=" + amount;
-    els.paypalLink.textContent = "PayPal - $" + amount;
+    els.paypalAmount.value = amount;
+    els.paypalButton.textContent = "PayPal - $" + amount;
   }
 
   fetch("/data/member-roster.json", { cache: "no-store" })

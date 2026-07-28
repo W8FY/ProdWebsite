@@ -63,7 +63,14 @@
                   </select>
                 </label>
                 <a class="dues-button cashapp" id="cashappLink" href="https://cash.app/$drfziggy/11.00" target="_blank" rel="noopener">Cash App - $11.00</a>
-                <a class="dues-button paypal" id="paypalLink" href="https://www.paypal.com/myaccount/transfer/homepage/pay?recipient=ka8zge@w8fy.org&amount=11.00" target="_blank" rel="noopener">PayPal - $11.00</a>
+                <form class="dues-paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                  <input type="hidden" name="cmd" value="_xclick">
+                  <input type="hidden" name="business" value="ka8zge@w8fy.org">
+                  <input type="hidden" name="item_name" value="W8FY Membership Dues">
+                  <input type="hidden" name="currency_code" value="USD">
+                  <input type="hidden" name="amount" id="paypalAmount" value="11.00">
+                  <button class="dues-button paypal" id="paypalButton" type="submit">PayPal - $11.00</button>
+                </form>
               </div>
             </div>
           </section>

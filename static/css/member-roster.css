@@ -184,6 +184,7 @@
 }
 
 .dues-button {
+  border: 0;
   border-radius: 4px;
   color: #ffffff;
   display: inline-flex;
@@ -195,6 +196,10 @@
   padding: 11px 13px;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.dues-paypal-form {
+  margin: 0;
 }
 
 .dues-button:hover,
