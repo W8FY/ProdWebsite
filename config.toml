@@ -249,6 +249,8 @@ pluralizelisttitles = false
 #
 [params]
     production_url = "https://w8fy.org"
+    membership_api_url = "https://w8fy-tool.n0sys.net/api/membership-applications/"
+    turnstile_site_key = ""
     viewMorePostLink = "/blog/"
     author = "BrantLab"
     defaultKeywords = ["HAM Radio", "Van Wert", "VWARC", "Radio", "Amateur Radio", "W8FY", "Van Wert Amateur Radio Club", "Field Day", "Emergency Communications", "Skywarn", "ARES", "Ohio HAM Radio", "FCC License", "Ham Radio Events", "Repeater System", "POTA", "OTA Activations", "Radio Club", "Public Service Radio", "Hamfest", "2 Meter Net"]

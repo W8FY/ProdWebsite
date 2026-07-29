@@ -572,3 +572,190 @@ img {
   content-visibility: auto;
   contain-intrinsic-size: 900px;
 }
+
+.membership-application-page {
+  background: #fff;
+}
+
+.application-hero {
+  background: #0b2545;
+  color: #f6f1e6;
+  padding: 34px 0 30px;
+}
+
+.application-eyebrow {
+  color: #9dc2f5;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.application-hero h1 {
+  color: #fff;
+  margin: 0 0 10px;
+}
+
+.application-hero p {
+  color: #cbd6e8;
+  max-width: 760px;
+}
+
+.application-shell {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  padding-bottom: 48px;
+  padding-top: 28px;
+}
+
+.application-shell::before,
+.application-shell::after {
+  display: none;
+}
+
+.membership-form,
+.application-side article {
+  border: 1px solid #dfe6ed;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.membership-form {
+  padding: 22px;
+}
+
+.application-section {
+  border-bottom: 1px solid #e6e9ed;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.application-section:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.application-section h2,
+.application-side h2 {
+  color: #0b2545;
+  font-size: 1.35rem;
+  margin: 0 0 14px;
+}
+
+.application-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.application-wide {
+  grid-column: 1 / -1;
+}
+
+.membership-form label {
+  color: #333;
+  display: block;
+  font-weight: 800;
+  margin: 0;
+}
+
+.membership-form input,
+.membership-form select,
+.membership-form textarea {
+  border: 1px solid #cfd7df;
+  border-radius: 4px;
+  color: #222;
+  display: block;
+  font: inherit;
+  font-weight: 400;
+  margin-top: 7px;
+  min-height: 42px;
+  padding: 9px 10px;
+  width: 100%;
+}
+
+.membership-form textarea {
+  resize: vertical;
+}
+
+.application-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.application-checks label,
+.application-agreement {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.application-checks input,
+.application-agreement input {
+  margin: 0;
+  min-height: 0;
+  width: auto;
+}
+
+.application-captcha {
+  margin: 16px 0;
+  min-height: 0;
+}
+
+.application-submit {
+  border: 0;
+  border-radius: 4px;
+  background: #467fbf;
+  color: #fff;
+  font-weight: 800;
+  min-height: 44px;
+  padding: 0 18px;
+}
+
+.application-submit:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.application-status {
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.application-status.success {
+  color: #2f7d46;
+}
+
+.application-status.error {
+  color: #b3261e;
+}
+
+.application-side {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.application-side article {
+  padding: 18px;
+}
+
+.application-side p {
+  color: #555;
+}
+
+.application-side a {
+  color: #467fbf;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .application-shell,
+  .application-grid {
+    grid-template-columns: 1fr;
+  }
+}

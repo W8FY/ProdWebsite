@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+  <head>
+    {{ partial "headers.html" . }}
+    {{ partial "custom_headers.html" . }}
+  </head>
+
+  <body>
+
+    <div id="all">
+        {{ partial "top.html" . }}
+
+        {{ partial "nav.html" . }}
+
+        {{ partial "breadcrumbs.html" . }}
+
+        <div id="content">
+            <div class="membership-application-page">
+                <section class="application-hero">
+                    <div class="container">
+                        <p class="application-eyebrow">Membership Application</p>
+                        <h1>Join The Van Wert Amateur Radio Club</h1>
+                        <p>Licensed operators, future hams, and community supporters are welcome. Annual dues are $10.00.</p>
+                    </div>
+                </section>
+
+                <section class="container application-shell">
+                    <form class="membership-form" id="membershipApplicationForm" data-api-url="{{ .Site.Params.membership_api_url }}" data-turnstile-site-key="{{ .Site.Params.turnstile_site_key }}">
+                        <div class="application-section">
+                            <h2>Applicant</h2>
+                            <div class="application-grid">
+                                <label>
+                                    First name
+                                    <input name="first_name" type="text" autocomplete="given-name" required>
+                                </label>
+                                <label>
+                                    Last name
+                                    <input name="last_name" type="text" autocomplete="family-name" required>
+                                </label>
+                                <label>
+                                    Call sign
+                                    <input name="call_sign" type="text" autocomplete="off" placeholder="Optional">
+                                </label>
+                                <label>
+                                    License class
+                                    <select name="license_class">
+                                        <option value="">Not licensed yet</option>
+                                        <option value="technician">Technician</option>
+                                        <option value="general">General</option>
+                                        <option value="extra">Extra</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="application-section">
+                            <h2>Contact</h2>
+                            <div class="application-grid">
+                                <label>
+                                    Email
+                                    <input name="email" type="email" autocomplete="email" required>
+                                </label>
+                                <label>
+                                    Phone
+                                    <input name="phone" type="tel" autocomplete="tel">
+                                </label>
+                                <label class="application-wide">
+                                    Street address
+                                    <input name="street" type="text" autocomplete="street-address">
+                                </label>
+                                <label>
+                                    City
+                                    <input name="city" type="text" autocomplete="address-level2">
+                                </label>
+                                <label>
+                                    State
+                                    <input name="state" type="text" autocomplete="address-level1" maxlength="30">
+                                </label>
+                                <label>
+                                    ZIP
+                                    <input name="zip_code" type="text" autocomplete="postal-code">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="application-section">
+                            <h2>Affiliations</h2>
+                            <div class="application-checks">
+                                <label><input name="arrl_member" type="checkbox" value="1"> ARRL member</label>
+                                <label><input name="ema_association" type="checkbox" value="1"> EMA association</label>
+                                <label><input name="races" type="checkbox" value="1"> RACES</label>
+                            </div>
+                        </div>
+
+                        <div class="application-section">
+                            <h2>Interests</h2>
+                            <label>
+                                What would you like to do with the club?
+                                <textarea name="interests" rows="4" placeholder="Emergency communications, repeaters, public service events, learning radio, license upgrades, digital modes..."></textarea>
+                            </label>
+                            <label>
+                                Anything else we should know?
+                                <textarea name="comments" rows="3"></textarea>
+                            </label>
+                        </div>
+
+                        <div class="application-section">
+                            <label class="application-agreement">
+                                <input name="agreed" type="checkbox" value="1" required>
+                                I certify this information is accurate and understand dues are $10.00 per year.
+                            </label>
+                            <div id="turnstileContainer" class="application-captcha"></div>
+                            <p class="application-status" id="membershipApplicationStatus" aria-live="polite"></p>
+                            <button class="application-submit" type="submit">Submit Application</button>
+                        </div>
+                    </form>
+
+                    <aside class="application-side">
+                        <article>
+                            <h2>After You Submit</h2>
+                            <p>Your application will appear in the membership panel as pending. A club officer will review it and match dues payment before activating your membership.</p>
+                        </article>
+                        <article>
+                            <h2>Pay Dues</h2>
+                            <p>After submitting the form, pay dues through the roster page and include your name or call sign in the payment note.</p>
+                            <a href="{{ "/member-roster/" | relURL }}">Go to payment links</a>
+                        </article>
+                        <article>
+                            <h2>Paper Form</h2>
+                            <p>Prefer paper? You can still download the original PDF application.</p>
+                            <a href="{{ "/docs/app.pdf" | relURL }}">Download PDF</a>
+                        </article>
+                    </aside>
+                </section>
+            </div>
+        </div>
+
+        {{ partial "footer.html" . }}
+
+    </div>
+
+    {{ partial "scripts.html" . }}
+    <script src="{{ "js/membership-application.js" | relURL }}?{{ now.Unix }}" defer></script>
+    {{ if .Site.Params.turnstile_site_key }}
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
+    {{ end }}
+  </body>
+</html>
