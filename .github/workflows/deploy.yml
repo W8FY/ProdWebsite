@@ -18,9 +18,8 @@ jobs:
       with:
         hugo-version: 'latest'
 
-    - name: Export member roster data
-      shell: pwsh
-      run: ./tools/Export-MemberRoster.ps1
+    - name: Verify member roster data
+      run: test -f static/data/member-roster.json
 
     - name: Build Hugo site
       run: hugo --baseURL https://w8fy.org/
