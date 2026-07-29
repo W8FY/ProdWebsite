@@ -1,21 +1,19 @@
 {{ $dir := .Get "gallery_dir" }}
 
-<br>
-<ul class="image-gallery-grid">
+<ul class="image-gallery-grid" data-gallery-lightbox>
   {{ range (readDir (print "static" $dir)) }}
     {{- $ext := lower (path.Ext .Name) -}}
-    {{- if in (slice ".jpg" ".jpeg" ".png" ".gif" ".tiff" ".bmp") $ext -}}
+    {{- if in (slice ".jpg" ".jpeg" ".png" ".gif" ".tiff" ".bmp" ".webp") $ext -}}
       {{- $imagepath := printf "%s/%s" $dir .Name -}}
       {{- $filename := path.Base .Name -}}
-      {{- $imagetitle := replace $filename (printf ".%s" (path.Ext $filename)) "" | humanize -}}
+      {{- $imagetitle := replaceRE "\\.[^.]+$" "" $filename | replaceRE "[-_]+" " " | humanize -}}
 
       <li class="gallery-item">
-        <a href="{{ $imagepath | relURL }}" class="lightbox-image">
-          <img src="{{ $imagepath | relURL }}" alt="{{ $imagetitle }}">
+        <a href="{{ $imagepath | relURL }}" class="lightbox-image" data-title="{{ $imagetitle }}">
+          <img src="{{ $imagepath | relURL }}" alt="{{ $imagetitle }}" loading="lazy" decoding="async">
         </a>
-        <div class="image-title">{{ $imagetitle }}</div>
+        <p class="image-title">{{ $imagetitle }}</p>
       </li>
     {{- end -}}
   {{ end }}
 </ul>
-<br><br><br>

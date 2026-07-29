@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+  <head>
+    {{ partial "headers.html" . }}
+    {{ partial "custom_headers.html" . }}
+  </head>
+
+  <body>
+
+    <div id="all">
+
+        {{ partial "top.html" . }}
+
+        {{ partial "nav.html" . }}
+
+        {{ partial "breadcrumbs.html" . }}
+
+        <div id="content">
+            <div class="container gallery-browser">
+                {{ $pages := where .Data.Pages "Type" "in" .Site.Params.mainSections }}
+                {{ $pages = sort $pages "Date" "desc" }}
+                {{ $years := slice }}
+                {{ range $pages }}
+                  {{ $years = $years | append (.Date.Format "2006") }}
+                {{ end }}
+                {{ $years = uniq $years }}
+
+                <header class="gallery-browser-header">
+                    <div>
+                        <p class="gallery-eyebrow">Club photo archive</p>
+                        <h1>{{ .Title }}</h1>
+                    </div>
+                    <p class="gallery-count">{{ len $pages }} galleries</p>
+                </header>
+
+                <nav class="gallery-filter" aria-label="Filter galleries by year">
+                    <button class="gallery-filter-button active" type="button" data-gallery-filter="all">All</button>
+                    {{ range $years }}
+                    <button class="gallery-filter-button" type="button" data-gallery-filter="{{ . }}">{{ . }}</button>
+                    {{ end }}
+                </nav>
+
+                <div class="gallery-card-grid">
+                    {{ range $pages }}
+                      {{ $galleryDir := "" }}
+                      {{ with .Params.banner }}
+                        {{ $galleryDir = path.Dir . }}
+                      {{ end }}
+                      {{ $photoCount := 0 }}
+                      {{ if and $galleryDir (fileExists (print "static" $galleryDir)) }}
+                        {{ range (readDir (print "static" $galleryDir)) }}
+                          {{ $ext := lower (path.Ext .Name) }}
+                          {{ if in (slice ".jpg" ".jpeg" ".png" ".gif" ".tiff" ".bmp" ".webp") $ext }}
+                            {{ $photoCount = add $photoCount 1 }}
+                          {{ end }}
+                        {{ end }}
+                      {{ end }}
+                      <article class="gallery-card" data-gallery-year="{{ .Date.Format "2006" }}">
+                          <a class="gallery-card-link" href="{{ .Permalink }}" aria-label="Open {{ .Title }}">
+                              <span class="gallery-card-image">
+                                  {{ if .Params.banner }}
+                                  <img src="{{ .Params.banner | relURL }}" alt="{{ .Title }}" loading="lazy" decoding="async">
+                                  {{ else }}
+                                  <img src="{{ "img/placeholder.png" | relURL }}" alt="" loading="lazy" decoding="async">
+                                  {{ end }}
+                              </span>
+                              <span class="gallery-card-body">
+                                  <span class="gallery-card-title">{{ .Title }}</span>
+                                  <span class="gallery-card-meta">
+                                      <span>{{ .Date.Format "2006" }}</span>
+                                      {{ if gt $photoCount 0 }}
+                                      <span>{{ $photoCount }} photos</span>
+                                      {{ end }}
+                                  </span>
+                              </span>
+                          </a>
+                      </article>
+                    {{ end }}
+                </div>
+
+                <p class="gallery-empty" hidden>No galleries match this year.</p>
+            </div>
+        </div>
+
+        {{ partial "footer.html" . }}
+
+    </div>
+
+    {{ partial "scripts.html" . }}
+
+  </body>
+</html>

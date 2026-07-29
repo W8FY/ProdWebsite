@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+  <head>
+    {{ partial "headers.html" . }}
+    {{ partial "custom_headers.html" . }}
+  </head>
+
+  <body>
+
+    <div id="all">
+        {{ partial "top.html" . }}
+
+        {{ partial "nav.html" . }}
+
+        {{ partial "breadcrumbs.html" . }}
+
+        <div id="content">
+            {{ if isset .Params "id" }}
+
+              {{ partial .Params.id . }}
+
+            {{ else }}
+
+            <div class="container gallery-page">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        {{ $galleryDir := "" }}
+                        {{ with .Params.banner }}
+                          {{ $galleryDir = path.Dir . }}
+                        {{ end }}
+                        {{ $photoCount := 0 }}
+                        {{ if and $galleryDir (fileExists (print "static" $galleryDir)) }}
+                          {{ range (readDir (print "static" $galleryDir)) }}
+                            {{ $ext := lower (path.Ext .Name) }}
+                            {{ if in (slice ".jpg" ".jpeg" ".png" ".gif" ".tiff" ".bmp" ".webp") $ext }}
+                              {{ $photoCount = add $photoCount 1 }}
+                            {{ end }}
+                          {{ end }}
+                        {{ end }}
+
+                        <header class="gallery-page-header">
+                          <div>
+                            <p class="gallery-eyebrow">{{ .Date.Format "2006" }} photo gallery</p>
+                            <h1>{{ .Title }}</h1>
+                          </div>
+                          {{ if gt $photoCount 0 }}
+                          <p class="gallery-count">{{ $photoCount }} photos</p>
+                          {{ end }}
+                        </header>
+
+                        <div class="gallery-page-content">
+                          {{ .Content }}
+                        </div>
+
+                        <nav class="gallery-neighbors" aria-label="Nearby galleries">
+                          {{ with .PrevInSection }}
+                          <a href="{{ .Permalink }}" class="gallery-neighbor gallery-neighbor-prev">
+                            <span>Previous gallery</span>
+                            <strong>{{ .Title }}</strong>
+                          </a>
+                          {{ end }}
+                          {{ with .NextInSection }}
+                          <a href="{{ .Permalink }}" class="gallery-neighbor gallery-neighbor-next">
+                            <span>Next gallery</span>
+                            <strong>{{ .Title }}</strong>
+                          </a>
+                          {{ end }}
+                        </nav>
+
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+
+            {{ end }}
+        </div>
+        <!-- /#content -->
+
+        {{ partial "footer.html" . }}
+
+    </div>
+    <!-- /#all -->
+
+    {{ partial "scripts.html" . }}
+
+  </body>
+</html>
