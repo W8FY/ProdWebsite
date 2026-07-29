@@ -26,6 +26,34 @@
   var DUES_PER_YEAR = 10;
   var PROCESSING_FEE = 1;
 
+  function normalizeMember(member) {
+    var paidThrough = member.paidThrough;
+    if (paidThrough === undefined) {
+      paidThrough = member.paid_through;
+    }
+    if (paidThrough === undefined) {
+      paidThrough = member.duesYear;
+    }
+    if (paidThrough === undefined) {
+      paidThrough = member.dues_year;
+    }
+
+    var normalizedPaidThrough = paidThrough === null || paidThrough === undefined || paidThrough === "" ? null : Number(paidThrough);
+    if (!Number.isFinite(normalizedPaidThrough)) {
+      normalizedPaidThrough = null;
+    }
+
+    return {
+      name: member.name || "",
+      lastName: member.lastName || member.last_name || member.name || "",
+      call: member.call || member.callSign || member.call_sign || "",
+      paidThrough: normalizedPaidThrough,
+      paid: member.paid,
+      arrl: Boolean(member.arrl !== undefined ? member.arrl : member.arrl_member),
+      officer: member.officer || member.position || ""
+    };
+  }
+
   function escapeHtml(value) {
     return String(value || "")
       .replace(/&/g, "&amp;")
@@ -37,6 +65,10 @@
 
   function isPaid(member) {
     var year = Number(member.paidThrough || 0);
+    if (!year && typeof member.paid === "boolean") {
+      return member.paid;
+    }
+
     return year >= new Date().getFullYear();
   }
 
@@ -190,10 +222,10 @@
       return response.json();
     })
     .then(function (payload) {
-      members = (payload.members || []).slice().sort(function (a, b) {
+      members = (payload.members || []).map(normalizeMember).sort(function (a, b) {
         return String(a.lastName || a.name).localeCompare(String(b.lastName || b.name));
       });
-      generatedAt = payload.generatedAt;
+      generatedAt = payload.generatedAt || payload.generated_at;
       render();
     })
     .catch(function () {

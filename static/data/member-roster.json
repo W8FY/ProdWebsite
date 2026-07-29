@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-28T13:10:01.2677442-04:00",
+  "generatedAt": "2026-07-29T10:51:22.2118223-04:00",
   "sourceWorkbook": "W8FY-Membership-List-2026-With-Officers-1.xlsx",
   "members": [
     {
@@ -51,10 +51,10 @@
       "name": "JUSTIN BRANT",
       "lastName": "BRANT",
       "call": "KF8CRX",
-      "paidThrough": null,
-      "paid": false,
+      "paidThrough": 2027,
+      "paid": true,
       "arrl": false,
-      "officer": ""
+      "officer": "Website Developer"
     },
     {
       "name": "JENNIFER BUEHRER",
@@ -132,8 +132,8 @@
       "name": "SHARON FALK",
       "lastName": "FALK",
       "call": "KE8WTE",
-      "paidThrough": null,
-      "paid": false,
+      "paidThrough": 2026,
+      "paid": true,
       "arrl": false,
       "officer": ""
     },
@@ -234,7 +234,7 @@
       "paidThrough": null,
       "paid": false,
       "arrl": true,
-      "officer": ""
+      "officer": "Secretary"
     },
     {
       "name": "RICK MCCOY",
@@ -315,7 +315,7 @@
       "paidThrough": null,
       "paid": false,
       "arrl": false,
-      "officer": ""
+      "officer": "President"
     },
     {
       "name": "BONNIE SWANEY",
@@ -369,7 +369,7 @@
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
-      "officer": ""
+      "officer": "Vice President"
     },
     {
       "name": "PHILIP TAYLOR",
