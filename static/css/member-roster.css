@@ -396,6 +396,16 @@
   color: #164a7a;
 }
 
+.badge-ema {
+  background: #e7f4ec;
+  color: #23643d;
+}
+
+.badge-races {
+  background: #fdeceb;
+  color: #8d211c;
+}
+
 .badge-officer {
   background: #f1ead7;
   color: var(--roster-blue);

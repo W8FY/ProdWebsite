@@ -50,6 +50,8 @@
       paidThrough: normalizedPaidThrough,
       paid: member.paid,
       arrl: Boolean(member.arrl !== undefined ? member.arrl : member.arrl_member),
+      ema: Boolean(member.ema !== undefined ? member.ema : member.ema_association),
+      races: Boolean(member.races !== undefined ? member.races : member.races_member),
       officer: member.officer || member.position || ""
     };
   }
@@ -81,6 +83,8 @@
       member.name,
       member.lastName,
       member.call,
+      member.ema ? "ema emergency management association" : "",
+      member.races ? "races radio amateur civil emergency service" : "",
       member.officer
     ].join(" ").toLowerCase();
 
@@ -133,6 +137,14 @@
 
     if (member.arrl) {
       badges += '<span class="badge-roster badge-arrl">ARRL</span>';
+    }
+
+    if (member.ema) {
+      badges += '<span class="badge-roster badge-ema">EMA</span>';
+    }
+
+    if (member.races) {
+      badges += '<span class="badge-roster badge-races">RACES</span>';
     }
 
     if (member.officer) {
