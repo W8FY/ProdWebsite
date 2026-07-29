@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-29T16:23:49.309535+00:00",
+  "generatedAt": "2026-07-29T16:50:22.469658+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -422,15 +422,6 @@
       "paidThrough": null,
       "paid": false,
       "arrl": true,
-      "officer": ""
-    },
-    {
-      "call": "N0CALL",
-      "name": "test test",
-      "lastName": "test",
-      "paidThrough": 2027,
-      "paid": true,
-      "arrl": false,
       "officer": ""
     }
   ]
