@@ -1,14 +1,8 @@
-# Membership Workbook Source
+# Membership Roster Data
 
-Place the private membership workbook in this folder, then run:
+The membership panel is the source of truth for roster data. Do not store private membership workbooks in this website repository.
 
-```powershell
-.\tools\Export-MemberRoster.ps1
-```
-
-The exporter writes the public, sanitized roster data to `static/data/member-roster.json`.
-
-The membership panel should publish to the same path inside this Hugo repo:
+The panel publishes the public, sanitized roster JSON to this path:
 
 ```env
 ROSTER_REPO_PATH=/website
