@@ -1,428 +1,436 @@
 {
-  "generatedAt": "2026-07-29T10:51:22.2118223-04:00",
-  "sourceWorkbook": "W8FY-Membership-List-2026-With-Officers-1.xlsx",
+  "generatedAt": "2026-07-29T16:13:48.776942+00:00",
   "members": [
     {
+      "call": "KE8NRP",
       "name": "CLIFF BARBER",
       "lastName": "BARBER",
-      "call": "KE8NRP",
       "paidThrough": null,
       "paid": false,
       "arrl": true,
       "officer": ""
     },
     {
+      "call": "N8VHS",
       "name": "KAY BARNES",
       "lastName": "BARNES",
-      "call": "N8VHS",
       "paidThrough": 2027,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "WD8LPY",
       "name": "ROBERT BARNES",
       "lastName": "BARNES",
-      "call": "WD8LPY",
       "paidThrough": 2027,
       "paid": true,
       "arrl": true,
       "officer": ""
     },
     {
+      "call": "NE8Y",
       "name": "RYAN G BEACHER",
       "lastName": "BEACHER",
-      "call": "NE8Y",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KD8EXQ",
       "name": "MATT BOLLENBACHER",
       "lastName": "BOLLENBACHER",
-      "call": "KD8EXQ",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KF8CRX",
       "name": "JUSTIN BRANT",
       "lastName": "BRANT",
-      "call": "KF8CRX",
       "paidThrough": 2027,
       "paid": true,
       "arrl": false,
       "officer": "Website Developer"
     },
     {
+      "call": "KF8BIA",
       "name": "JENNIFER BUEHRER",
       "lastName": "BUEHRER",
-      "call": "KF8BIA",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KE8VCH",
       "name": "JOSHUA D BUEHRER",
       "lastName": "BUEHRER",
-      "call": "KE8VCH",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KE8QOC",
       "name": "JOSHUA D BURTCH",
       "lastName": "BURTCH",
-      "call": "KE8QOC",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "W8BDC",
       "name": "RICK BUSCH",
       "lastName": "BUSCH",
-      "call": "W8BDC",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KF8BMF",
       "name": "NATHAN CARNAHAN",
       "lastName": "CARNAHAN",
-      "call": "KF8BMF",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KC8BMK",
       "name": "GARY DAVIS",
       "lastName": "DAVIS",
-      "call": "KC8BMK",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "ASSOC.",
       "name": "RUTH DAVIS",
       "lastName": "DAVIS",
-      "call": "ASSOC.",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KD8KPG",
       "name": "MARK DILLER",
       "lastName": "DILLER",
-      "call": "KD8KPG",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KE8WTE",
       "name": "SHARON FALK",
       "lastName": "FALK",
-      "call": "KE8WTE",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KC8UNU",
       "name": "BRETT FEASBY",
       "lastName": "FEASBY",
-      "call": "KC8UNU",
       "paidThrough": 2026,
       "paid": true,
       "arrl": true,
       "officer": ""
     },
     {
+      "call": "KE8LNQ",
       "name": "FRED FISHER",
       "lastName": "FISHER",
-      "call": "KE8LNQ",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KA8ZGE",
       "name": "DAVID FREELS",
       "lastName": "FREELS",
-      "call": "KA8ZGE",
       "paidThrough": 2026,
       "paid": true,
       "arrl": true,
       "officer": "Treasurer / Lead Volunteer Examiner"
     },
     {
+      "call": "ASSOC.",
       "name": "DIANA FREELS",
       "lastName": "FREELS",
-      "call": "ASSOC.",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KF8EIW",
       "name": "MARK GILLETTE",
       "lastName": "GILLETTE",
-      "call": "KF8EIW",
       "paidThrough": 2027,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "N8RLW",
       "name": "STEVEN M HARVEY",
       "lastName": "HARVEY",
-      "call": "N8RLW",
       "paidThrough": null,
       "paid": false,
       "arrl": true,
       "officer": ""
     },
     {
+      "call": "N8PCN",
       "name": "DALE HESSELING",
       "lastName": "HESSELING",
-      "call": "N8PCN",
       "paidThrough": 2028,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "N8GFK",
       "name": "BARBARA HIGH",
       "lastName": "HIGH",
-      "call": "N8GFK",
       "paidThrough": 2027,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KD8WKR",
       "name": "MATTHEW HOLTSBERRY",
       "lastName": "HOLTSBERRY",
-      "call": "KD8WKR",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "W8BHA",
       "name": "JIM KNEBEL",
       "lastName": "KNEBEL",
-      "call": "W8BHA",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "WA8WKF",
       "name": "STEPHEN KOUTS",
       "lastName": "KOUTS",
-      "call": "WA8WKF",
       "paidThrough": null,
       "paid": false,
       "arrl": true,
       "officer": "Secretary"
     },
     {
+      "call": "KB8LFJ",
       "name": "RICK MCCOY",
       "lastName": "MCCOY",
-      "call": "KB8LFJ",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "N8OXQ",
       "name": "FRED PIEPER",
       "lastName": "PIEPER",
-      "call": "N8OXQ",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "WD8ASG",
       "name": "DAN RILEY",
       "lastName": "RILEY",
-      "call": "WD8ASG",
       "paidThrough": null,
       "paid": false,
       "arrl": true,
       "officer": ""
     },
     {
+      "call": "K8VGL",
       "name": "JERRY RYAN",
       "lastName": "RYAN",
-      "call": "K8VGL",
       "paidThrough": 2026,
       "paid": true,
       "arrl": true,
       "officer": ""
     },
     {
+      "call": "KE8DCN",
       "name": "ERIC SCARE",
       "lastName": "SCARE",
-      "call": "KE8DCN",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KB8JYW",
       "name": "JOSEPH SHELDON",
       "lastName": "SHELDON",
-      "call": "KB8JYW",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "WB8YIH",
       "name": "RALPH SHIELDS",
       "lastName": "SHIELDS",
-      "call": "WB8YIH",
       "paidThrough": 2026,
       "paid": true,
       "arrl": true,
       "officer": ""
     },
     {
+      "call": "NU8P",
       "name": "BILL SNEAD",
       "lastName": "SNEAD",
-      "call": "NU8P",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "WD8MLV",
       "name": "JACK SNYDER",
       "lastName": "SNYDER",
-      "call": "WD8MLV",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": "President"
     },
     {
+      "call": "KB5BLS",
       "name": "BONNIE SWANEY",
       "lastName": "SWANEY",
-      "call": "KB5BLS",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KI8CP",
       "name": "LARRY SWANEY",
       "lastName": "SWANEY",
-      "call": "KI8CP",
       "paidThrough": 2026,
       "paid": true,
       "arrl": true,
       "officer": ""
     },
     {
+      "call": "ASSOC.",
       "name": "CHERYL TAYLOR",
       "lastName": "TAYLOR",
-      "call": "ASSOC.",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KA8WFA",
       "name": "CHRIS TAYLOR",
       "lastName": "TAYLOR",
-      "call": "KA8WFA",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KC8QHK",
       "name": "DAVE M TAYLOR",
       "lastName": "TAYLOR",
-      "call": "KC8QHK",
       "paidThrough": null,
       "paid": false,
       "arrl": true,
       "officer": ""
     },
     {
+      "call": "KB8JYV",
       "name": "DAVID W TAYLOR",
       "lastName": "TAYLOR",
-      "call": "KB8JYV",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": "Vice President"
     },
     {
+      "call": "KA9LAA",
       "name": "PHILIP TAYLOR",
       "lastName": "TAYLOR",
-      "call": "KA9LAA",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KB8YXO",
       "name": "MICHELE THOMAS",
       "lastName": "THOMAS",
-      "call": "KB8YXO",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "KD9YVI",
       "name": "THAD TURNER",
       "lastName": "TURNER",
-      "call": "KD9YVI",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "W8ULM",
       "name": "BOB ULM",
       "lastName": "ULM",
-      "call": "W8ULM",
       "paidThrough": null,
       "paid": false,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "W8YND",
       "name": "MICHAEL ULRICH",
       "lastName": "ULRICH",
-      "call": "W8YND",
       "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "officer": ""
     },
     {
+      "call": "WB8GPB",
       "name": "ANN VOGEL",
       "lastName": "VOGEL",
-      "call": "WB8GPB",
       "paidThrough": null,
       "paid": false,
       "arrl": true,
+      "officer": ""
+    },
+    {
+      "call": "N0CALL",
+      "name": "test test",
+      "lastName": "test",
+      "paidThrough": 2027,
+      "paid": true,
+      "arrl": false,
       "officer": ""
     }
   ]
