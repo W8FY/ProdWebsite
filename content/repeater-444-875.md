@@ -2,6 +2,8 @@
 title: "444.875 MHz Repeater"
 date: 2025-06-08
 draft: false
+description: "W8FY UHF repeater information including offset, PL tone, mode, and auxiliary communication uses."
+keywords: ["444.875 repeater", "W8FY UHF", "Van Wert ham radio"]
 ---
 ## 🛰️ Frequency Info
 

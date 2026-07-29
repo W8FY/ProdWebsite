@@ -2,6 +2,8 @@
 title: "146.850 MHz Repeater"
 date: 2025-06-08
 draft: false
+description: "Primary W8FY VHF repeater for Van Wert club nets, Skywarn coordination, and event talk-in."
+keywords: ["146.850 repeater", "W8FY", "Van Wert Skywarn", "Van Wert ham radio"]
 ---
 ## 🛰️ Frequency Info
 

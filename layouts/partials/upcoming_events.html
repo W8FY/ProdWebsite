@@ -1,0 +1,24 @@
+{{ if gt (len .Site.Data.events) 0 }}
+<section class="bar background-white no-mb upcoming-events-section">
+  <div class="container">
+    <div class="heading text-center">
+      <h2>Upcoming Events</h2>
+    </div>
+
+    <div class="upcoming-events-grid">
+      {{ range sort .Site.Data.events "weight" }}
+      <article class="upcoming-event-card">
+        <div>
+          <p class="upcoming-event-date">{{ .date }}</p>
+          <h3>{{ .title }}</h3>
+          <p>{{ .description }}</p>
+        </div>
+        {{ with .url }}
+        <a href="{{ . | relURL }}" class="upcoming-event-link">Details</a>
+        {{ end }}
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}

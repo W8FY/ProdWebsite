@@ -2,6 +2,8 @@
 title: "License Exams"
 date: 2025-06-08
 draft: false
+description: "Amateur radio license exam information for Technician, General, and Extra class applicants near Van Wert, Ohio."
+keywords: ["ham radio license exam", "Van Wert amateur radio exam", "FCC amateur radio license"]
 ---
 
 # Amateur Radio License Exams

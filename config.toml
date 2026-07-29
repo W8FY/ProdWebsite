@@ -72,6 +72,12 @@ pluralizelisttitles = false
     name       = "146.850 (EchoLink)"
 #    identifier = "menu.club"
     url        = "/repeater-146-850/"
+    weight     = 2
+    parent     = "section.RF"
+
+[[menu.main]]
+    name       = "Repeater Overview"
+    url        = "/repeaters/"
     weight     = 1
     parent     = "section.RF"
 
@@ -79,7 +85,7 @@ pluralizelisttitles = false
     name       = "444.875"
 #    identifier = "menu.club"
     url        = "/repeater-444-875/"
-    weight     = 2
+    weight     = 3
     parent     = "section.RF"
 
 [[menu.main]]
@@ -242,6 +248,7 @@ pluralizelisttitles = false
     pre = "<i class='fas fa-2x fa-envelope'></i>"
 #
 [params]
+    production_url = "https://w8fy.org"
     viewMorePostLink = "/blog/"
     author = "BrantLab"
     defaultKeywords = ["HAM Radio", "Van Wert", "VWARC", "Radio", "Amateur Radio", "W8FY", "Van Wert Amateur Radio Club", "Field Day", "Emergency Communications", "Skywarn", "ARES", "Ohio HAM Radio", "FCC License", "Ham Radio Events", "Repeater System", "POTA", "OTA Activations", "Radio Club", "Public Service Radio", "Hamfest", "2 Meter Net"]
@@ -327,7 +334,7 @@ pluralizelisttitles = false
 # Enable or disable top bar with social icons
 [params.topbar]
     enable = true
-    text = """<p> Mind the mess! Under development.</p>"""
+    text = """<p>Saturday Morning Net: 10:30 AM on 146.850 MHz.</p>"""
       
       #<p class="hidden-md hidden-lg"><a href="tel:+420 777 555 333" data-animate-hover="pulse"><i class="fas fa-phone"></i></a>
       #<a href="mailto:hello@universal.com" data-animate-hover="pulse"><i class="fas fa-envelope"></i></a>
@@ -391,7 +398,7 @@ pluralizelisttitles = false
     # at 'exampleSite/data/clients'.
     # For more information take a look at the README.
     title = "Neighboring Clubs"
-    subtitle = ""
+    subtitle = "Other amateur radio organizations serving northwest Ohio and northeast Indiana."
 
 [params.recent_posts]
     enable = false

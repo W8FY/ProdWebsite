@@ -2,6 +2,8 @@
 title: "VWARC Monthly Meetings"
 date: 2025-06-30
 draft: false
+description: "Van Wert Amateur Radio Club meeting time, location, Zoom information, and upcoming meeting schedule."
+keywords: ["Van Wert Amateur Radio Club meetings", "VWARC meetings", "W8FY meetings"]
 ---
 
 The **Van Wert Amateur Radio Club (VWARC)** meets on the **first and third Saturday of each month at 8:00 PM**. Meetings are held at:

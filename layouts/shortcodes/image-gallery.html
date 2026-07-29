@@ -7,10 +7,11 @@
       {{- $imagepath := printf "%s/%s" $dir .Name -}}
       {{- $filename := path.Base .Name -}}
       {{- $imagetitle := replaceRE "\\.[^.]+$" "" $filename | replaceRE "[-_]+" " " | humanize -}}
+      {{- $imageconfig := imageConfig (printf "/static%s" $imagepath) -}}
 
       <li class="gallery-item">
         <a href="{{ $imagepath | relURL }}" class="lightbox-image" data-title="{{ $imagetitle }}">
-          <img src="{{ $imagepath | relURL }}" alt="{{ $imagetitle }}" loading="lazy" decoding="async">
+          <img src="{{ $imagepath | relURL }}" alt="{{ $imagetitle }}" loading="lazy" decoding="async" width="{{ $imageconfig.Width }}" height="{{ $imageconfig.Height }}" sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw">
         </a>
         <p class="image-title">{{ $imagetitle }}</p>
       </li>

@@ -2,6 +2,8 @@
 title: "W8FY Hamfest"
 date: 2025-07-19
 draft: false
+description: "Details for the W8FY Van Wert Hamfest on Sunday, July 19, 2026, including admission, tables, license testing, and talk-in."
+keywords: ["W8FY Hamfest", "Van Wert Hamfest", "Ohio hamfest", "amateur radio swap"]
 ---
 The Van Wert Amateur Radio Club hosts an annual **Hamfest** for amateur radio operators, hobbyists, and the general public. Join us for a day of radio, gear, networking, and community!
 

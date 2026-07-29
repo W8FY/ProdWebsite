@@ -1,0 +1,38 @@
+{{ if isset .Site.Params "clients" }}
+{{ if .Site.Params.clients.enable }}
+{{ if gt (len .Site.Data.clients) 0 }}
+<section class="bar background-gray no-mb neighboring-clubs-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="heading text-center">
+                    <h2>{{ .Site.Params.clients.title | markdownify }}</h2>
+                </div>
+
+                {{ with .Site.Params.clients.subtitle }}
+                <p class="lead neighboring-clubs-lead">
+                  {{ . | markdownify }}
+                </p>
+                {{ end }}
+
+                <div class="neighboring-clubs-grid">
+                    {{ range .Site.Data.clients }}
+                    <article class="neighboring-club-card">
+                        <div class="neighboring-club-call">{{ .callsign | default .name }}</div>
+                        <h3>{{ .name }}</h3>
+                        {{ with .location }}
+                        <p class="neighboring-club-location">{{ . }}</p>
+                        {{ end }}
+                        {{ with .url }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" class="neighboring-club-link">Visit club</a>
+                        {{ end }}
+                    </article>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{ end }}
+{{ end }}
+{{ end }}

@@ -9,7 +9,23 @@
 }
 
 .box-simple {
-  min-height: 230px;
+  min-height: 0;
+}
+
+.homepage-features-section {
+  padding-bottom: 24px;
+}
+
+.homepage-features-section .row:last-child .box-simple {
+  margin-bottom: 0;
+}
+
+.upcoming-events-section {
+  padding-top: 28px;
+}
+
+.topbar-message p {
+  margin: 0;
 }
 
 .gallery-browser,
@@ -386,4 +402,173 @@
   .gallery-lightbox-next {
     right: 14px;
   }
+}
+
+.neighboring-clubs-section {
+  padding: 44px 0;
+}
+
+.neighboring-clubs-lead {
+  max-width: 720px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.neighboring-clubs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.neighboring-club-card {
+  min-height: 190px;
+  border: 1px solid #dfe6ed;
+  border-radius: 6px;
+  background: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.neighboring-club-call {
+  width: fit-content;
+  border: 1px solid #467fbf;
+  border-radius: 4px;
+  color: #467fbf;
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 7px 9px;
+}
+
+.neighboring-club-card h3 {
+  margin: 16px 0 8px;
+  color: #222;
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.neighboring-club-location {
+  margin: 0 0 16px;
+  color: #666;
+}
+
+.neighboring-club-link {
+  align-self: flex-start;
+  color: #467fbf;
+  font-weight: 700;
+}
+
+.upcoming-events-section {
+  padding: 28px 0 46px;
+}
+
+.upcoming-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.upcoming-event-card {
+  min-height: 210px;
+  border: 1px solid #dfe6ed;
+  border-radius: 6px;
+  background: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.upcoming-event-date {
+  margin: 0 0 10px;
+  color: #467fbf;
+  font-weight: 800;
+}
+
+.upcoming-event-card h3 {
+  margin: 0 0 10px;
+  color: #222;
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.upcoming-event-card p {
+  color: #555;
+}
+
+.upcoming-event-link,
+.upcoming-event-link:hover,
+.upcoming-event-link:focus {
+  align-self: flex-start;
+  color: #467fbf;
+  font-weight: 700;
+}
+
+.repeater-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin: 24px 0 28px;
+}
+
+.repeater-card {
+  border: 1px solid #dfe6ed;
+  border-radius: 6px;
+  background: #fff;
+  padding: 20px;
+}
+
+.repeater-card h2 {
+  margin-top: 0;
+}
+
+.repeater-card dl {
+  margin-bottom: 16px;
+}
+
+.repeater-card dt {
+  color: #333;
+  font-weight: 800;
+}
+
+.repeater-card dd {
+  margin: 0 0 10px;
+  color: #555;
+}
+
+.footer-quick-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-quick-links li {
+  margin-bottom: 8px;
+}
+
+.footer-quick-links a {
+  color: #ddd;
+}
+
+.footer-quick-links a:hover,
+.footer-quick-links a:focus {
+  color: #fff;
+}
+
+a:focus,
+button:focus {
+  outline: 2px solid #467fbf;
+  outline-offset: 2px;
+}
+
+img {
+  height: auto;
+}
+
+.image-gallery-grid,
+.gallery-card-grid {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
 }
