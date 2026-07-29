@@ -626,6 +626,15 @@ img {
   padding: 22px;
 }
 
+.application-honeypot {
+  height: 1px;
+  left: -10000px;
+  overflow: hidden;
+  position: absolute;
+  top: auto;
+  width: 1px;
+}
+
 .application-section {
   border-bottom: 1px solid #e6e9ed;
   margin-bottom: 20px;

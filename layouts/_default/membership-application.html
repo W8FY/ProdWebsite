@@ -27,6 +27,11 @@
 
                 <section class="container application-shell">
                     <form class="membership-form" id="membershipApplicationForm" data-api-url="{{ .Site.Params.membership_api_url }}" data-turnstile-site-key="{{ .Site.Params.turnstile_site_key }}">
+                        <label class="application-honeypot" aria-hidden="true">
+                            Website
+                            <input name="website" type="text" tabindex="-1" autocomplete="off">
+                        </label>
+
                         <div class="application-section">
                             <h2>Applicant</h2>
                             <div class="application-grid">
