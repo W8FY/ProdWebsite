@@ -52,7 +52,8 @@
       arrl: Boolean(member.arrl !== undefined ? member.arrl : member.arrl_member),
       ema: Boolean(member.ema !== undefined ? member.ema : member.ema_association),
       races: Boolean(member.races !== undefined ? member.races : member.races_member),
-      officer: member.officer || member.position || ""
+      officer: member.officer || member.position || "",
+      officerRank: Number(member.officerRank || member.officer_rank || 9999)
     };
   }
 
@@ -110,6 +111,11 @@
   function renderOfficers(activeMembers) {
     var officers = activeMembers.filter(function (member) {
       return member.officer && String(member.officer).trim();
+    }).sort(function (a, b) {
+      if (a.officerRank !== b.officerRank) {
+        return a.officerRank - b.officerRank;
+      }
+      return String(a.name).localeCompare(String(b.name));
     });
 
     if (!officers.length) {
