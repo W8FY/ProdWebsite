@@ -686,6 +686,14 @@ img {
   width: 100%;
 }
 
+.application-help {
+  color: #666;
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  margin-top: 6px;
+}
+
 .membership-form textarea {
   resize: vertical;
 }
