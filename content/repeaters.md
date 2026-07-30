@@ -25,18 +25,33 @@ The Van Wert Amateur Radio Club maintains repeaters for local communication, pub
   </article>
 
   <article class="repeater-card">
-    <h2>444.875 MHz</h2>
+    <h2>444.850 MHz</h2>
     <dl>
       <dt>Offset</dt>
       <dd>+5.000 MHz</dd>
       <dt>PL Tone</dt>
-      <dd>118.8 Hz</dd>
+      <dd>136.5 Hz</dd>
       <dt>Mode</dt>
       <dd>FM</dd>
       <dt>Common Uses</dt>
       <dd>Backup communications, auxiliary event traffic, UHF coverage testing</dd>
     </dl>
     <a href="/repeater-444-875/">444.875 details</a>
+  </article>
+  
+  <article class="repeater-card">
+    <h2>146.700 MHz</h2>
+    <dl>
+      <dt>Offset</dt>
+      <dd>-.600 MHz</dd>
+      <dt>PL Tone</dt>
+      <dd>107.2 Hz</dd>
+      <dt>Mode</dt>
+      <dd>FM</dd>
+      <dt>Common Uses</dt>
+      <dd>Backup communications, auxiliary event traffic, VHF coverage testing, wires-x</dd>
+    </dl>
+    <a href="/repeater-146.700/">146.700 details</a>
   </article>
 </div>
 
