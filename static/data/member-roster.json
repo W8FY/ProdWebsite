@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-29T17:25:36.904929+00:00",
+  "generatedAt": "2026-07-30T17:20:18.702486+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -10,7 +10,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "N8VHS",
@@ -21,7 +22,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "WD8LPY",
@@ -32,7 +34,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "NE8Y",
@@ -43,7 +46,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KD8EXQ",
@@ -54,7 +58,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "N0SYS",
@@ -65,7 +70,8 @@
       "arrl": false,
       "ema": true,
       "races": false,
-      "officer": "Website Developer"
+      "officer": "Website Developer",
+      "officerRank": 90
     },
     {
       "call": "KF8BIA",
@@ -76,7 +82,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KE8VCH",
@@ -87,7 +94,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KE8QOC",
@@ -98,7 +106,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "W8BDC",
@@ -109,7 +118,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KF8BMF",
@@ -120,7 +130,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KC8BMK",
@@ -131,7 +142,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "ASSOC.",
@@ -142,7 +154,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KD8KPG",
@@ -153,7 +166,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KE8WTE",
@@ -164,7 +178,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KC8UNU",
@@ -175,7 +190,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KE8LNQ",
@@ -186,7 +202,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KA8ZGE",
@@ -197,7 +214,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": "Treasurer / Lead Volunteer Examiner"
+      "officer": "Treasurer / Lead Volunteer Examiner",
+      "officerRank": 30
     },
     {
       "call": "ASSOC.",
@@ -208,7 +226,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KF8EIW",
@@ -219,7 +238,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "N8RLW",
@@ -230,7 +250,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "N8PCN",
@@ -241,7 +262,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "N8GFK",
@@ -252,7 +274,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KD8WKR",
@@ -263,7 +286,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "W8BHA",
@@ -274,7 +298,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "WA8WKF",
@@ -285,7 +310,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": "Secretary"
+      "officer": "Secretary",
+      "officerRank": 40
     },
     {
       "call": "KB8LFJ",
@@ -296,7 +322,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "N8OXQ",
@@ -307,7 +334,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "WD8ASG",
@@ -318,7 +346,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "K8VGL",
@@ -329,7 +358,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KE8DCN",
@@ -340,7 +370,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KB8JYW",
@@ -351,7 +382,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "WB8YIH",
@@ -362,7 +394,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "NU8P",
@@ -373,7 +406,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "WD8MLV",
@@ -384,7 +418,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": "President"
+      "officer": "President",
+      "officerRank": 10
     },
     {
       "call": "KB5BLS",
@@ -395,7 +430,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KI8CP",
@@ -406,7 +442,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "ASSOC.",
@@ -417,7 +454,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KA8WFA",
@@ -428,7 +466,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KC8QHK",
@@ -439,7 +478,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KB8JYV",
@@ -450,7 +490,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": "Vice President"
+      "officer": "Vice President",
+      "officerRank": 20
     },
     {
       "call": "KA9LAA",
@@ -461,7 +502,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KB8YXO",
@@ -472,7 +514,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "KD9YVI",
@@ -483,7 +526,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "W8ULM",
@@ -494,7 +538,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "W8YND",
@@ -505,7 +550,8 @@
       "arrl": false,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     },
     {
       "call": "WB8GPB",
@@ -516,7 +562,8 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": ""
+      "officer": "",
+      "officerRank": null
     }
   ]
 }
