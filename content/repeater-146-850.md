@@ -9,6 +9,7 @@ keywords: ["146.850 repeater", "W8FY", "Van Wert Skywarn", "Van Wert ham radio"]
 
 - **Frequency:** 146.850 MHz  
 - **Offset:** -0.600 MHz   
+- **PL Tone:** 107.2 Hz
 - **Mode:** FM
 
 ## 📡 Usage

@@ -69,7 +69,7 @@ pluralizelisttitles = false
     post       = 2
 
 [[menu.main]]
-    name       = "146.850 (EchoLink)"
+    name       = "146.850 / PL 107.2"
 #    identifier = "menu.club"
     url        = "/repeater-146-850/"
     weight     = 2
@@ -336,7 +336,7 @@ pluralizelisttitles = false
 # Enable or disable top bar with social icons
 [params.topbar]
     enable = true
-    text = """<p>Saturday Morning Net: 10:30 AM on 146.850 MHz.</p>"""
+    text = """<p>Saturday Morning Net: 10:30 AM on 146.850 MHz, PL 107.2 Hz.</p>"""
       
       #<p class="hidden-md hidden-lg"><a href="tel:+420 777 555 333" data-animate-hover="pulse"><i class="fas fa-phone"></i></a>
       #<a href="mailto:hello@universal.com" data-animate-hover="pulse"><i class="fas fa-envelope"></i></a>

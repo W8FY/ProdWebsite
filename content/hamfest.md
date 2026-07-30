@@ -62,7 +62,7 @@ Reserve your table early! Email us at [info@w8fy.org](mailto:info@w8fy.org)
 
 ## 📻 Talk-In Frequency
 
-**Talk-In on 146.850 MHz**
+**Talk-In on 146.850 MHz, PL 107.2 Hz**
 
 Use this repeater to get directions, ask questions, or chat with attendees on your way in!
 

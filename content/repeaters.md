@@ -14,6 +14,8 @@ The Van Wert Amateur Radio Club maintains repeaters for local communication, pub
     <dl>
       <dt>Offset</dt>
       <dd>-0.600 MHz</dd>
+      <dt>PL Tone</dt>
+      <dd>107.2 Hz</dd>
       <dt>Mode</dt>
       <dd>FM</dd>
       <dt>Common Uses</dt>
@@ -40,7 +42,7 @@ The Van Wert Amateur Radio Club maintains repeaters for local communication, pub
 
 ## Net And Event Use
 
-The weekly Saturday Morning Net meets on the **146.850 MHz repeater at 10:30 AM**. During severe weather, please keep the repeater clear for Skywarn traffic and follow Net Control instructions.
+The weekly Saturday Morning Net meets on the **146.850 MHz repeater at 10:30 AM**. Use **PL 107.2 Hz** when programming the repeater. During severe weather, please keep the repeater clear for Skywarn traffic and follow Net Control instructions.
 
 ## Questions
 

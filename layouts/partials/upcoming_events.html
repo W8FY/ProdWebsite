@@ -1,4 +1,12 @@
-{{ if gt (len .Site.Data.events) 0 }}
+{{ $upcomingEvents := slice }}
+{{ $today := now.Format "2006-01-02" }}
+{{ range sort .Site.Data.events "weight" }}
+  {{ if or (not .expires) (ge .expires $today) }}
+    {{ $upcomingEvents = $upcomingEvents | append . }}
+  {{ end }}
+{{ end }}
+
+{{ if gt (len $upcomingEvents) 0 }}
 <section class="bar background-white no-mb upcoming-events-section">
   <div class="container">
     <div class="heading text-center">
@@ -6,7 +14,7 @@
     </div>
 
     <div class="upcoming-events-grid">
-      {{ range sort .Site.Data.events "weight" }}
+      {{ range $upcomingEvents }}
       <article class="upcoming-event-card">
         <div>
           <p class="upcoming-event-date">{{ .date }}</p>

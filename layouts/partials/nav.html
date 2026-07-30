@@ -1,0 +1,61 @@
+<header class="navbar-affixed-top site-header-main" data-spy="affix" data-offset-top="62">
+  <div class="navbar navbar-default yamm {{ if .Site.Params.dropdown_mouse_over }}mouseover{{ end }}" role="navigation" id="navbar">
+    <div class="container site-nav-container">
+      <div class="navbar-header">
+        <a class="navbar-brand home site-brand" href="{{ "/" | relLangURL }}">
+          {{ if default false .Site.Params.disabled_logo }}
+            <span class="site-brand-mark">{{ .Site.Params.logo_text }}</span>
+          {{ else }}
+            <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Title }} logo" class="hidden-xs hidden-sm" />
+            <img src="{{ .Site.Params.logo_small | relURL }}" alt="{{ .Title }} logo" class="visible-xs visible-sm" />
+          {{ end }}
+          <span class="sr-only">{{ .Title }} - {{ i18n "navHome" }}</span>
+        </a>
+        <div class="navbar-buttons">
+          <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+            <span class="sr-only">{{ i18n "navToggle" }}</span>
+            <i class="fas fa-align-justify"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="navbar-collapse collapse" id="navigation">
+        <ul class="nav navbar-nav navbar-right site-nav">
+          {{ $current := . }}
+          {{ range .Site.Menus.main.ByWeight }}
+          {{ $topLevel := replace .URL "/" "" }}
+          {{ $active := "" }}
+          {{ if eq $current.RelPermalink .URL }}{{ $active = "active" }}{{ end }}
+          {{ if eq $current.Type $topLevel }}{{ $active = "active" }}{{ end }}
+          {{ if and (or (eq $current.RelPermalink .URL) (eq "term" $current.Kind)) (in (slice "page" "term") $current.Kind) }}
+            {{ range (split .URL "/") }}{{ if eq "blog" . }}{{ $active = "active" }}{{ end }}{{ end }}
+          {{ end }}
+
+          {{ if .HasChildren }}
+          <li class="dropdown {{ $active }}">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ .Name }} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              {{ range .Children.ByWeight }}
+                {{ if .HasChildren }}
+                  <li class="dropdown-header">{{ .Name }}</li>
+                  {{ range .Children.ByWeight }}
+                    <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                  {{ end }}
+                {{ else }}
+                  <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                {{ end }}
+              {{ end }}
+            </ul>
+          </li>
+          {{ else }}
+          <li class="dropdown {{ $active }}">
+            <a href="{{ .URL }}">{{ .Name }}</a>
+          </li>
+          {{ end }}
+          {{ end }}
+          <li class="site-nav-join"><a href="{{ "/app/" | relURL }}">Join</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
