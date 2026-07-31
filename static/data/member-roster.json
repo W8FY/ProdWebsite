@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-30T17:20:18.702486+00:00",
+  "generatedAt": "2026-07-31T00:59:10.438084+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -524,6 +524,18 @@
       "paidThrough": null,
       "paid": false,
       "arrl": false,
+      "ema": false,
+      "races": false,
+      "officer": "",
+      "officerRank": null
+    },
+    {
+      "call": "W8EJC",
+      "name": "RANDAL TUTTLE",
+      "lastName": "TUTTLE",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": true,
       "ema": false,
       "races": false,
       "officer": "",

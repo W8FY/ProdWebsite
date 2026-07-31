@@ -1,9 +1,9 @@
 ---
-title: "146.850 MHz Repeater"
+title: "146.700 MHz Repeater"
 date: 2025-06-08
 draft: false
-description: "Backup communications, auxiliary event traffic, VHF coverage testing, wires-x"
-keywords: ["146.700 repeater", "W8FY", "Van Wert ham radio"]
+description: "W8FY secondary VHF repeater for backup communications, auxiliary event traffic, VHF coverage testing, Skywarn coordination, and Wires-X."
+keywords: ["146.700 repeater", "W8FY", "Van Wert Skywarn", "Van Wert ham radio", "Wires-X"]
 ---
 ## 🛰️ Frequency Info
 
@@ -19,8 +19,12 @@ This is the secondary VHF repeater operated by **W8FY**. It is used for:
 - Backup communications
 - Auxiliary event traffic
 - VHF coverage testing
-- wires-x
+- Skywarn operations during severe weather
+- Wires-X
 
+## 🌪️ Skywarn & Weather Nets
+
+Monitor this repeater during severe weather and follow Net Control instructions when a weather net is active.
 
 
 ## 🛠️ Maintained By
