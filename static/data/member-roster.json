@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T14:03:56.130481+00:00",
+  "generatedAt": "2026-08-01T14:46:34.379124+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -212,8 +212,8 @@
       "paidThrough": 2026,
       "paid": true,
       "arrl": true,
-      "ema": false,
-      "races": false,
+      "ema": true,
+      "races": true,
       "officer": "Treasurer / Lead Volunteer Examiner",
       "officerRank": 30
     },
@@ -473,8 +473,8 @@
       "call": "KC8QHK",
       "name": "DAVE M TAYLOR",
       "lastName": "TAYLOR",
-      "paidThrough": null,
-      "paid": false,
+      "paidThrough": 2026,
+      "paid": true,
       "arrl": true,
       "ema": false,
       "races": false,
