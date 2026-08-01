@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T19:11:23.176600+00:00",
+  "generatedAt": "2026-08-01T22:42:50.971134+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -312,6 +312,58 @@
       "officer": "",
       "officerRank": null,
       "cardUrl": ""
+    },
+    {
+      "call": "KB8QET",
+      "name": "Gary Heckert",
+      "lastName": "Heckert",
+      "paidThrough": 2,
+      "paid": false,
+      "arrl": false,
+      "ema": false,
+      "races": true,
+      "officer": "",
+      "officerRank": null,
+      "cardUrl": ""
+    },
+    {
+      "call": "KB8QET",
+      "name": "Gary Heckert",
+      "lastName": "Heckert",
+      "paidThrough": 2,
+      "paid": false,
+      "arrl": false,
+      "ema": false,
+      "races": false,
+      "officer": "",
+      "officerRank": null,
+      "cardUrl": ""
+    },
+    {
+      "call": "KF8EZW",
+      "name": "Joe Hess",
+      "lastName": "Hess",
+      "paidThrough": 2028,
+      "paid": true,
+      "arrl": true,
+      "ema": false,
+      "races": false,
+      "officer": "",
+      "officerRank": null,
+      "cardUrl": "/membership-cards/joe-hess-kf8ezw-58.pdf"
+    },
+    {
+      "call": "KF8BMP",
+      "name": "Tanner Johnston",
+      "lastName": "Johnston",
+      "paidThrough": 2028,
+      "paid": true,
+      "arrl": false,
+      "ema": false,
+      "races": false,
+      "officer": "",
+      "officerRank": null,
+      "cardUrl": "/membership-cards/tanner-johnston-kf8bmp-54.pdf"
     },
     {
       "call": "W8BHA",
