@@ -366,6 +366,19 @@
   min-width: 0;
 }
 
+.member-card-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--roster-green);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.member-card-link:hover,
+.member-card-link:focus {
+  color: var(--roster-green);
+}
+
 .member-meta {
   color: var(--roster-muted);
   font-family: Consolas, Monaco, monospace;

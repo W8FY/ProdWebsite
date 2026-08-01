@@ -2,3 +2,4 @@ public
 /public
 .hugo_build.lock
 source/membership/*.xlsx
+.DS_Store

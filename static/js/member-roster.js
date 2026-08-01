@@ -53,7 +53,8 @@
       ema: Boolean(member.ema !== undefined ? member.ema : member.ema_association),
       races: Boolean(member.races !== undefined ? member.races : member.races_member),
       officer: member.officer || member.position || "",
-      officerRank: Number(member.officerRank || member.officer_rank || 9999)
+      officerRank: Number(member.officerRank || member.officer_rank || 9999),
+      cardUrl: member.cardUrl || member.card_url || ""
     };
   }
 
@@ -140,6 +141,11 @@
     var paid = isPaid(member);
     var badges = "";
     var right = paid && member.paidThrough ? "thru " + escapeHtml(member.paidThrough) : "dues open";
+    var name = escapeHtml(member.name);
+
+    if (paid && member.cardUrl) {
+      name = '<a class="member-card-link" href="' + escapeHtml(member.cardUrl) + '" download title="Download membership card">' + name + '</a>';
+    }
 
     if (member.arrl) {
       badges += '<span class="badge-roster badge-arrl">ARRL</span>';
@@ -160,7 +166,7 @@
     return [
       '<article class="member-row' + (member.officer ? ' officer' : '') + '">',
       '<div>',
-      '<div class="member-name">' + escapeHtml(member.name) + badges + '</div>',
+      '<div class="member-name">' + name + badges + '</div>',
       '<div class="member-meta">' + escapeHtml(member.call) + '</div>',
       '</div>',
       '<div class="member-right">' + right + '</div>',
