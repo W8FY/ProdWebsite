@@ -213,7 +213,7 @@
     var membershipType = els.membershipType ? els.membershipType.value : "regular";
     var membershipLabel = membershipType === "associate" ? "Associate" : "Regular";
     var duesPerYear = DUES_RATES[membershipType] || DUES_RATES.regular;
-    var amount = (years * duesPerYear + PROCESSING_FEE).toFixed(2);
+    var amount = (years * (duesPerYear + PROCESSING_FEE)).toFixed(2);
     var callsign = els.duesCallsign ? els.duesCallsign.value.trim().toUpperCase() : "";
     var paymentNote = membershipLabel + " membership; " + years + (years === 1 ? " year" : " years");
     if (callsign) {
