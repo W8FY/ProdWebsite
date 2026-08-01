@@ -309,7 +309,7 @@
 .roster-columns {
   align-items: start;
   display: grid;
-  grid-template-areas: "unpaid paid";
+  grid-template-areas: "paid unpaid";
   gap: 22px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding-bottom: 42px;
@@ -443,8 +443,8 @@
 
   .roster-columns {
     grid-template-areas:
-      "unpaid"
-      "paid";
+      "paid"
+      "unpaid";
     grid-template-columns: 1fr;
   }
 

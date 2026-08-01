@@ -195,7 +195,7 @@
 
     renderStats(activeMembers);
     renderOfficers(activeMembers);
-    els.columns.innerHTML = renderColumn("Open Dues", "unpaid", unpaid) + renderColumn("Paid Members", "paid", paid);
+    els.columns.innerHTML = renderColumn("Paid Members", "paid", paid) + renderColumn("Open Dues", "unpaid", unpaid);
 
     if (generatedAt) {
       els.updated.textContent = "Roster generated " + new Date(generatedAt).toLocaleString();
