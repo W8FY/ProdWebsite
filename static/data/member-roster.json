@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-31T00:59:10.438084+00:00",
+  "generatedAt": "2026-08-01T14:03:56.130481+00:00",
   "members": [
     {
       "call": "KE8NRP",
       "name": "CLIFF BARBER",
       "lastName": "BARBER",
-      "paidThrough": null,
-      "paid": false,
+      "paidThrough": 2028,
+      "paid": true,
       "arrl": true,
       "ema": false,
       "races": false,
