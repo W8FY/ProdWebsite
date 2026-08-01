@@ -14,16 +14,18 @@
     officerGrid: document.getElementById("officerGrid"),
     duesCallsign: document.getElementById("duesCallsign"),
     yearsSelect: document.getElementById("yearsSelect"),
+    membershipType: document.getElementById("membershipType"),
     cashappLink: document.getElementById("cashappLink"),
     paypalForm: document.querySelector(".dues-paypal-form"),
     paypalAmount: document.getElementById("paypalAmount"),
     paypalButton: document.getElementById("paypalButton"),
     paypalCallsign: document.getElementById("paypalCallsign"),
     paypalCustom: document.getElementById("paypalCustom"),
-    paypalItemNumber: document.getElementById("paypalItemNumber")
+    paypalItemNumber: document.getElementById("paypalItemNumber"),
+    paypalItemName: document.getElementById("paypalItemName")
   };
 
-  var DUES_PER_YEAR = 10;
+  var DUES_RATES = { regular: 10, associate: 5 };
   var PROCESSING_FEE = 1;
 
   function normalizeMember(member) {
@@ -208,9 +210,15 @@
     }
 
     var years = parseInt(els.yearsSelect.value, 10) || 1;
-    var amount = (years * DUES_PER_YEAR + PROCESSING_FEE).toFixed(2);
+    var membershipType = els.membershipType ? els.membershipType.value : "regular";
+    var membershipLabel = membershipType === "associate" ? "Associate" : "Regular";
+    var duesPerYear = DUES_RATES[membershipType] || DUES_RATES.regular;
+    var amount = (years * duesPerYear + PROCESSING_FEE).toFixed(2);
     var callsign = els.duesCallsign ? els.duesCallsign.value.trim().toUpperCase() : "";
-    var paymentNote = callsign ? "Call sign: " + callsign : "";
+    var paymentNote = membershipLabel + " membership; " + years + (years === 1 ? " year" : " years");
+    if (callsign) {
+      paymentNote += "; Call sign: " + callsign;
+    }
 
     els.cashappLink.href = "https://cash.app/$drfziggy/" + amount + (paymentNote ? "?note=" + encodeURIComponent(paymentNote) : "");
     els.cashappLink.textContent = "Cash App - $" + amount;
@@ -226,16 +234,26 @@
     if (els.paypalItemNumber) {
       els.paypalItemNumber.value = callsign;
     }
+    if (els.paypalItemName) {
+      els.paypalItemName.value = "W8FY " + membershipLabel + " Membership Dues";
+    }
   }
 
   function copyCashAppNote() {
     var callsign = els.duesCallsign ? els.duesCallsign.value.trim().toUpperCase() : "";
+    var membershipType = els.membershipType ? els.membershipType.value : "regular";
+    var membershipLabel = membershipType === "associate" ? "Associate" : "Regular";
+    var years = parseInt(els.yearsSelect.value, 10) || 1;
+    var paymentNote = membershipLabel + " membership; " + years + (years === 1 ? " year" : " years");
+    if (callsign) {
+      paymentNote += "; Call sign: " + callsign;
+    }
 
-    if (!callsign || !navigator.clipboard || !navigator.clipboard.writeText) {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
       return;
     }
 
-    navigator.clipboard.writeText("Call sign: " + callsign).catch(function () {});
+    navigator.clipboard.writeText(paymentNote).catch(function () {});
   }
 
   fetch("/data/member-roster.json", { cache: "no-store" })
@@ -261,6 +279,9 @@
   if (els.yearsSelect) {
     els.yearsSelect.addEventListener("change", updatePaymentLinks);
     updatePaymentLinks();
+  }
+  if (els.membershipType) {
+    els.membershipType.addEventListener("change", updatePaymentLinks);
   }
   if (els.duesCallsign) {
     els.duesCallsign.addEventListener("input", updatePaymentLinks);

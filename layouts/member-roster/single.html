@@ -49,7 +49,7 @@
             <div class="dues-payment-inner">
               <div class="dues-payment-text">
                 <strong>Past due or renewing?</strong>
-                <span>Dues are $10.00 per year plus a $1.00 processing fee. Include your name, call sign, and any address or phone changes in the note.</span>
+                <span>Regular dues are $10.00 per year and associate dues are $5.00 per year, plus a $1.00 processing fee. Include your name, call sign, and any address or phone changes in the note.</span>
               </div>
               <div class="dues-payment-actions">
                 <label class="dues-callsign" for="duesCallsign">
@@ -66,11 +66,18 @@
                     <option value="5">5</option>
                   </select>
                 </label>
+                <label class="dues-type" for="membershipType">
+                  Membership
+                  <select id="membershipType">
+                    <option value="regular">Regular - $10/year</option>
+                    <option value="associate">Associate - $5/year</option>
+                  </select>
+                </label>
                 <a class="dues-button cashapp" id="cashappLink" href="https://cash.app/$drfziggy/11.00" target="_blank" rel="noopener">Cash App - $11.00</a>
                 <form class="dues-paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                   <input type="hidden" name="cmd" value="_xclick">
                   <input type="hidden" name="business" value="ka8zge@w8fy.org">
-                  <input type="hidden" name="item_name" value="W8FY Membership Dues">
+                  <input type="hidden" name="item_name" id="paypalItemName" value="W8FY Regular Membership Dues">
                   <input type="hidden" name="currency_code" value="USD">
                   <input type="hidden" name="amount" id="paypalAmount" value="11.00">
                   <input type="hidden" name="on0" value="Call sign">
