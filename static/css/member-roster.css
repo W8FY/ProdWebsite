@@ -164,6 +164,7 @@
 }
 
 .dues-years,
+.dues-type,
 .dues-callsign {
   align-items: center;
   color: var(--roster-muted);
@@ -175,6 +176,7 @@
 }
 
 .dues-years select,
+.dues-type select,
 .dues-callsign input {
   background: #ffffff;
   border: 1px solid var(--roster-line);
