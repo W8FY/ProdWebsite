@@ -15,7 +15,9 @@ Join W8FY for a club work day focused on testing our antenna systems and repairi
 
 ## Location
 
-**Van Wert EMA**
+**Van Wert County Emergency Management Agency**<br>
+1220 Lincoln Hwy<br>
+Van Wert, OH 45891
 
 ## Planned work
 
@@ -26,3 +28,7 @@ We will inspect and test the club’s antennas and associated equipment. Known i
 - Butternut antenna
 
 Club members are encouraged to attend and help identify problems, make repairs, and return the affected antenna systems to service.
+
+## What to bring
+
+Please bring any tools or test equipment that could help with antenna work and repairs. Having a variety of tools available will help in case we discover additional issues or need extra assistance completing a repair.
