@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T03:03:54.056199+00:00",
+  "generatedAt": "2026-08-02T19:06:37.065097+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -390,6 +390,19 @@
       "officer": "",
       "officerRank": null,
       "cardUrl": "/membership-cards/rick-mccoy-kb8lfj-27.pdf"
+    },
+    {
+      "call": "N8IDD",
+      "name": "KIM OSENGA",
+      "lastName": "OSENGA",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "ema": false,
+      "races": false,
+      "officer": "",
+      "officerRank": null,
+      "cardUrl": "/membership-cards/kim-osenga-n8idd-59.pdf"
     },
     {
       "call": "N8OXQ",
