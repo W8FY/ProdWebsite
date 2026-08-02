@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T22:42:50.971134+00:00",
+  "generatedAt": "2026-08-02T00:06:32.431783+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -275,6 +275,19 @@
       "cardUrl": ""
     },
     {
+      "call": "KB8QET",
+      "name": "GARY HECKERT",
+      "lastName": "HECKERT",
+      "paidThrough": 2027,
+      "paid": true,
+      "arrl": false,
+      "ema": false,
+      "races": false,
+      "officer": "",
+      "officerRank": null,
+      "cardUrl": "/membership-cards/gary-heckert-kb8qet-51.pdf"
+    },
+    {
       "call": "N8PCN",
       "name": "DALE HESSELING",
       "lastName": "HESSELING",
@@ -314,36 +327,10 @@
       "cardUrl": ""
     },
     {
-      "call": "KB8QET",
-      "name": "Gary Heckert",
-      "lastName": "Heckert",
-      "paidThrough": 2,
-      "paid": false,
-      "arrl": false,
-      "ema": false,
-      "races": true,
-      "officer": "",
-      "officerRank": null,
-      "cardUrl": ""
-    },
-    {
-      "call": "KB8QET",
-      "name": "Gary Heckert",
-      "lastName": "Heckert",
-      "paidThrough": 2,
-      "paid": false,
-      "arrl": false,
-      "ema": false,
-      "races": false,
-      "officer": "",
-      "officerRank": null,
-      "cardUrl": ""
-    },
-    {
       "call": "KF8EZW",
       "name": "Joe Hess",
       "lastName": "Hess",
-      "paidThrough": 2028,
+      "paidThrough": 2027,
       "paid": true,
       "arrl": true,
       "ema": false,
@@ -356,7 +343,7 @@
       "call": "KF8BMP",
       "name": "Tanner Johnston",
       "lastName": "Johnston",
-      "paidThrough": 2028,
+      "paidThrough": 2026,
       "paid": true,
       "arrl": false,
       "ema": false,
