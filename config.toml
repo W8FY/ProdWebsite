@@ -76,6 +76,12 @@ pluralizelisttitles = false
     parent     = "section.RF"
 
 [[menu.main]]
+    name       = "146.700 / PL 107.2"
+    url        = "/repeater-146-700/"
+    weight     = 3
+    parent     = "section.RF"
+
+[[menu.main]]
     name       = "Repeater Overview"
     url        = "/repeaters/"
     weight     = 1
@@ -85,7 +91,7 @@ pluralizelisttitles = false
     name       = "444.875"
 #    identifier = "menu.club"
     url        = "/repeater-444-875/"
-    weight     = 3
+    weight     = 4
     parent     = "section.RF"
 
 [[menu.main]]
