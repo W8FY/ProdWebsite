@@ -1,6 +1,6 @@
 ---
 title: "W8FY Antenna Work Day"
-date: 2026-10-24
+date: 2026-08-01
 draft: false
 description: "W8FY club work day for testing and repairing antennas at the Van Wert EMA on October 24, 2026."
 keywords: ["W8FY work day", "antenna repair", "Van Wert EMA", "amateur radio"]
