@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T00:06:32.431783+00:00",
+  "generatedAt": "2026-08-02T03:03:54.056199+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -239,14 +239,14 @@
       "call": "ASSOC.",
       "name": "DIANA FREELS",
       "lastName": "FREELS",
-      "paidThrough": null,
-      "paid": false,
+      "paidThrough": 2027,
+      "paid": true,
       "arrl": false,
       "ema": false,
       "races": false,
       "officer": "",
       "officerRank": null,
-      "cardUrl": ""
+      "cardUrl": "/membership-cards/diana-freels-assoc-18.pdf"
     },
     {
       "call": "KF8EIW",
@@ -372,9 +372,9 @@
       "paidThrough": null,
       "paid": false,
       "arrl": true,
-      "ema": false,
+      "ema": true,
       "races": false,
-      "officer": "Secretary",
+      "officer": "Secretary, VE",
       "officerRank": 40,
       "cardUrl": ""
     },
@@ -413,7 +413,7 @@
       "arrl": true,
       "ema": false,
       "races": false,
-      "officer": "",
+      "officer": "Volunteer Examiner",
       "officerRank": null,
       "cardUrl": ""
     },
