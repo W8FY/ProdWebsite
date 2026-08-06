@@ -1,6 +1,7 @@
 name: Build and Deploy Hugo to FTP
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main   # Or your deployment branch
