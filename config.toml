@@ -88,7 +88,7 @@ pluralizelisttitles = false
     parent     = "section.RF"
 
 [[menu.main]]
-    name       = "444.850 / PL 136.51"
+    name       = "444.850 / PL 136.5"
 #    identifier = "menu.club"
     url        = "/repeater-444-850/"
     weight     = 4
