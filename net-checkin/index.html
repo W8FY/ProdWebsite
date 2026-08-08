@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="W8FY Amateur Radio Net Check-In and Net Control application">
+  <title>W8FY Amateur Radio Net Check-In</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="app-header">
+    <div class="container app-header-inner">
+      <div class="logo-shell" aria-label="W8FY club logo area">
+        <img id="club-logo" class="club-logo" src="images/w8fy-logo.png" alt="W8FY club logo">
+        <span id="logo-placeholder" class="logo-placeholder" aria-hidden="true">W8FY</span>
+      </div>
+      <div>
+        <p class="header-kicker">Van Wert Amateur Radio Club</p>
+        <h1>W8FY Amateur Radio Net Check-In</h1>
+        <p class="header-subtitle">Net Check-In &amp; Control</p>
+      </div>
+      <div id="net-status" class="net-status status-ready" role="status" aria-live="polite">READY</div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container app-main">
+    <noscript>
+      <div class="alert alert-danger">JavaScript is required to run the Net Check-In application.</div>
+    </noscript>
+
+    <section class="app-card" aria-labelledby="net-information-heading">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Session setup</p>
+          <h2 id="net-information-heading">Net Information</h2>
+        </div>
+        <span class="signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </div>
+
+      <div id="net-form-message" class="form-message" role="alert" hidden></div>
+
+      <form id="net-form" novalidate>
+        <div class="row g-4">
+          <div class="col-12 col-md-6 col-xl-3">
+            <label class="form-label" for="net-date">Net Date</label>
+            <input class="form-control form-control-lg" id="net-date" name="netDate" type="date" required>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <label class="form-label" for="net-control-callsign">Net Control Callsign</label>
+            <input class="form-control form-control-lg callsign-input" id="net-control-callsign" name="netControlCallsign" type="text" maxlength="20" autocomplete="off" placeholder="W8ABC" required>
+          </div>
+
+          <div class="col-12 col-xl-6">
+            <fieldset id="net-control-station-group">
+              <legend class="form-label">Station Type</legend>
+              <div class="option-grid option-grid-four" role="radiogroup">
+                <input class="btn-check" type="radio" name="netControlStation" id="net-control-home" value="Home" autocomplete="off">
+                <label class="btn option-button" for="net-control-home">Home</label>
+
+                <input class="btn-check" type="radio" name="netControlStation" id="net-control-mobile" value="Mobile" autocomplete="off">
+                <label class="btn option-button" for="net-control-mobile">Mobile</label>
+
+                <input class="btn-check" type="radio" name="netControlStation" id="net-control-echolink" value="EchoLink" autocomplete="off">
+                <label class="btn option-button" for="net-control-echolink">EchoLink</label>
+
+                <input class="btn-check" type="radio" name="netControlStation" id="net-control-short-time" value="Short Time" autocomplete="off">
+                <label class="btn option-button" for="net-control-short-time">Short Time</label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <fieldset id="net-control-traffic-group">
+              <legend class="form-label">Traffic</legend>
+              <div class="option-grid option-grid-two" role="radiogroup">
+                <input class="btn-check" type="radio" name="netControlTraffic" id="net-control-traffic-yes" value="Yes" autocomplete="off">
+                <label class="btn option-button traffic-yes-option" for="net-control-traffic-yes">Yes</label>
+
+                <input class="btn-check" type="radio" name="netControlTraffic" id="net-control-traffic-no" value="No" autocomplete="off">
+                <label class="btn option-button" for="net-control-traffic-no">No</label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <label class="form-label" for="start-time">Start Time</label>
+            <input class="form-control form-control-lg" id="start-time" name="startTime" type="time">
+            <div class="form-text">Uses the current time when left blank.</div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <label class="form-label" for="end-time">End Time</label>
+            <input class="form-control form-control-lg" id="end-time" name="endTime" type="time" disabled>
+            <div class="form-text">Set automatically when the net is finalized.</div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3 d-flex align-items-end">
+            <button id="start-net-button" class="btn btn-primary btn-lg action-button w-100" type="submit">
+              <span aria-hidden="true">●</span> Start Net
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section id="active-net-area" hidden>
+      <div class="row g-4">
+        <div class="col-12 col-xl-5">
+          <section class="app-card h-100" aria-labelledby="add-checkin-heading">
+            <div class="section-heading compact-heading">
+              <div>
+                <p class="section-kicker">On-air roster</p>
+                <h2 id="add-checkin-heading">Add Check-In</h2>
+              </div>
+            </div>
+
+            <div id="checkin-form-message" class="form-message" role="alert" hidden></div>
+
+            <form id="checkin-form" novalidate>
+              <div class="mb-4">
+                <label class="form-label" for="checkin-callsign">Callsign</label>
+                <input class="form-control form-control-lg callsign-input" id="checkin-callsign" name="checkinCallsign" type="text" maxlength="20" autocomplete="off" placeholder="K8XYZ" required>
+              </div>
+
+              <fieldset class="mb-4" id="checkin-station-group">
+                <legend class="form-label">Station Type</legend>
+                <div class="option-grid option-grid-two" role="radiogroup">
+                  <input class="btn-check" type="radio" name="checkinStation" id="checkin-home" value="Home" autocomplete="off">
+                  <label class="btn option-button" for="checkin-home">Home</label>
+
+                  <input class="btn-check" type="radio" name="checkinStation" id="checkin-mobile" value="Mobile" autocomplete="off">
+                  <label class="btn option-button" for="checkin-mobile">Mobile</label>
+
+                  <input class="btn-check" type="radio" name="checkinStation" id="checkin-echolink" value="EchoLink" autocomplete="off">
+                  <label class="btn option-button" for="checkin-echolink">EchoLink</label>
+
+                  <input class="btn-check" type="radio" name="checkinStation" id="checkin-short-time" value="Short Time" autocomplete="off">
+                  <label class="btn option-button" for="checkin-short-time">Short Time</label>
+                </div>
+              </fieldset>
+
+              <fieldset class="mb-4" id="checkin-traffic-group">
+                <legend class="form-label">Traffic</legend>
+                <div class="option-grid option-grid-two" role="radiogroup">
+                  <input class="btn-check" type="radio" name="checkinTraffic" id="checkin-traffic-yes" value="Yes" autocomplete="off">
+                  <label class="btn option-button traffic-yes-option" for="checkin-traffic-yes">Yes</label>
+
+                  <input class="btn-check" type="radio" name="checkinTraffic" id="checkin-traffic-no" value="No" autocomplete="off">
+                  <label class="btn option-button" for="checkin-traffic-no">No</label>
+                </div>
+              </fieldset>
+
+              <button id="add-checkin-button" class="btn btn-success btn-lg action-button w-100" type="submit">Add Check-In</button>
+            </form>
+          </section>
+        </div>
+
+        <div class="col-12 col-xl-7">
+          <section class="app-card h-100" aria-labelledby="totals-heading">
+            <div class="section-heading compact-heading">
+              <div>
+                <p class="section-kicker">Live activity</p>
+                <h2 id="totals-heading">Net Totals</h2>
+              </div>
+            </div>
+            <div class="totals-grid" aria-live="polite">
+              <div class="total-card total-primary"><span id="total-checkins">0</span><small>Total Check-Ins</small></div>
+              <div class="total-card total-traffic"><span id="total-traffic">0</span><small>Traffic</small></div>
+              <div class="total-card"><span id="total-home">0</span><small>Home</small></div>
+              <div class="total-card"><span id="total-mobile">0</span><small>Mobile</small></div>
+              <div class="total-card"><span id="total-echolink">0</span><small>EchoLink</small></div>
+              <div class="total-card"><span id="total-short-time">0</span><small>Short Time</small></div>
+            </div>
+
+            <div class="net-actions">
+              <button id="finalize-net-button" class="btn btn-warning btn-lg action-button" type="button">Finalize Net &amp; Email Report</button>
+              <p class="stage-note">Stage 1 generates a report preview only. No email is sent.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <section class="app-card" aria-labelledby="roster-heading">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Sorted automatically</p>
+            <h2 id="roster-heading">Current Net Roster</h2>
+          </div>
+          <span id="roster-count" class="count-chip">0 stations</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table roster-table align-middle">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Callsign</th>
+                <th scope="col">Station</th>
+                <th scope="col">Traffic</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody id="roster-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section id="final-report-section" class="app-card report-card" aria-labelledby="final-report-heading" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Completed session</p>
+          <h2 id="final-report-heading">Final Report Preview</h2>
+        </div>
+        <span class="finalized-badge">Net Finalized</span>
+      </div>
+      <pre id="final-report" class="final-report" tabindex="0"></pre>
+      <button id="start-new-net-button" class="btn btn-primary btn-lg action-button" type="button">Start New Net</button>
+    </section>
+
+    <section class="app-card" aria-labelledby="pdf-roster-heading">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Reference document</p>
+          <h2 id="pdf-roster-heading">Net Roster</h2>
+        </div>
+      </div>
+      <p>View the club roster PDF while conducting the net.</p>
+      <button id="view-roster-button" class="btn btn-outline-primary btn-lg action-button" type="button">View Net Roster</button>
+      <p id="pdf-message" class="pdf-message" role="status">Checking for the net roster PDF…</p>
+      <div id="pdf-viewer-wrap" class="pdf-viewer-wrap" hidden>
+        <object id="pdf-viewer" class="pdf-viewer" data="roster/net-roster.pdf" type="application/pdf">
+          <p>Your browser cannot embed this PDF. <a href="roster/net-roster.pdf" target="_blank" rel="noopener">Open the net roster PDF</a>.</p>
+        </object>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">W8FY Amateur Radio Net Check-In · Stage 1</div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
