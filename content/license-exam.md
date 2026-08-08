@@ -14,7 +14,7 @@ Interested in getting your amateur radio license or upgrading to a higher class?
 
 ## 📅 Upcoming Exam Dates
 
-Exams are generally offered **quarterly** or as needed. Please reach out to confirm the next available session or to request an individual appointment.
+Please reach out to confirm the next available session or to request an individual appointment.
 
 > **Next Scheduled Session: September 5th at Lima, Ohio 11am**
          Will be held at the Red Cross building
