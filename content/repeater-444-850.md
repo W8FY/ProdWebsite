@@ -9,7 +9,7 @@ keywords: ["444.850 repeater", "W8FY UHF", "Van Wert ham radio"]
 
 - **Frequency:** 444.850 MHz
 - **Offset:** +5.000 MHz  
-- **PL Tone:** 136.6 Hz
+- **PL Tone:** 136.51 Hz
 - **Mode:** FM
 
 ## 📡 Usage

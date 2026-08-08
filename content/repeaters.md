@@ -30,7 +30,7 @@ The Van Wert Amateur Radio Club maintains repeaters for local communication, pub
       <dt>Offset</dt>
       <dd>+5.000 MHz</dd>
       <dt>PL Tone</dt>
-      <dd>136.6 Hz</dd>
+      <dd>136.51 Hz</dd>
       <dt>Mode</dt>
       <dd>FM</dd>
       <dt>Common Uses</dt>
