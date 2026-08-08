@@ -20,6 +20,13 @@ Please reach out to confirm the next available session or to request an individu
          Will be held at the Red Cross building
 - 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede77f91128a332e0558cd/1) This takes you to the registration page.
 
+> **October 3rd: NWOARC Hamfest, 9:00–11:00 a.m.**
+
+Testing will be held at the NWOARC Hamfest. Walk-ins are welcome. Please obtain your FCC Registration Number (FRN) before arriving; this is required for testing and would be appreciated.
+
+- **Location:** [2240 Baty Road, Lima, Ohio](https://www.google.com/maps/search/?api=1&query=2240+Baty+Road+Lima+Ohio)
+- 📘 [Register on HamStudy.org](https://hamstudy.org/sessions/6a2fc923ba0f1b5baf528ed2/1)
+
 ---
 
 ## 📝 What to Bring
