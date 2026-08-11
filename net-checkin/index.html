@@ -23,7 +23,13 @@
         <h1>W8FY Amateur Radio Net Check-In</h1>
         <p class="header-subtitle">Net Check-In &amp; Control</p>
       </div>
-      <div id="net-status" class="net-status status-ready" role="status" aria-live="polite">READY</div>
+      <div class="status-stack">
+        <div id="net-status" class="net-status status-ready" role="status" aria-live="polite">READY</div>
+        <div id="database-status" class="database-status database-checking" role="status" aria-live="polite">
+          <span class="database-status-dot" aria-hidden="true"></span>
+          <span>Google Database: Checking</span>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -31,6 +37,8 @@
     <noscript>
       <div class="alert alert-danger">JavaScript is required to run the Net Check-In application.</div>
     </noscript>
+
+    <div id="database-message" class="database-message" role="alert" hidden></div>
 
     <section class="app-card" aria-labelledby="net-information-heading">
       <div class="section-heading">
@@ -178,8 +186,8 @@
             </div>
 
             <div class="net-actions">
-              <button id="finalize-net-button" class="btn btn-warning btn-lg action-button" type="button">Finalize Net &amp; Email Report</button>
-              <p class="stage-note">Stage 1 generates a report preview only. No email is sent.</p>
+              <button id="finalize-net-button" class="btn btn-warning btn-lg action-button" type="button">Finalize Net</button>
+              <p class="stage-note">Finalizing locks the net, displays the final report, and asks the Google backend to email it.</p>
             </div>
           </section>
         </div>
@@ -220,6 +228,11 @@
         </div>
         <span class="finalized-badge">Net Finalized</span>
       </div>
+      <div id="email-status-panel" class="email-status-panel" role="status" aria-live="polite">
+        <strong id="email-status-title">Email status pending</strong>
+        <span id="email-status-message"></span>
+        <button id="retry-email-button" class="btn btn-outline-danger action-button" type="button" hidden>Retry Email</button>
+      </div>
       <pre id="final-report" class="final-report" tabindex="0"></pre>
       <button id="start-new-net-button" class="btn btn-primary btn-lg action-button" type="button">Start New Net</button>
     </section>
@@ -232,20 +245,22 @@
         </div>
       </div>
       <p>View the club roster PDF while conducting the net.</p>
-      <button id="view-roster-button" class="btn btn-outline-primary btn-lg action-button" type="button">View Net Roster</button>
-      <p id="pdf-message" class="pdf-message" role="status">Checking for the net roster PDF…</p>
-      <div id="pdf-viewer-wrap" class="pdf-viewer-wrap" hidden>
-        <object id="pdf-viewer" class="pdf-viewer" data="roster/net-roster.pdf" type="application/pdf">
-          <p>Your browser cannot embed this PDF. <a href="roster/net-roster.pdf" target="_blank" rel="noopener">Open the net roster PDF</a>.</p>
+      <a id="view-roster-button" class="btn btn-outline-primary btn-lg action-button" href="../static/docs/2026_net_roster.pdf" target="_blank" rel="noopener">Open Net Roster PDF</a>
+      <p id="pdf-message" class="pdf-message" role="status">The current Net Roster is displayed below. Use the button above if your browser cannot display embedded PDFs.</p>
+      <div id="pdf-viewer-wrap" class="pdf-viewer-wrap">
+        <object id="pdf-viewer" class="pdf-viewer" data="../static/docs/2026_net_roster.pdf" type="application/pdf">
+          <p>Your browser cannot embed this PDF. <a href="../static/docs/2026_net_roster.pdf" target="_blank" rel="noopener">Open Net Roster PDF</a>.</p>
         </object>
       </div>
     </section>
   </main>
 
   <footer class="app-footer">
-    <div class="container">W8FY Amateur Radio Net Check-In · Stage 1</div>
+    <div class="container">W8FY Amateur Radio Net Check-In · Stage 3</div>
   </footer>
 
+  <script src="js/config.js"></script>
+  <script src="js/google-apps-script.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
