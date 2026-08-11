@@ -1,0 +1,5 @@
+[functions.send-net-report]
+# Stage 3 has no user authentication. The function accepts calls from the
+# public GitHub Pages client, validates the net UUID, and sends only finalized,
+# authoritative database data to the configured fixed recipient.
+verify_jwt = false
