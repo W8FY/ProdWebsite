@@ -209,6 +209,12 @@ pluralizelisttitles = false
     weight     = 1
     parent     = "section.nc"
 
+[[menu.main]]
+    name       = "Net Control"
+    url        = "/net-checkin/index.html"
+    weight     = 2
+    parent     = "section.nc"
+
 
 
 #
