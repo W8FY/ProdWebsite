@@ -5,8 +5,7 @@
  * Google Sheet named "W8FY Net Check-In Database". Run setupW8FYDatabase()
  * once before deploying the script as a web app.
  *
- * This stage sends finalized net reports by email. PDF generation remains
- * reserved for a later stage.
+ * Finalized reports can be emailed or generated as operator-requested PDFs.
  */
 
 const W8FY_CONFIG = Object.freeze({
@@ -65,7 +64,7 @@ const LEGACY_NET_HEADERS = Object.freeze(NET_HEADERS.slice(0, 12));
 const LEGACY_CHECKIN_HEADERS = Object.freeze(CHECKIN_HEADERS.slice(0, 7));
 
 const GET_ACTIONS = Object.freeze(['health', 'getActiveNet', 'getNet', 'lookupCallsign']);
-const POST_ACTIONS = Object.freeze(['createNet', 'addCheckIn', 'updateCheckInNote', 'removeCheckIn', 'finalizeNet', 'sendReport']);
+const POST_ACTIONS = Object.freeze(['createNet', 'addCheckIn', 'updateCheckInNote', 'removeCheckIn', 'finalizeNet', 'sendReport', 'downloadReportPdf']);
 
 /**
  * One-time setup. Run this function from the Apps Script editor while the
@@ -172,7 +171,7 @@ function doGet(e) {
           service: 'W8FY Net Check-In API',
           sheets: [W8FY_CONFIG.netsSheet, W8FY_CONFIG.checkInsSheet, W8FY_CONFIG.callsignDirectorySheet],
           emailEnabled: true,
-          pdfEnabled: false,
+          pdfEnabled: true,
           callsignLookupEnabled: true,
           netTypes: W8FY_CONFIG.netTypes.slice()
         };
@@ -210,6 +209,8 @@ function doPost(e) {
         return withScriptLock_(function () { return finalizeNet_(spreadsheet, data); });
       case 'sendReport':
         return withScriptLock_(function () { return sendReport_(spreadsheet, data); });
+      case 'downloadReportPdf':
+        return withScriptLock_(function () { return downloadReportPdf_(spreadsheet, data); });
       default:
         throw new PublicError('Unsupported POST action.');
     }
@@ -418,9 +419,62 @@ function sendReport_(spreadsheet, data) {
   };
 }
 
-/** Reserved integration point for later PDF generation. */
-function generatePdfReport_() {
-  throw new PublicError('PDF generation is not implemented in this stage.');
+function downloadReportPdf_(spreadsheet, data) {
+  const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
+  const net = requireNet_(spreadsheet, netId);
+  if (!net.finalized) {
+    throw new PublicError('The net must be finalized before its PDF can be downloaded.');
+  }
+
+  const checkIns = sortCheckIns_(getCheckInsForNet_(spreadsheet, netId));
+  const report = buildFinalReport_(net, checkIns);
+  return generatePdfReport_(net, report);
+}
+
+function generatePdfReport_(net, report) {
+  const filename = buildReportPdfFilename_(report.netType, report.netDate);
+  let temporaryDocument = null;
+  let temporaryFile = null;
+
+  try {
+    temporaryDocument = DocumentApp.create('Temporary ' + filename.replace(/\.pdf$/i, ''));
+    temporaryFile = DriveApp.getFileById(temporaryDocument.getId());
+    const body = temporaryDocument.getBody();
+    body.clear();
+    report.text.split('\n').forEach(function (line) {
+      body.appendParagraph(line);
+    });
+    temporaryDocument.saveAndClose();
+
+    const pdfBlob = temporaryFile.getAs(MimeType.PDF);
+    return {
+      filename: filename,
+      mimeType: 'application/pdf',
+      base64: Utilities.base64Encode(pdfBlob.getBytes())
+    };
+  } finally {
+    if (temporaryFile) {
+      temporaryFile.setTrashed(true);
+    } else if (temporaryDocument) {
+      DriveApp.getFileById(temporaryDocument.getId()).setTrashed(true);
+    }
+  }
+}
+
+function buildReportPdfFilename_(netType, netDate) {
+  const typeSegment = sanitizeFilenameSegment_(requireNetType_(netType).replace(/_/g, '-'));
+  const dateSegment = sanitizeFilenameSegment_(String(netDate || 'undated'));
+  return 'W8FY-' + typeSegment + '-' + dateSegment + '.pdf';
+}
+
+function sanitizeFilenameSegment_(value) {
+  const sanitized = String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+  return sanitized || 'report';
 }
 
 function getActiveNetResponse_(spreadsheet) {

@@ -136,6 +136,9 @@
     },
     sendReport: function (data) {
       return request("sendReport", { method: "POST", data: data });
+    },
+    downloadReportPdf: function (data) {
+      return request("downloadReportPdf", { method: "POST", data: data });
     }
   };
 }());

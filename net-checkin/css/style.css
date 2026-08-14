@@ -649,6 +649,26 @@ fieldset .form-label {
   white-space: pre-wrap;
 }
 
+.final-report-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.pdf-download-status {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.pdf-download-status-success {
+  color: var(--success);
+}
+
+.pdf-download-status-error {
+  color: var(--radio-red);
+}
+
 .email-status-panel {
   display: flex;
   gap: 0.75rem 1rem;
@@ -681,6 +701,15 @@ fieldset .form-label {
 }
 
 @media (max-width: 575.98px) {
+  .final-report-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .final-report-actions .btn {
+    width: 100%;
+  }
+
   .email-status-panel {
     align-items: stretch;
     flex-direction: column;

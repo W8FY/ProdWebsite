@@ -22,6 +22,7 @@
   var elements = {};
   var state = createEmptyState();
   var databaseReady = false;
+  var pdfDownloadBusy = false;
   var lookupTrackers = {
     netControl: createLookupTracker(),
     checkIn: createLookupTracker()
@@ -91,6 +92,10 @@
       return getDatabaseApi().sendReport({ netId: netId });
     },
 
+    downloadReportPdf: async function (netId) {
+      return getDatabaseApi().downloadReportPdf({ netId: netId });
+    },
+
     lookupCallsign: async function (callsign) {
       return getDatabaseApi().lookupCallsign(callsign);
     }
@@ -143,6 +148,8 @@
     elements.emailStatusTitle = document.getElementById("email-status-title");
     elements.emailStatusMessage = document.getElementById("email-status-message");
     elements.retryEmailButton = document.getElementById("retry-email-button");
+    elements.downloadReportPdfButton = document.getElementById("download-report-pdf-button");
+    elements.pdfDownloadStatus = document.getElementById("pdf-download-status");
     elements.startNewNetButton = document.getElementById("start-new-net-button");
     elements.totalCheckins = document.getElementById("total-checkins");
     elements.totalTraffic = document.getElementById("total-traffic");
@@ -159,6 +166,7 @@
     elements.rosterBody.addEventListener("input", handleRosterInput);
     elements.finalizeNetButton.addEventListener("click", finalizeNet);
     elements.retryEmailButton.addEventListener("click", retryEmail);
+    elements.downloadReportPdfButton.addEventListener("click", downloadFinalReportPdf);
     elements.startNewNetButton.addEventListener("click", startNewNet);
     elements.endTime.addEventListener("change", function () {
       if (state.active && !state.finalized) {
@@ -694,6 +702,30 @@
     }
   }
 
+  async function downloadFinalReportPdf() {
+    if (!databaseReady || !state.id || !state.finalized || pdfDownloadBusy) {
+      return;
+    }
+
+    pdfDownloadBusy = true;
+    setPdfDownloadStatus("Generating the final report PDF…", "pending");
+    setButtonBusy(elements.downloadReportPdfButton, true, "Generating PDF…");
+    setInterfaceLocking();
+
+    try {
+      var payload = await netRepository.downloadReportPdf(state.id);
+      var pdfFile = validatePdfDownloadPayload(payload);
+      triggerPdfDownload(pdfFile);
+      setPdfDownloadStatus("The final report PDF was downloaded successfully.", "success");
+    } catch (error) {
+      setPdfDownloadStatus("The final report PDF could not be downloaded. " + getErrorMessage(error), "error");
+    } finally {
+      pdfDownloadBusy = false;
+      setButtonBusy(elements.downloadReportPdfButton, false, "Download Final Report PDF");
+      setInterfaceLocking();
+    }
+  }
+
   function startNewNet() {
     if (!state.finalized) {
       return;
@@ -705,6 +737,8 @@
 
     clearLastNetId();
     resetNoteEditorState();
+    pdfDownloadBusy = false;
+    setPdfDownloadStatus("", "");
     state = createEmptyState();
     elements.netForm.reset();
     resetCheckInForm();
@@ -820,6 +854,9 @@
 
     elements.finalizeNetButton.disabled = !databaseReady || !state.active || state.finalized || Boolean(noteEditorState.savingCheckInId);
     elements.retryEmailButton.disabled = !databaseReady || !state.finalized || state.emailSent || state.emailStatus === "sending";
+    elements.downloadReportPdfButton.hidden = !state.finalized;
+    elements.downloadReportPdfButton.disabled = !databaseReady || !state.finalized || pdfDownloadBusy;
+    elements.startNewNetButton.disabled = !state.finalized || pdfDownloadBusy;
   }
 
   function renderRoster() {
@@ -1382,6 +1419,73 @@
 
   function getErrorMessage(error) {
     return error && error.message ? error.message : DATABASE_ERROR_MESSAGE;
+  }
+
+  function validatePdfDownloadPayload(payload) {
+    if (!payload || typeof payload !== "object") {
+      throw new Error("The server returned an invalid PDF response.");
+    }
+
+    var filename = cleanText(payload.filename);
+    if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,179}\.pdf$/i.test(filename) || filename.indexOf("..") !== -1) {
+      throw new Error("The server returned an invalid PDF filename.");
+    }
+    if (payload.mimeType !== "application/pdf") {
+      throw new Error("The server returned an invalid PDF content type.");
+    }
+    if (typeof payload.base64 !== "string") {
+      throw new Error("The server returned invalid PDF data.");
+    }
+
+    var base64 = payload.base64.trim();
+    if (!base64 || base64.length % 4 !== 0 || !/^[A-Za-z0-9+/]+={0,2}$/.test(base64)) {
+      throw new Error("The server returned invalid PDF data.");
+    }
+
+    var binary;
+    try {
+      binary = window.atob(base64);
+    } catch (error) {
+      throw new Error("The server returned invalid PDF data.");
+    }
+    var bytes = new Uint8Array(binary.length);
+    for (var index = 0; index < binary.length; index += 1) {
+      bytes[index] = binary.charCodeAt(index);
+    }
+    if (bytes.length < 4 || bytes[0] !== 0x25 || bytes[1] !== 0x50 || bytes[2] !== 0x44 || bytes[3] !== 0x46) {
+      throw new Error("The downloaded file is not a valid PDF.");
+    }
+
+    return {
+      filename: filename,
+      mimeType: payload.mimeType,
+      bytes: bytes
+    };
+  }
+
+  function triggerPdfDownload(pdfFile) {
+    var blob = new window.Blob([pdfFile.bytes], { type: "application/pdf" });
+    var objectUrl = window.URL.createObjectURL(blob);
+    var link = document.createElement("a");
+    link.href = objectUrl;
+    link.download = pdfFile.filename;
+    link.hidden = true;
+    document.body.appendChild(link);
+    try {
+      link.click();
+    } finally {
+      link.remove();
+      window.URL.revokeObjectURL(objectUrl);
+    }
+  }
+
+  function setPdfDownloadStatus(message, status) {
+    elements.pdfDownloadStatus.className = "pdf-download-status";
+    elements.pdfDownloadStatus.textContent = message;
+    elements.pdfDownloadStatus.hidden = !message;
+    if (status) {
+      elements.pdfDownloadStatus.classList.add("pdf-download-status-" + status);
+    }
   }
 
   function createBadge(text, className) {
