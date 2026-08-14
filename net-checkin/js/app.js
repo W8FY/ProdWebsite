@@ -5,6 +5,7 @@
   var DATABASE_ERROR_MESSAGE = "Unable to connect to the net database. Please check your internet connection and try again.";
   var NOTE_MAX_LENGTH = 80;
   var LOOKUP_DELAY_MS = 300;
+  var DEFAULT_NET_TYPE = "two_meter_ncs";
   var NET_TYPE_NAMES = {
     current: "Current Net",
     two_meter_ncs: "2 Meter NCS Net",
@@ -263,7 +264,7 @@
       id: "",
       active: false,
       finalized: false,
-      netType: "two_meter_ncs",
+      netType: DEFAULT_NET_TYPE,
       netDate: getTodayDate(),
       netControlCallsign: "",
       netControlName: "",
@@ -734,7 +735,7 @@
         callsignCell.appendChild(createBadge("NET CONTROL", "badge-net-control ms-2"));
       }
 
-      appendTextCell(row, entry.name || "—");
+      appendTextCell(row, displaySavedName(entry.name));
 
       var stationCell = document.createElement("td");
       stationCell.appendChild(createBadge(entry.stationType, "badge-station " + stationClass(entry.stationType)));
@@ -1074,6 +1075,11 @@
 
   function cleanText(value) {
     return typeof value === "string" ? value.trim() : "";
+  }
+
+  function displaySavedName(value) {
+    var name = cleanText(value);
+    return name === "" ? "—" : name;
   }
 
   function normalizeDatabaseTime(value) {
