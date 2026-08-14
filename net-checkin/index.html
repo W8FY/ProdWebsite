@@ -5,17 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="W8FY Amateur Radio Net Check-In and Net Control application">
   <title>W8FY Amateur Radio Net Check-In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/style.css?v=20260814-final-report-pdf">
+  <link rel="stylesheet" href="css/style.css?v=20260814-site-theme">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
+  <div class="site-topbar">
+    <div class="container site-topbar-inner">
+      <p>Saturday Morning Net: 10:30 AM on 146.850 MHz, PL 107.2 Hz.</p>
+      <div class="site-social-links" aria-label="W8FY social and contact links">
+        <a href="mailto:info@w8fy.org" aria-label="Email W8FY"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+        <a href="https://facebook.com/w8fy.org" target="_blank" rel="noopener" aria-label="W8FY on Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="https://github.com/W8FY" target="_blank" rel="noopener" aria-label="W8FY on GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="site-navigation" aria-label="Main navigation">
+    <div class="container site-navigation-inner">
+      <a class="site-brand" href="/">
+        <img src="/img/logobanner.png" alt="W8FY Van Wert Amateur Radio Club">
+      </a>
+      <button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        <span class="visually-hidden">Toggle navigation</span>
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+      <div id="site-menu" class="site-menu">
+        <a href="/">Home</a>
+        <a href="/silent-keys/">Silent Keys</a>
+        <a href="/license-exam/">Schedule Exam</a>
+        <a href="/galleries/">Galleries</a>
+        <div class="site-menu-dropdown">
+          <button class="site-menu-dropdown-toggle active" type="button" aria-expanded="false" aria-controls="site-links-menu">
+            Links <i class="fas fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="site-links-menu" class="site-links-menu">
+            <section aria-labelledby="membership-links-heading">
+              <h2 id="membership-links-heading">Memberships</h2>
+              <a href="/app/">Join VWARC Club</a>
+              <a href="https://www.arrl.org/membership" target="_blank" rel="noopener">Join ARRL</a>
+              <a href="https://www.echolink.org/validation/" target="_blank" rel="noopener">Join EchoLink</a>
+            </section>
+            <section aria-labelledby="rf-links-heading">
+              <h2 id="rf-links-heading">RF Information</h2>
+              <a href="/repeaters/">Repeater Overview</a>
+              <a href="/repeater-146-850/">146.850 / PL 107.2</a>
+              <a href="/repeater-146-700/">146.700 / PL 107.2</a>
+              <a href="/repeater-444-850/">444.850 / PL 136.5</a>
+            </section>
+            <section aria-labelledby="event-links-heading">
+              <h2 id="event-links-heading">Events</h2>
+              <a href="/hamfest/">Hamfest 2026</a>
+              <a href="/sfieldday25/">Summer Field Day 2026</a>
+              <a href="/wfieldday26/">Winter Field Day 2026</a>
+            </section>
+            <section aria-labelledby="club-links-heading">
+              <h2 id="club-links-heading">Club Information</h2>
+              <a href="/committees/">Committees</a>
+              <a href="/meeting-info/">Meeting Information</a>
+              <a href="/meetings/">Meeting Minutes</a>
+            </section>
+            <section aria-labelledby="county-links-heading">
+              <h2 id="county-links-heading">County Information</h2>
+              <a href="https://www.vanwertcountyohio.gov/government/ema_office/index.php" target="_blank" rel="noopener">Van Wert County EMA</a>
+              <a href="/hamlist/vanwert-hams">Van Wert County HAMs</a>
+            </section>
+            <section aria-labelledby="net-links-heading">
+              <h2 id="net-links-heading">Net Control Information</h2>
+              <a href="/docs/2026_net_roster.pdf" target="_blank" rel="noopener">2026 Net Roster</a>
+              <a class="current" href="/net-checkin/index.html" aria-current="page">Net Control</a>
+            </section>
+          </div>
+        </div>
+        <a class="site-join-link" href="/app/">Join</a>
+      </div>
+    </div>
+  </nav>
+
   <header class="app-header">
     <div class="container app-header-inner">
       <div class="logo-shell" aria-label="W8FY club logo area">
-        <img id="club-logo" class="club-logo" src="images/w8fy-logo.png" alt="W8FY club logo">
+        <img id="club-logo" class="club-logo" src="/img/carousel/Logo.png" alt="W8FY club logo">
         <span id="logo-placeholder" class="logo-placeholder" aria-hidden="true">W8FY</span>
       </div>
       <div>
@@ -121,7 +197,8 @@
             <div class="form-text">Set automatically when the net is finalized.</div>
           </div>
 
-          <div class="col-12 col-md-6 col-xl-3 d-flex align-items-end">
+          <div class="col-12 col-md-6 col-xl-3 start-net-action">
+            <span class="form-label action-label-spacer" aria-hidden="true">Session Action</span>
             <button id="start-net-button" class="btn btn-primary btn-lg action-button w-100" type="submit">
               <span aria-hidden="true">●</span> Start Net
             </button>
@@ -294,6 +371,7 @@
   </footer>
 
   <script src="js/config.js"></script>
+  <script src="js/site-navigation.js?v=20260814-site-theme"></script>
   <script src="js/google-apps-script.js?v=20260814-final-report-pdf"></script>
   <script src="js/app.js?v=20260814-final-report-pdf"></script>
 </body>
