@@ -303,9 +303,36 @@ fieldset .form-label {
   border-radius: 0.65rem;
 }
 
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
   border-color: var(--radio-cyan);
   box-shadow: 0 0 0 0.25rem rgba(46, 196, 214, 0.17);
+}
+
+.name-lookup-status {
+  min-height: 1.25rem;
+}
+
+.note-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.note-counter {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.note-counter.limit-reached {
+  color: #664d03;
+}
+
+.note-counter.over-limit {
+  color: #b02a37;
 }
 
 .callsign-input {
@@ -486,6 +513,11 @@ fieldset .form-label {
 
 .roster-table {
   margin-bottom: 0;
+  min-width: 54rem;
+}
+
+.roster-table.weather-roster {
+  min-width: 64rem;
 }
 
 .roster-table thead th {
@@ -526,6 +558,13 @@ fieldset .form-label {
   font-size: 1.05rem;
   font-weight: 900;
   letter-spacing: 0.055em;
+}
+
+.roster-note-cell {
+  min-width: 12rem;
+  max-width: 24rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .badge-station,
@@ -719,10 +758,6 @@ fieldset .form-label {
   .net-actions {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .roster-table {
-    min-width: 47rem;
   }
 
   .pdf-viewer {

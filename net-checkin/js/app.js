@@ -3,6 +3,13 @@
 
   var LAST_NET_ID_KEY = "w8fy.netCheckin.lastNetId";
   var DATABASE_ERROR_MESSAGE = "Unable to connect to the net database. Please check your internet connection and try again.";
+  var NOTE_MAX_LENGTH = 80;
+  var LOOKUP_DELAY_MS = 300;
+  var NET_TYPE_NAMES = {
+    current: "Current Net",
+    two_meter_ncs: "2 Meter NCS Net",
+    weather_special: "Weather/Special Net"
+  };
   var STATION_TYPES = ["Home", "Mobile", "EchoLink", "Short Time"];
   var STATION_ORDER = {
     Home: 0,
@@ -14,6 +21,10 @@
   var elements = {};
   var state = createEmptyState();
   var databaseReady = false;
+  var lookupTrackers = {
+    netControl: createLookupTracker(),
+    checkIn: createLookupTracker()
+  };
 
   // All persistent operations go through the Google Apps Script API module so
   // the form, roster, totals, and report stay independent of the backend.
@@ -26,7 +37,9 @@
     createNet: async function (netData) {
       return getDatabaseApi().createNet({
         netDate: netData.netDate,
+        netType: netData.netType,
         netControlCallsign: netData.netControlCallsign,
+        netControlName: netData.netControlName,
         netControlStationType: netData.netControlStation,
         netControlTraffic: netData.netControlTraffic,
         startTime: netData.startTime
@@ -45,8 +58,10 @@
       return getDatabaseApi().addCheckIn({
         netId: netId,
         callsign: checkIn.callsign,
+        name: checkIn.name,
         stationType: checkIn.stationType,
-        traffic: checkIn.traffic
+        traffic: checkIn.traffic,
+        note: checkIn.note
       });
     },
 
@@ -61,6 +76,10 @@
 
     sendNetReport: async function (netId) {
       return getDatabaseApi().sendReport({ netId: netId });
+    },
+
+    lookupCallsign: async function (callsign) {
+      return getDatabaseApi().lookupCallsign(callsign);
     }
   };
 
@@ -82,8 +101,11 @@
     elements.databaseMessage = document.getElementById("database-message");
     elements.netForm = document.getElementById("net-form");
     elements.netFormMessage = document.getElementById("net-form-message");
+    elements.netType = document.getElementById("net-type");
     elements.netDate = document.getElementById("net-date");
     elements.netControlCallsign = document.getElementById("net-control-callsign");
+    elements.netControlName = document.getElementById("net-control-name");
+    elements.netControlNameStatus = document.getElementById("net-control-name-status");
     elements.startTime = document.getElementById("start-time");
     elements.endTime = document.getElementById("end-time");
     elements.startNetButton = document.getElementById("start-net-button");
@@ -91,8 +113,15 @@
     elements.checkinForm = document.getElementById("checkin-form");
     elements.checkinFormMessage = document.getElementById("checkin-form-message");
     elements.checkinCallsign = document.getElementById("checkin-callsign");
+    elements.checkinName = document.getElementById("checkin-name");
+    elements.checkinNameStatus = document.getElementById("checkin-name-status");
+    elements.checkinNoteGroup = document.getElementById("checkin-note-group");
+    elements.checkinNote = document.getElementById("checkin-note");
+    elements.checkinNoteCounter = document.getElementById("checkin-note-counter");
     elements.addCheckinButton = document.getElementById("add-checkin-button");
     elements.rosterBody = document.getElementById("roster-body");
+    elements.rosterHeading = document.getElementById("roster-heading");
+    elements.rosterNoteHeading = document.getElementById("roster-note-heading");
     elements.rosterCount = document.getElementById("roster-count");
     elements.finalizeNetButton = document.getElementById("finalize-net-button");
     elements.finalReportSection = document.getElementById("final-report-section");
@@ -123,9 +152,26 @@
       }
     });
 
-    document.querySelectorAll(".callsign-input").forEach(function (input) {
-      input.addEventListener("input", uppercaseCallsignInput);
+    elements.netType.addEventListener("change", function () {
+      if (!state.active) {
+        state.netType = normalizeNetType(elements.netType.value);
+      }
     });
+    elements.netControlCallsign.addEventListener("input", function (event) {
+      uppercaseCallsignInput(event);
+      scheduleCallsignLookup("netControl", elements.netControlCallsign, elements.netControlName, elements.netControlNameStatus);
+    });
+    elements.checkinCallsign.addEventListener("input", function (event) {
+      uppercaseCallsignInput(event);
+      scheduleCallsignLookup("checkIn", elements.checkinCallsign, elements.checkinName, elements.checkinNameStatus);
+    });
+    elements.netControlName.addEventListener("input", function () {
+      markNameEdited("netControl", elements.netControlNameStatus);
+    });
+    elements.checkinName.addEventListener("input", function () {
+      markNameEdited("checkIn", elements.checkinNameStatus);
+    });
+    elements.checkinNote.addEventListener("input", updateNoteCounter);
 
     document.querySelectorAll("input[type='radio']").forEach(function (input) {
       input.addEventListener("change", function () {
@@ -197,7 +243,7 @@
   }
 
   function loadNetIntoState(netPayload) {
-    state = mapDatabaseNet(netPayload.net, netPayload.checkIns || []);
+    state = mapDatabaseNet(netPayload.net, netPayload.checkIns || [], netPayload.report);
   }
 
   async function reloadCurrentNet() {
@@ -217,8 +263,10 @@
       id: "",
       active: false,
       finalized: false,
+      netType: "two_meter_ncs",
       netDate: getTodayDate(),
       netControlCallsign: "",
+      netControlName: "",
       netControlStation: "",
       netControlTraffic: "",
       startTime: "",
@@ -227,17 +275,22 @@
       emailSentAt: "",
       emailStatus: "idle",
       emailError: "",
+      authoritativeReportText: "",
       checkIns: []
     };
   }
 
-  function mapDatabaseNet(netRecord, checkInRecords) {
+  function mapDatabaseNet(netRecord, checkInRecords, report) {
+    var mappedCheckIns = (checkInRecords || []).map(mapDatabaseCheckIn).filter(Boolean);
+    var netControl = mappedCheckIns.find(function (entry) { return entry.isNetControl; });
     return {
       id: cleanText(netRecord.id),
       active: true,
       finalized: Boolean(netRecord.finalized),
+      netType: normalizeNetType(netRecord.net_type),
       netDate: cleanText(netRecord.net_date),
       netControlCallsign: normalizeCallsign(netRecord.net_control_callsign),
+      netControlName: netControl ? netControl.name : "",
       netControlStation: cleanText(netRecord.net_control_station_type),
       netControlTraffic: netRecord.net_control_traffic ? "Yes" : "No",
       startTime: normalizeDatabaseTime(netRecord.start_time),
@@ -246,7 +299,8 @@
       emailSentAt: cleanText(netRecord.email_sent_at),
       emailStatus: netRecord.email_sent ? "sent" : (netRecord.finalized ? "failed" : "idle"),
       emailError: "",
-      checkIns: (checkInRecords || []).map(mapDatabaseCheckIn).filter(Boolean)
+      authoritativeReportText: report && typeof report.text === "string" ? report.text : "",
+      checkIns: mappedCheckIns
     };
   }
 
@@ -258,9 +312,10 @@
     return {
       id: cleanText(record.id),
       callsign: normalizeCallsign(record.callsign),
+      name: cleanText(record.name),
       stationType: record.station_type,
       traffic: record.traffic ? "Yes" : "No",
-      notes: record.is_net_control ? "NET CONTROL" : "",
+      note: cleanText(record.note),
       isNetControl: Boolean(record.is_net_control),
       createdAt: cleanText(record.created_at)
     };
@@ -281,8 +336,10 @@
       return;
     }
 
+    var netType = normalizeNetType(elements.netType.value);
     var netDate = cleanText(elements.netDate.value);
     var callsign = normalizeCallsign(elements.netControlCallsign.value);
+    var name = cleanText(elements.netControlName.value);
     var station = getSelectedValue("netControlStation");
     var traffic = getSelectedValue("netControlTraffic");
     var errors = [];
@@ -312,14 +369,17 @@
 
     var startTime = cleanText(elements.startTime.value) || getCurrentTime();
     var netDraft = {
+      netType: netType,
       netDate: netDate,
       netControlCallsign: callsign,
+      netControlName: name,
       netControlStation: station,
       netControlTraffic: traffic,
       startTime: startTime
     };
     var createdPayload = null;
 
+    invalidateLookup("netControl");
     setButtonBusy(elements.startNetButton, true, "Starting Net…");
 
     try {
@@ -350,8 +410,10 @@
     }
 
     var callsign = normalizeCallsign(elements.checkinCallsign.value);
+    var name = cleanText(elements.checkinName.value);
     var station = getSelectedValue("checkinStation");
     var traffic = getSelectedValue("checkinTraffic");
+    var note = isWeatherNet() ? cleanText(elements.checkinNote.value) : "";
     var errors = [];
 
     if (!callsign) {
@@ -365,6 +427,10 @@
     if (!traffic) {
       errors.push("Choose whether the station has traffic.");
       document.getElementById("checkin-traffic-group").classList.add("is-invalid-group");
+    }
+    if (note.length > NOTE_MAX_LENGTH) {
+      errors.push("Note must be 80 characters or fewer.");
+      elements.checkinNote.classList.add("is-invalid");
     }
 
     if (errors.length) {
@@ -384,13 +450,16 @@
       return;
     }
 
+    invalidateLookup("checkIn");
     setButtonBusy(elements.addCheckinButton, true, "Saving…");
 
     try {
       await netRepository.addCheckIn(state.id, {
         callsign: callsign,
+        name: name,
         stationType: station,
         traffic: traffic,
+        note: note,
         isNetControl: false
       });
       await reloadCurrentNet();
@@ -529,6 +598,7 @@
     state = createEmptyState();
     elements.netForm.reset();
     resetCheckInForm();
+    resetLookupTracker("netControl", elements.netControlNameStatus);
     clearMessage(elements.netFormMessage);
     clearMessage(elements.checkinFormMessage);
     renderApplication();
@@ -538,6 +608,7 @@
 
   function renderApplication() {
     populateNetForm();
+    renderNetTypeFeatures();
     renderStatus();
     renderRoster();
     renderTotals();
@@ -546,9 +617,23 @@
     setInterfaceLocking();
   }
 
+  function renderNetTypeFeatures() {
+    var includeNotes = isWeatherNet();
+    elements.checkinNoteGroup.hidden = !includeNotes;
+    elements.rosterNoteHeading.hidden = !includeNotes;
+    elements.rosterHeading.textContent = getNetTypeName(state.netType) + " Roster";
+    elements.rosterBody.closest("table").classList.toggle("weather-roster", includeNotes);
+    if (!includeNotes) {
+      elements.checkinNote.value = "";
+    }
+    updateNoteCounter();
+  }
+
   function populateNetForm() {
+    elements.netType.value = state.netType;
     elements.netDate.value = state.netDate || getTodayDate();
     elements.netControlCallsign.value = state.netControlCallsign;
+    elements.netControlName.value = state.netControlName;
     elements.startTime.value = state.startTime;
     elements.endTime.value = state.endTime;
     setRadioValue("netControlStation", state.netControlStation);
@@ -611,7 +696,7 @@
     elements.activeNetArea.hidden = !state.active;
     elements.finalReportSection.hidden = !state.finalized;
 
-    elements.netForm.querySelectorAll("input, button").forEach(function (control) {
+    elements.netForm.querySelectorAll("input, select, button").forEach(function (control) {
       if (control === elements.endTime) {
         control.disabled = !databaseReady || !state.active || state.finalized;
       } else {
@@ -619,7 +704,7 @@
       }
     });
 
-    elements.checkinForm.querySelectorAll("input, button").forEach(function (control) {
+    elements.checkinForm.querySelectorAll("input, textarea, button").forEach(function (control) {
       control.disabled = !databaseReady || !state.active || state.finalized;
     });
 
@@ -629,7 +714,9 @@
 
   function renderRoster() {
     elements.rosterBody.replaceChildren();
-    var sorted = sortCheckIns(state.checkIns);
+    // The Apps Script backend returns check-ins in authoritative report order.
+    var sorted = state.checkIns.slice();
+    var includeNotes = isWeatherNet();
 
     sorted.forEach(function (entry, index) {
       var row = document.createElement("tr");
@@ -643,6 +730,11 @@
       appendTextCell(row, String(index + 1));
       var callsignCell = appendTextCell(row, entry.callsign);
       callsignCell.classList.add("callsign-cell");
+      if (entry.isNetControl) {
+        callsignCell.appendChild(createBadge("NET CONTROL", "badge-net-control ms-2"));
+      }
+
+      appendTextCell(row, entry.name || "—");
 
       var stationCell = document.createElement("td");
       stationCell.appendChild(createBadge(entry.stationType, "badge-station " + stationClass(entry.stationType)));
@@ -652,13 +744,10 @@
       trafficCell.appendChild(createBadge(entry.traffic, entry.traffic === "Yes" ? "badge-traffic" : "badge-traffic badge-no-traffic"));
       row.appendChild(trafficCell);
 
-      var notesCell = document.createElement("td");
-      if (entry.isNetControl) {
-        notesCell.appendChild(createBadge("NET CONTROL", "badge-net-control"));
-      } else {
-        notesCell.textContent = "—";
+      if (includeNotes) {
+        var noteCell = appendTextCell(row, entry.note || "—");
+        noteCell.classList.add("roster-note-cell");
       }
-      row.appendChild(notesCell);
 
       var actionCell = document.createElement("td");
       if (entry.isNetControl) {
@@ -691,7 +780,9 @@
   }
 
   function renderFinalReport() {
-    elements.finalReport.textContent = state.finalized ? generateFinalReport(state) : "";
+    elements.finalReport.textContent = state.finalized
+      ? (state.authoritativeReportText || generateFinalReport(state))
+      : "";
   }
 
   function renderEmailStatus() {
@@ -746,11 +837,12 @@
   }
 
   function generateFinalReport(netState) {
-    var sorted = sortCheckIns(netState.checkIns);
+    var sorted = netState.checkIns.slice();
     var totals = calculateTotals(sorted);
     var lines = [
       "W8FY AMATEUR RADIO NET REPORT",
       "",
+      "Net Type: " + getNetTypeName(netState.netType),
       "Net Date: " + netState.netDate,
       "Net Control: " + netState.netControlCallsign,
       "Start Time: " + formatTime(netState.startTime),
@@ -762,9 +854,9 @@
       ""
     ];
 
-    appendReportGroups(lines, sorted, "Yes");
+    appendReportGroups(lines, sorted, "Yes", netState.netType === "weather_special");
     lines.push("", "--------------------------------", "", "NO TRAFFIC", "");
-    appendReportGroups(lines, sorted, "No");
+    appendReportGroups(lines, sorted, "No", netState.netType === "weather_special");
     lines.push(
       "", "--------------------------------", "",
       "TOTAL CHECK-INS: " + totals.total,
@@ -777,7 +869,7 @@
     return lines.join("\n");
   }
 
-  function appendReportGroups(lines, sorted, trafficValue) {
+  function appendReportGroups(lines, sorted, trafficValue, includeNotes) {
     STATION_TYPES.forEach(function (stationType) {
       lines.push(stationType);
       var matching = sorted.filter(function (entry) {
@@ -785,13 +877,110 @@
       });
       if (matching.length) {
         matching.forEach(function (entry) {
-          lines.push("  " + entry.callsign + (entry.isNetControl ? "  [NET CONTROL]" : ""));
+          lines.push(
+            "  " + entry.callsign +
+            " - " + (entry.name || "N/A") +
+            " - " + entry.stationType +
+            " - " + (entry.traffic === "Yes" ? "Traffic" : "No Traffic") +
+            (includeNotes ? " - Note: " + (entry.note || "N/A") : "") +
+            (entry.isNetControl ? "  [NET CONTROL]" : "")
+          );
         });
       } else {
         lines.push("  —");
       }
       lines.push("");
     });
+  }
+
+  function createLookupTracker() {
+    return {
+      sequence: 0,
+      callsign: "",
+      nameEdited: false,
+      timer: null
+    };
+  }
+
+  function scheduleCallsignLookup(key, callsignInput, nameInput, statusElement) {
+    var tracker = lookupTrackers[key];
+    var callsign = normalizeCallsign(callsignInput.value);
+    tracker.sequence += 1;
+    tracker.callsign = callsign;
+    tracker.nameEdited = false;
+    window.clearTimeout(tracker.timer);
+    tracker.timer = null;
+    nameInput.value = "";
+    statusElement.textContent = "";
+
+    if (!databaseReady || !callsign) {
+      return;
+    }
+
+    var requestSequence = tracker.sequence;
+    tracker.timer = window.setTimeout(function () {
+      tracker.timer = null;
+      performCallsignLookup(key, callsignInput, nameInput, statusElement, callsign, requestSequence);
+    }, LOOKUP_DELAY_MS);
+  }
+
+  async function performCallsignLookup(key, callsignInput, nameInput, statusElement, callsign, requestSequence) {
+    var tracker = lookupTrackers[key];
+    statusElement.textContent = "Looking up callsign…";
+
+    try {
+      var result = await netRepository.lookupCallsign(callsign);
+      if (tracker.sequence !== requestSequence ||
+          tracker.nameEdited ||
+          normalizeCallsign(callsignInput.value) !== callsign) {
+        return;
+      }
+
+      if (result && result.found) {
+        nameInput.value = typeof result.name === "string" ? result.name : "";
+        statusElement.textContent = "Directory name found. You can edit it.";
+      } else {
+        nameInput.value = "";
+        statusElement.textContent = "No directory name found. Enter a name if known.";
+      }
+    } catch (error) {
+      if (tracker.sequence === requestSequence && !tracker.nameEdited) {
+        statusElement.textContent = "Name lookup unavailable. Enter a name manually.";
+      }
+    }
+  }
+
+  function markNameEdited(key, statusElement) {
+    var tracker = lookupTrackers[key];
+    tracker.sequence += 1;
+    tracker.nameEdited = true;
+    window.clearTimeout(tracker.timer);
+    tracker.timer = null;
+    statusElement.textContent = "Name entered manually.";
+  }
+
+  function invalidateLookup(key) {
+    var tracker = lookupTrackers[key];
+    tracker.sequence += 1;
+    window.clearTimeout(tracker.timer);
+    tracker.timer = null;
+  }
+
+  function resetLookupTracker(key, statusElement) {
+    invalidateLookup(key);
+    lookupTrackers[key].callsign = "";
+    lookupTrackers[key].nameEdited = false;
+    statusElement.textContent = "";
+  }
+
+  function updateNoteCounter() {
+    var length = elements.checkinNote.value.length;
+    elements.checkinNoteCounter.textContent = length + " / " + NOTE_MAX_LENGTH;
+    elements.checkinNoteCounter.classList.toggle("limit-reached", length >= NOTE_MAX_LENGTH);
+    elements.checkinNoteCounter.classList.toggle("over-limit", length > NOTE_MAX_LENGTH);
+    if (length <= NOTE_MAX_LENGTH) {
+      elements.checkinNote.classList.remove("is-invalid");
+    }
   }
 
   function getDatabaseApi() {
@@ -868,6 +1057,19 @@
 
   function normalizeCallsign(value) {
     return cleanText(value).toUpperCase();
+  }
+
+  function normalizeNetType(value) {
+    var netType = cleanText(value).toLowerCase();
+    return Object.prototype.hasOwnProperty.call(NET_TYPE_NAMES, netType) ? netType : "current";
+  }
+
+  function getNetTypeName(value) {
+    return NET_TYPE_NAMES[normalizeNetType(value)];
+  }
+
+  function isWeatherNet() {
+    return state.netType === "weather_special";
   }
 
   function cleanText(value) {
@@ -966,6 +1168,7 @@
 
   function clearCheckInValidation() {
     elements.checkinCallsign.classList.remove("is-invalid");
+    elements.checkinNote.classList.remove("is-invalid");
     document.getElementById("checkin-station-group").classList.remove("is-invalid-group");
     document.getElementById("checkin-traffic-group").classList.remove("is-invalid-group");
   }
@@ -979,6 +1182,8 @@
 
   function resetCheckInForm() {
     elements.checkinForm.reset();
+    resetLookupTracker("checkIn", elements.checkinNameStatus);
+    updateNoteCounter();
     clearCheckInValidation();
   }
 

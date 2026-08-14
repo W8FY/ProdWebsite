@@ -54,6 +54,14 @@
       <form id="net-form" novalidate>
         <div class="row g-4">
           <div class="col-12 col-md-6 col-xl-3">
+            <label class="form-label" for="net-type">Net Type</label>
+            <select class="form-select form-select-lg" id="net-type" name="netType">
+              <option value="two_meter_ncs" selected>2 Meter NCS Net</option>
+              <option value="weather_special">Weather/Special Net</option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
             <label class="form-label" for="net-date">Net Date</label>
             <input class="form-control form-control-lg" id="net-date" name="netDate" type="date" required>
           </div>
@@ -61,6 +69,12 @@
           <div class="col-12 col-md-6 col-xl-3">
             <label class="form-label" for="net-control-callsign">Net Control Callsign</label>
             <input class="form-control form-control-lg callsign-input" id="net-control-callsign" name="netControlCallsign" type="text" maxlength="20" autocomplete="off" placeholder="W8ABC" required>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <label class="form-label" for="net-control-name">Net Control Name</label>
+            <input class="form-control form-control-lg" id="net-control-name" name="netControlName" type="text" autocomplete="name" placeholder="Name">
+            <div id="net-control-name-status" class="form-text name-lookup-status" aria-live="polite"></div>
           </div>
 
           <div class="col-12 col-xl-6">
@@ -135,6 +149,12 @@
                 <input class="form-control form-control-lg callsign-input" id="checkin-callsign" name="checkinCallsign" type="text" maxlength="20" autocomplete="off" placeholder="K8XYZ" required>
               </div>
 
+              <div class="mb-4">
+                <label class="form-label" for="checkin-name">Name</label>
+                <input class="form-control form-control-lg" id="checkin-name" name="checkinName" type="text" autocomplete="name" placeholder="Name">
+                <div id="checkin-name-status" class="form-text name-lookup-status" aria-live="polite"></div>
+              </div>
+
               <fieldset class="mb-4" id="checkin-station-group">
                 <legend class="form-label">Station Type</legend>
                 <div class="option-grid option-grid-two" role="radiogroup">
@@ -162,6 +182,15 @@
                   <label class="btn option-button" for="checkin-traffic-no">No</label>
                 </div>
               </fieldset>
+
+              <div id="checkin-note-group" class="mb-4" hidden>
+                <div class="note-label-row">
+                  <label class="form-label" for="checkin-note">Note</label>
+                  <span id="checkin-note-counter" class="note-counter" aria-live="polite">0 / 80</span>
+                </div>
+                <textarea class="form-control" id="checkin-note" name="checkinNote" rows="3" maxlength="80" aria-describedby="checkin-note-help checkin-note-counter"></textarea>
+                <div id="checkin-note-help" class="form-text">Weather/Special report note, maximum 80 characters.</div>
+              </div>
 
               <button id="add-checkin-button" class="btn btn-success btn-lg action-button w-100" type="submit">Add Check-In</button>
             </form>
@@ -197,7 +226,7 @@
         <div class="section-heading">
           <div>
             <p class="section-kicker">Sorted automatically</p>
-            <h2 id="roster-heading">Current Net Roster</h2>
+            <h2 id="roster-heading">2 Meter NCS Net Roster</h2>
           </div>
           <span id="roster-count" class="count-chip">0 stations</span>
         </div>
@@ -208,9 +237,10 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Callsign</th>
+                <th scope="col">Name</th>
                 <th scope="col">Station</th>
                 <th scope="col">Traffic</th>
-                <th scope="col">Notes</th>
+                <th id="roster-note-heading" scope="col" hidden>Note</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>

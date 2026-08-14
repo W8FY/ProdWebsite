@@ -113,6 +113,9 @@
     getNet: function (netId) {
       return request("getNet", { parameters: { netId: netId } });
     },
+    lookupCallsign: function (callsign) {
+      return request("lookupCallsign", { parameters: { callsign: callsign } });
+    },
     createNet: function (data) {
       return request("createNet", { method: "POST", data: data });
     },
