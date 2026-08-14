@@ -13,9 +13,17 @@ const W8FY_CONFIG = Object.freeze({
   spreadsheetProperty: 'W8FY_SPREADSHEET_ID',
   netsSheet: 'Nets',
   checkInsSheet: 'CheckIns',
+  callsignDirectorySheet: 'CallsignDirectory',
   reportRecipient: 'info@w8fy.org',
   stationTypes: Object.freeze(['Home', 'Mobile', 'EchoLink', 'Short Time']),
+  netTypes: Object.freeze(['current', 'two_meter_ncs', 'weather_special']),
+  netTypeNames: Object.freeze({
+    current: 'Current Net',
+    two_meter_ncs: '2 Meter NCS Net',
+    weather_special: 'Weather/Special Net'
+  }),
   maxCallsignLength: 20,
+  maxNoteLength: 80,
   lockTimeoutMs: 30000
 });
 
@@ -31,7 +39,8 @@ const NET_HEADERS = Object.freeze([
   'email_sent',
   'email_sent_at',
   'created_at',
-  'updated_at'
+  'updated_at',
+  'net_type'
 ]);
 
 const CHECKIN_HEADERS = Object.freeze([
@@ -41,16 +50,27 @@ const CHECKIN_HEADERS = Object.freeze([
   'station_type',
   'traffic',
   'is_net_control',
-  'created_at'
+  'created_at',
+  'name',
+  'note'
 ]);
 
-const GET_ACTIONS = Object.freeze(['health', 'getActiveNet', 'getNet']);
+const CALLSIGN_DIRECTORY_HEADERS = Object.freeze([
+  'callsign',
+  'name',
+  'updated_at'
+]);
+
+const LEGACY_NET_HEADERS = Object.freeze(NET_HEADERS.slice(0, 12));
+const LEGACY_CHECKIN_HEADERS = Object.freeze(CHECKIN_HEADERS.slice(0, 7));
+
+const GET_ACTIONS = Object.freeze(['health', 'getActiveNet', 'getNet', 'lookupCallsign']);
 const POST_ACTIONS = Object.freeze(['createNet', 'addCheckIn', 'removeCheckIn', 'finalizeNet', 'sendReport']);
 
 /**
  * One-time setup. Run this function from the Apps Script editor while the
  * target spreadsheet is open. It stores the spreadsheet ID in Script
- * Properties and creates/verifies the two application sheets.
+ * Properties and creates/verifies the application sheets.
  */
 function setupW8FYDatabase() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
@@ -67,8 +87,75 @@ function setupW8FYDatabase() {
   return {
     success: true,
     message: 'W8FY Net Check-In sheets are ready.',
-    sheets: [W8FY_CONFIG.netsSheet, W8FY_CONFIG.checkInsSheet]
+    sheets: [W8FY_CONFIG.netsSheet, W8FY_CONFIG.checkInsSheet, W8FY_CONFIG.callsignDirectorySheet]
   };
+}
+
+/**
+ * One-time Stage 1 production migration. It validates the legacy schema,
+ * creates a versioned copy of the complete spreadsheet, appends only the new
+ * headers, and verifies that every pre-existing Nets/CheckIns cell is intact.
+ * Run this manually from the Apps Script editor before deploying code that
+ * expects the expanded schema.
+ */
+function migrateW8FYStage1Schema() {
+  const spreadsheet = getConfiguredSpreadsheet_();
+
+  return withScriptLock_(function () {
+    const migration = inspectStage1Migration_(spreadsheet);
+    if (!migration.required) {
+      ensureApplicationSheets_(spreadsheet);
+      return {
+        success: true,
+        changed: false,
+        message: 'The W8FY Stage 1 schema is already installed.',
+        backupId: '',
+        backupUrl: ''
+      };
+    }
+
+    const legacyData = captureLegacyData_(migration.netsSheet, migration.checkInsSheet);
+    const timestamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyyMMdd-HHmmss');
+    const backup = spreadsheet.copy(spreadsheet.getName() + ' - Pre Stage 1 Backup - ' + timestamp);
+
+    try {
+      verifyBackupData_(backup, legacyData);
+    } catch (error) {
+      console.error('W8FY Stage 1 backup verification failed for ' + backup.getId() + ':', error && error.stack ? error.stack : error);
+      throw new Error(
+        'Stage 1 migration stopped because the backup could not be verified. Production was not modified. ' +
+        'The unverified copy is at ' + backup.getUrl() + '. Original error: ' + error.message
+      );
+    }
+
+    try {
+      appendStage1Headers_(migration.netsSheet, migration.checkInsSheet);
+      ensureSheet_(
+        spreadsheet,
+        W8FY_CONFIG.callsignDirectorySheet,
+        CALLSIGN_DIRECTORY_HEADERS,
+        [1, 2]
+      );
+      SpreadsheetApp.flush();
+      ensureApplicationSheets_(spreadsheet);
+      verifyLegacyDataUnchanged_(migration.netsSheet, migration.checkInsSheet, legacyData);
+    } catch (error) {
+      console.error('W8FY Stage 1 migration failed after backup ' + backup.getId() + ':', error && error.stack ? error.stack : error);
+      throw new Error(
+        'Stage 1 migration failed. The production spreadsheet may be partially migrated. ' +
+        'A pre-migration backup was created at ' + backup.getUrl() + '. Original error: ' + error.message
+      );
+    }
+
+    return {
+      success: true,
+      changed: true,
+      message: 'W8FY Stage 1 schema installed and legacy data verified unchanged.',
+      backupId: backup.getId(),
+      backupUrl: backup.getUrl(),
+      sheets: [W8FY_CONFIG.netsSheet, W8FY_CONFIG.checkInsSheet, W8FY_CONFIG.callsignDirectorySheet]
+    };
+  });
 }
 
 /** Handles read-only web-app actions. */
@@ -83,14 +170,18 @@ function doGet(e) {
         return {
           status: 'ok',
           service: 'W8FY Net Check-In API',
-          sheets: [W8FY_CONFIG.netsSheet, W8FY_CONFIG.checkInsSheet],
+          sheets: [W8FY_CONFIG.netsSheet, W8FY_CONFIG.checkInsSheet, W8FY_CONFIG.callsignDirectorySheet],
           emailEnabled: true,
-          pdfEnabled: false
+          pdfEnabled: false,
+          callsignLookupEnabled: true,
+          netTypes: W8FY_CONFIG.netTypes.slice()
         };
       case 'getActiveNet':
         return getActiveNetResponse_(spreadsheet);
       case 'getNet':
         return getNetResponse_(spreadsheet, requireUuid_(e.parameter.netId, 'netId'));
+      case 'lookupCallsign':
+        return lookupCallsign_(spreadsheet, e.parameter.callsign);
       default:
         throw new PublicError('Unsupported GET action.');
     }
@@ -130,7 +221,9 @@ function createNet_(spreadsheet, data) {
   }
 
   const netDate = requireDate_(readField_(data, ['netDate', 'net_date']), 'netDate');
+  const netType = requireNetType_(readField_(data, ['netType', 'net_type']));
   const callsign = requireCallsign_(readField_(data, ['netControlCallsign', 'net_control_callsign']));
+  const name = normalizeOptionalText_(readField_(data, ['netControlName', 'net_control_name', 'name']), 'netControlName');
   const stationType = requireStationType_(readField_(data, ['netControlStationType', 'netControlStation', 'net_control_station_type']));
   const traffic = requireBoolean_(readField_(data, ['netControlTraffic', 'net_control_traffic']), 'netControlTraffic');
   const startTime = requireTime_(readField_(data, ['startTime', 'start_time']) || currentTime_(), 'startTime');
@@ -152,7 +245,8 @@ function createNet_(spreadsheet, data) {
     email_sent: false,
     email_sent_at: '',
     created_at: now,
-    updated_at: now
+    updated_at: now,
+    net_type: netType
   };
   const controlRecord = {
     id: checkInId,
@@ -161,7 +255,9 @@ function createNet_(spreadsheet, data) {
     station_type: stationType,
     traffic: traffic,
     is_net_control: true,
-    created_at: now
+    created_at: now,
+    name: name,
+    note: ''
   };
 
   appendRecord_(netsSheet, NET_HEADERS, netRecord);
@@ -182,8 +278,10 @@ function addCheckIn_(spreadsheet, data) {
   requireOpenNet_(net);
 
   const callsign = requireCallsign_(data.callsign);
+  const name = normalizeOptionalText_(data.name, 'name');
   const stationType = requireStationType_(readField_(data, ['stationType', 'station_type']));
   const traffic = requireBoolean_(data.traffic, 'traffic');
+  const note = requireNote_(data.note, net.net_type);
   const checkIns = getCheckInsForNet_(spreadsheet, netId);
   if (checkIns.some(function (entry) { return entry.callsign === callsign; })) {
     throw new PublicError(callsign + ' is already checked into this net.');
@@ -196,7 +294,9 @@ function addCheckIn_(spreadsheet, data) {
     station_type: stationType,
     traffic: traffic,
     is_net_control: false,
-    created_at: new Date()
+    created_at: new Date(),
+    name: name,
+    note: note
   };
   appendRecord_(spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet), CHECKIN_HEADERS, record);
   return publicRecord_(record);
@@ -251,7 +351,7 @@ function sendReport_(spreadsheet, data) {
     throw new PublicError('This net report has already been sent.');
   }
 
-  const checkIns = sortCheckIns_(getCheckInsForNet_(spreadsheet, netId));
+  const checkIns = getCheckInsForNet_(spreadsheet, netId);
   const report = buildFinalReport_(net, checkIns);
   const subject = 'W8FY Net Report - ' + net.net_date + ' - ' + net.net_control_callsign;
 
@@ -307,6 +407,22 @@ function getNetResponse_(spreadsheet, netId) {
   return buildNetPayload_(spreadsheet, requireNet_(spreadsheet, netId));
 }
 
+function lookupCallsign_(spreadsheet, value) {
+  const callsign = requireCallsign_(value);
+  const match = getRecords_(
+    spreadsheet.getSheetByName(W8FY_CONFIG.callsignDirectorySheet),
+    CALLSIGN_DIRECTORY_HEADERS
+  ).find(function (entry) {
+    return String(entry.callsign).toUpperCase() === callsign;
+  });
+
+  return {
+    callsign: callsign,
+    found: Boolean(match),
+    name: match ? match.name : ''
+  };
+}
+
 function buildNetPayload_(spreadsheet, net, includeReport) {
   const checkIns = sortCheckIns_(getCheckInsForNet_(spreadsheet, net.id));
   const payload = {
@@ -319,7 +435,10 @@ function buildNetPayload_(spreadsheet, net, includeReport) {
   return payload;
 }
 
-function buildFinalReport_(net, sortedCheckIns) {
+function buildFinalReport_(net, checkIns) {
+  const sortedCheckIns = sortCheckIns_(checkIns);
+  const netType = requireNetType_(net.net_type);
+  const netTypeName = getNetTypeName_(netType);
   const totals = {
     total: sortedCheckIns.length,
     traffic: 0,
@@ -345,28 +464,33 @@ function buildFinalReport_(net, sortedCheckIns) {
   });
 
   return {
+    netType: netType,
+    netTypeName: netTypeName,
     netDate: net.net_date,
     netControl: net.net_control_callsign,
     startTime: net.start_time,
     endTime: net.end_time,
+    checkIns: sortedCheckIns.map(publicRecord_),
     groups: groups,
     totals: totals,
-    text: buildTextReport_(net, groups, totals)
+    text: buildTextReport_(net, groups, totals, netTypeName)
   };
 }
 
-function buildTextReport_(net, groups, totals) {
+function buildTextReport_(net, groups, totals, netTypeName) {
   const lines = [
     'W8FY AMATEUR RADIO NET REPORT',
     '',
+    'Net Type: ' + netTypeName,
     'Net Date: ' + net.net_date,
     'Net Control: ' + net.net_control_callsign,
     'Start Time: ' + net.start_time,
     'End Time: ' + (net.end_time || '—')
   ];
 
-  appendTextGroups_(lines, 'TRAFFIC', groups.traffic);
-  appendTextGroups_(lines, 'NO TRAFFIC', groups.noTraffic);
+  const includeNotes = requireNetType_(net.net_type) === 'weather_special';
+  appendTextGroups_(lines, 'TRAFFIC', groups.traffic, includeNotes);
+  appendTextGroups_(lines, 'NO TRAFFIC', groups.noTraffic, includeNotes);
   lines.push(
     '',
     '========================================',
@@ -381,7 +505,7 @@ function buildTextReport_(net, groups, totals) {
   return lines.join('\n');
 }
 
-function appendTextGroups_(lines, heading, grouped) {
+function appendTextGroups_(lines, heading, grouped, includeNotes) {
   lines.push('', '========================================', '', heading, '');
   W8FY_CONFIG.stationTypes.forEach(function (stationType) {
     lines.push(stationType.toUpperCase());
@@ -392,6 +516,8 @@ function appendTextGroups_(lines, heading, grouped) {
       entries.forEach(function (entry) {
         lines.push(
           entry.callsign +
+          ' - ' + (entry.name || 'N/A') +
+          (includeNotes ? ' - Note: ' + (entry.note || 'N/A') : '') +
           ' — ' + entry.station_type +
           ' — ' + (entry.traffic ? 'Traffic' : 'No Traffic') +
           (entry.is_net_control ? ' — NET CONTROL' : '')
@@ -452,8 +578,116 @@ function getConfiguredSpreadsheet_() {
 }
 
 function ensureApplicationSheets_(spreadsheet) {
-  ensureSheet_(spreadsheet, W8FY_CONFIG.netsSheet, NET_HEADERS, [1, 2, 3, 4, 6, 7]);
-  ensureSheet_(spreadsheet, W8FY_CONFIG.checkInsSheet, CHECKIN_HEADERS, [1, 2, 3, 4]);
+  ensureSheet_(spreadsheet, W8FY_CONFIG.netsSheet, NET_HEADERS, [1, 2, 3, 4, 6, 7, 13]);
+  ensureSheet_(spreadsheet, W8FY_CONFIG.checkInsSheet, CHECKIN_HEADERS, [1, 2, 3, 4, 8, 9]);
+  ensureSheet_(spreadsheet, W8FY_CONFIG.callsignDirectorySheet, CALLSIGN_DIRECTORY_HEADERS, [1, 2]);
+}
+
+function inspectStage1Migration_(spreadsheet) {
+  const netsSheet = requireMigrationSheet_(spreadsheet, W8FY_CONFIG.netsSheet);
+  const checkInsSheet = requireMigrationSheet_(spreadsheet, W8FY_CONFIG.checkInsSheet);
+
+  validateMigrationHeaders_(netsSheet, LEGACY_NET_HEADERS, ['net_type']);
+  validateMigrationHeaders_(checkInsSheet, LEGACY_CHECKIN_HEADERS, ['name', 'note']);
+
+  const directorySheet = spreadsheet.getSheetByName(W8FY_CONFIG.callsignDirectorySheet);
+  if (directorySheet && directorySheet.getLastRow() > 0) {
+    validateExactHeaders_(directorySheet, CALLSIGN_DIRECTORY_HEADERS);
+  }
+
+  return {
+    netsSheet: netsSheet,
+    checkInsSheet: checkInsSheet,
+    required: !hasExactHeaders_(netsSheet, NET_HEADERS) ||
+      !hasExactHeaders_(checkInsSheet, CHECKIN_HEADERS) ||
+      !directorySheet || directorySheet.getLastRow() === 0
+  };
+}
+
+function requireMigrationSheet_(spreadsheet, name) {
+  const sheet = spreadsheet.getSheetByName(name);
+  if (!sheet || sheet.getLastRow() === 0) {
+    throw new Error('Cannot migrate because the existing ' + name + ' sheet was not found. No backup or schema changes were made.');
+  }
+  return sheet;
+}
+
+function validateMigrationHeaders_(sheet, legacyHeaders, appendedHeaders) {
+  const expected = legacyHeaders.concat(appendedHeaders);
+  const width = expected.length;
+  const actual = sheet.getRange(1, 1, 1, width).getDisplayValues()[0];
+
+  legacyHeaders.forEach(function (header, index) {
+    if (actual[index] !== header) {
+      throw new Error('The ' + sheet.getName() + ' legacy headers do not match the required W8FY schema. No backup or schema changes were made.');
+    }
+  });
+
+  appendedHeaders.forEach(function (header, index) {
+    const actualHeader = actual[legacyHeaders.length + index];
+    if (actualHeader && actualHeader !== header) {
+      throw new Error(
+        'The ' + sheet.getName() + ' sheet has unexpected data in the column reserved for ' + header +
+        '. No backup or schema changes were made.'
+      );
+    }
+  });
+}
+
+function appendStage1Headers_(netsSheet, checkInsSheet) {
+  if (!hasExactHeaders_(netsSheet, NET_HEADERS)) {
+    netsSheet.getRange(1, LEGACY_NET_HEADERS.length + 1).setValue('net_type');
+    netsSheet.getRange(2, LEGACY_NET_HEADERS.length + 1, Math.max(netsSheet.getMaxRows() - 1, 1), 1).setNumberFormat('@');
+  }
+
+  if (!hasExactHeaders_(checkInsSheet, CHECKIN_HEADERS)) {
+    checkInsSheet.getRange(1, LEGACY_CHECKIN_HEADERS.length + 1, 1, 2).setValues([['name', 'note']]);
+    checkInsSheet.getRange(2, LEGACY_CHECKIN_HEADERS.length + 1, Math.max(checkInsSheet.getMaxRows() - 1, 1), 2).setNumberFormat('@');
+  }
+}
+
+function captureLegacyData_(netsSheet, checkInsSheet) {
+  return {
+    nets: captureSheetRange_(netsSheet, LEGACY_NET_HEADERS.length),
+    checkIns: captureSheetRange_(checkInsSheet, LEGACY_CHECKIN_HEADERS.length)
+  };
+}
+
+function captureSheetRange_(sheet, columnCount) {
+  return JSON.stringify(sheet.getRange(1, 1, sheet.getLastRow(), columnCount).getValues());
+}
+
+function verifyLegacyDataUnchanged_(netsSheet, checkInsSheet, before) {
+  const netsAfter = captureSheetRange_(netsSheet, LEGACY_NET_HEADERS.length);
+  const checkInsAfter = captureSheetRange_(checkInsSheet, LEGACY_CHECKIN_HEADERS.length);
+  if (netsAfter !== before.nets || checkInsAfter !== before.checkIns) {
+    throw new Error('Legacy Nets or CheckIns data changed during migration verification.');
+  }
+}
+
+function verifyBackupData_(backup, expected) {
+  const backupNets = backup.getSheetByName(W8FY_CONFIG.netsSheet);
+  const backupCheckIns = backup.getSheetByName(W8FY_CONFIG.checkInsSheet);
+  if (!backupNets || !backupCheckIns) {
+    throw new Error('The pre-migration backup is missing Nets or CheckIns. Production was not modified.');
+  }
+
+  const backupData = captureLegacyData_(backupNets, backupCheckIns);
+  if (backupData.nets !== expected.nets || backupData.checkIns !== expected.checkIns) {
+    throw new Error('The pre-migration backup could not be verified. Production was not modified.');
+  }
+}
+
+function validateExactHeaders_(sheet, headers) {
+  if (!hasExactHeaders_(sheet, headers)) {
+    throw new Error('The ' + sheet.getName() + ' sheet headers do not match the required W8FY schema. No backup or schema changes were made.');
+  }
+}
+
+function hasExactHeaders_(sheet, headers) {
+  if (sheet.getLastRow() === 0) return false;
+  const actual = sheet.getRange(1, 1, 1, headers.length).getDisplayValues()[0];
+  return headers.every(function (header, index) { return actual[index] === header; });
 }
 
 function ensureSheet_(spreadsheet, name, headers, textColumns) {
@@ -486,7 +720,7 @@ function getRecords_(sheet, headers) {
       record[header] = normalizeStoredValue_(header, row[columnIndex]);
     });
     return record;
-  }).filter(function (record) { return Boolean(record.id); });
+  }).filter(function (record) { return Boolean(record[headers[0]]); });
 }
 
 function normalizeStoredValue_(header, value) {
@@ -500,6 +734,13 @@ function normalizeStoredValue_(header, value) {
       return Utilities.formatDate(value, Session.getScriptTimeZone(), 'HH:mm');
     }
     return value.toISOString();
+  }
+  if (header === 'callsign') {
+    return value === null || typeof value === 'undefined' ? '' : String(value).trim().toUpperCase();
+  }
+  if (header === 'net_type') {
+    const netType = value === null || typeof value === 'undefined' ? '' : String(value).trim();
+    return netType ? netType.toLowerCase() : 'current';
   }
   return value === null || typeof value === 'undefined' ? '' : String(value).trim();
 }
@@ -543,6 +784,38 @@ function requireCallsign_(value) {
     throw new PublicError('Callsign must contain only letters, numbers, or / and be 1–20 characters.');
   }
   return callsign;
+}
+
+function requireNetType_(value) {
+  const netType = typeof value === 'string' ? value.trim().toLowerCase() : '';
+  const normalized = netType || 'current';
+  if (W8FY_CONFIG.netTypes.indexOf(normalized) === -1) {
+    throw new PublicError('Net type must be current, two_meter_ncs, or weather_special.');
+  }
+  return normalized;
+}
+
+function getNetTypeName_(netType) {
+  return W8FY_CONFIG.netTypeNames[requireNetType_(netType)];
+}
+
+function normalizeOptionalText_(value, fieldName) {
+  if (value === null || typeof value === 'undefined') return '';
+  if (typeof value !== 'string') {
+    throw new PublicError(fieldName + ' must be text.');
+  }
+  return value.trim();
+}
+
+function requireNote_(value, netType) {
+  const note = normalizeOptionalText_(value, 'note');
+  if (note.length > W8FY_CONFIG.maxNoteLength) {
+    throw new PublicError('Note must be 80 characters or fewer.');
+  }
+  if (requireNetType_(netType) !== 'weather_special' && note) {
+    throw new PublicError('Notes are only allowed for Weather/Special nets.');
+  }
+  return note;
 }
 
 function requireStationType_(value) {
