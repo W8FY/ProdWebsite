@@ -567,6 +567,40 @@ fieldset .form-label {
   overflow-wrap: anywhere;
 }
 
+.edit-note-button {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.roster-note-editor {
+  min-width: 15rem;
+}
+
+.roster-note-editor-input {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.roster-note-editor-meta {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.35rem;
+}
+
+.roster-note-editor-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.roster-note-editor-error {
+  margin-top: 0.5rem;
+  color: var(--radio-red);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .badge-station,
 .badge-traffic,
 .badge-net-control,

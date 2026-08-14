@@ -65,7 +65,7 @@ const LEGACY_NET_HEADERS = Object.freeze(NET_HEADERS.slice(0, 12));
 const LEGACY_CHECKIN_HEADERS = Object.freeze(CHECKIN_HEADERS.slice(0, 7));
 
 const GET_ACTIONS = Object.freeze(['health', 'getActiveNet', 'getNet', 'lookupCallsign']);
-const POST_ACTIONS = Object.freeze(['createNet', 'addCheckIn', 'removeCheckIn', 'finalizeNet', 'sendReport']);
+const POST_ACTIONS = Object.freeze(['createNet', 'addCheckIn', 'updateCheckInNote', 'removeCheckIn', 'finalizeNet', 'sendReport']);
 
 /**
  * One-time setup. Run this function from the Apps Script editor while the
@@ -202,6 +202,8 @@ function doPost(e) {
         return withScriptLock_(function () { return createNet_(spreadsheet, data); });
       case 'addCheckIn':
         return withScriptLock_(function () { return addCheckIn_(spreadsheet, data); });
+      case 'updateCheckInNote':
+        return withScriptLock_(function () { return updateCheckInNote_(spreadsheet, data); });
       case 'removeCheckIn':
         return withScriptLock_(function () { return removeCheckIn_(spreadsheet, data); });
       case 'finalizeNet':
@@ -299,6 +301,29 @@ function addCheckIn_(spreadsheet, data) {
     note: note
   };
   appendRecord_(spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet), CHECKIN_HEADERS, record);
+  return publicRecord_(record);
+}
+
+function updateCheckInNote_(spreadsheet, data) {
+  const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
+  const checkInId = requireUuid_(readField_(data, ['checkInId', 'checkinId', 'id']), 'checkInId');
+  const net = requireNet_(spreadsheet, netId);
+  requireOpenNet_(net);
+  if (requireNetType_(net.net_type) !== 'weather_special') {
+    throw new PublicError('Notes can only be edited for Weather/Special nets.');
+  }
+
+  const note = requireNote_(data.note, net.net_type);
+  const sheet = spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet);
+  const record = getRecords_(sheet, CHECKIN_HEADERS).find(function (entry) {
+    return entry.id === checkInId && entry.net_id === netId;
+  });
+  if (!record) {
+    throw new PublicError('Check-in not found for this net.');
+  }
+
+  setRecordCells_(sheet, record._rowNumber, CHECKIN_HEADERS, { note: note });
+  record.note = note;
   return publicRecord_(record);
 }
 

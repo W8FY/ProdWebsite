@@ -122,6 +122,12 @@
     addCheckIn: function (data) {
       return request("addCheckIn", { method: "POST", data: data });
     },
+    updateCheckInNote: function (data) {
+      return request("updateCheckInNote", {
+        method: "POST",
+        data: data
+      });
+    },
     removeCheckIn: function (data) {
       return request("removeCheckIn", { method: "POST", data: data });
     },

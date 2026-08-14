@@ -26,6 +26,10 @@
     netControl: createLookupTracker(),
     checkIn: createLookupTracker()
   };
+  var noteEditorState = {
+    editingCheckInId: "",
+    savingCheckInId: ""
+  };
 
   // All persistent operations go through the Google Apps Script API module so
   // the form, roster, totals, and report stay independent of the backend.
@@ -69,6 +73,14 @@
     removeCheckIn: async function (netId, checkInId) {
       var result = await getDatabaseApi().removeCheckIn({ netId: netId, checkInId: checkInId });
       return Boolean(result && result.removed);
+    },
+
+    updateCheckInNote: async function (netId, checkInId, note) {
+      return getDatabaseApi().updateCheckInNote({
+        netId: netId,
+        checkInId: checkInId,
+        note: note
+      });
     },
 
     finalizeNet: async function (netId, endTime) {
@@ -144,6 +156,7 @@
     elements.netForm.addEventListener("submit", startNet);
     elements.checkinForm.addEventListener("submit", addCheckIn);
     elements.rosterBody.addEventListener("click", handleRosterAction);
+    elements.rosterBody.addEventListener("input", handleRosterInput);
     elements.finalizeNetButton.addEventListener("click", finalizeNet);
     elements.retryEmailButton.addEventListener("click", retryEmail);
     elements.startNewNetButton.addEventListener("click", startNewNet);
@@ -244,6 +257,7 @@
   }
 
   function loadNetIntoState(netPayload) {
+    resetNoteEditorState();
     state = mapDatabaseNet(netPayload.net, netPayload.checkIns || [], netPayload.report);
   }
 
@@ -482,15 +496,109 @@
   }
 
   function handleRosterAction(event) {
-    var button = event.target.closest("[data-remove-id]");
-    if (!button) {
+    var editNoteButton = event.target.closest("[data-edit-note-id]");
+    if (editNoteButton) {
+      startEditingNote(editNoteButton.getAttribute("data-edit-note-id"));
       return;
     }
-    removeCheckIn(button.getAttribute("data-remove-id"));
+
+    var saveNoteButton = event.target.closest("[data-save-note-id]");
+    if (saveNoteButton) {
+      saveEditedNote(saveNoteButton.getAttribute("data-save-note-id"));
+      return;
+    }
+
+    var cancelNoteButton = event.target.closest("[data-cancel-note-id]");
+    if (cancelNoteButton) {
+      cancelEditingNote(cancelNoteButton.getAttribute("data-cancel-note-id"));
+      return;
+    }
+
+    var removeButton = event.target.closest("[data-remove-id]");
+    if (removeButton) {
+      removeCheckIn(removeButton.getAttribute("data-remove-id"));
+    }
+  }
+
+  function handleRosterInput(event) {
+    var textarea = event.target.closest("[data-note-editor-id]");
+    if (textarea) {
+      updateRosterNoteCounter(textarea);
+    }
+  }
+
+  function startEditingNote(checkInId) {
+    if (!canEditRosterNotes() || noteEditorState.savingCheckInId) {
+      return;
+    }
+    var entry = findCheckIn(checkInId);
+    if (!entry) {
+      return;
+    }
+
+    noteEditorState.editingCheckInId = entry.id;
+    renderRoster();
+    var textarea = getRosterNoteTextarea(entry.id);
+    if (textarea) {
+      textarea.focus();
+      textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+    }
+  }
+
+  function cancelEditingNote(checkInId) {
+    if (noteEditorState.savingCheckInId || noteEditorState.editingCheckInId !== checkInId) {
+      return;
+    }
+    noteEditorState.editingCheckInId = "";
+    renderRoster();
+  }
+
+  async function saveEditedNote(checkInId) {
+    if (!canEditRosterNotes() || noteEditorState.savingCheckInId || noteEditorState.editingCheckInId !== checkInId) {
+      return;
+    }
+
+    var entry = findCheckIn(checkInId);
+    var textarea = getRosterNoteTextarea(checkInId);
+    if (!entry || !textarea) {
+      return;
+    }
+
+    var note = cleanText(textarea.value);
+    if (note.length > NOTE_MAX_LENGTH) {
+      textarea.classList.add("is-invalid");
+      showRosterNoteError(textarea, "Note must be 80 characters or fewer.");
+      return;
+    }
+
+    noteEditorState.savingCheckInId = checkInId;
+    setRosterNoteEditorBusy(textarea, true);
+    setInterfaceLocking();
+
+    try {
+      var updatedRecord = await netRepository.updateCheckInNote(state.id, checkInId, note);
+      var updatedEntry = mapDatabaseCheckIn(updatedRecord);
+      if (!updatedEntry || updatedEntry.id !== checkInId) {
+        throw new Error("The database did not return the updated check-in.");
+      }
+      state.checkIns = state.checkIns.map(function (checkIn) {
+        return checkIn.id === checkInId ? updatedEntry : checkIn;
+      });
+      noteEditorState.editingCheckInId = "";
+      noteEditorState.savingCheckInId = "";
+      renderRoster();
+      setInterfaceLocking();
+      showMessage(elements.checkinFormMessage, entry.callsign + " note was saved.", true);
+    } catch (error) {
+      noteEditorState.savingCheckInId = "";
+      setRosterNoteEditorBusy(textarea, false);
+      setInterfaceLocking();
+      showRosterNoteError(textarea, "The note was not saved. " + getErrorMessage(error));
+    }
   }
 
   async function removeCheckIn(checkInId) {
-    if (!databaseReady || state.finalized) {
+    if (!databaseReady || state.finalized || noteEditorState.savingCheckInId) {
       return;
     }
 
@@ -523,7 +631,7 @@
   }
 
   async function finalizeNet() {
-    if (!databaseReady || !state.active || state.finalized) {
+    if (!databaseReady || !state.active || state.finalized || noteEditorState.savingCheckInId) {
       return;
     }
 
@@ -596,6 +704,7 @@
     }
 
     clearLastNetId();
+    resetNoteEditorState();
     state = createEmptyState();
     elements.netForm.reset();
     resetCheckInForm();
@@ -709,7 +818,7 @@
       control.disabled = !databaseReady || !state.active || state.finalized;
     });
 
-    elements.finalizeNetButton.disabled = !databaseReady || !state.active || state.finalized;
+    elements.finalizeNetButton.disabled = !databaseReady || !state.active || state.finalized || Boolean(noteEditorState.savingCheckInId);
     elements.retryEmailButton.disabled = !databaseReady || !state.finalized || state.emailSent || state.emailStatus === "sending";
   }
 
@@ -718,6 +827,7 @@
     // The Apps Script backend returns check-ins in authoritative report order.
     var sorted = state.checkIns.slice();
     var includeNotes = isWeatherNet();
+    var allowNoteEditing = canEditRosterNotes();
 
     sorted.forEach(function (entry, index) {
       var row = document.createElement("tr");
@@ -746,8 +856,10 @@
       row.appendChild(trafficCell);
 
       if (includeNotes) {
-        var noteCell = appendTextCell(row, entry.note || "—");
+        var noteCell = document.createElement("td");
         noteCell.classList.add("roster-note-cell");
+        renderRosterNoteCell(noteCell, entry, allowNoteEditing);
+        row.appendChild(noteCell);
       }
 
       var actionCell = document.createElement("td");
@@ -1134,6 +1246,128 @@
     cell.textContent = text;
     row.appendChild(cell);
     return cell;
+  }
+
+  function renderRosterNoteCell(cell, entry, allowEditing) {
+    if (allowEditing && noteEditorState.editingCheckInId === entry.id) {
+      var editor = document.createElement("div");
+      editor.className = "roster-note-editor";
+
+      var textarea = document.createElement("textarea");
+      textarea.className = "form-control roster-note-editor-input";
+      textarea.value = entry.note;
+      textarea.maxLength = NOTE_MAX_LENGTH;
+      textarea.rows = 3;
+      textarea.setAttribute("data-note-editor-id", entry.id);
+      textarea.setAttribute("aria-label", "Edit note for " + entry.callsign);
+      editor.appendChild(textarea);
+
+      var meta = document.createElement("div");
+      meta.className = "roster-note-editor-meta";
+      var counter = document.createElement("span");
+      counter.className = "note-counter";
+      counter.setAttribute("data-note-editor-counter", entry.id);
+      meta.appendChild(counter);
+      editor.appendChild(meta);
+
+      var actions = document.createElement("div");
+      actions.className = "roster-note-editor-actions";
+      actions.appendChild(createRosterNoteButton("Save", "btn btn-primary btn-sm", "data-save-note-id", entry.id));
+      actions.appendChild(createRosterNoteButton("Cancel", "btn btn-outline-secondary btn-sm", "data-cancel-note-id", entry.id));
+      editor.appendChild(actions);
+
+      var error = document.createElement("div");
+      error.className = "roster-note-editor-error";
+      error.hidden = true;
+      error.setAttribute("role", "alert");
+      editor.appendChild(error);
+      cell.appendChild(editor);
+      updateRosterNoteCounter(textarea);
+      return;
+    }
+
+    var noteText = document.createElement("div");
+    noteText.className = "roster-note-text";
+    noteText.textContent = entry.note || "—";
+    cell.appendChild(noteText);
+
+    if (allowEditing) {
+      cell.appendChild(createRosterNoteButton("Edit Note", "btn btn-outline-primary btn-sm edit-note-button", "data-edit-note-id", entry.id));
+    }
+  }
+
+  function createRosterNoteButton(label, className, attribute, checkInId) {
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = className;
+    button.textContent = label;
+    button.setAttribute(attribute, checkInId);
+    return button;
+  }
+
+  function updateRosterNoteCounter(textarea) {
+    var editor = textarea.closest(".roster-note-editor");
+    var counter = editor ? editor.querySelector("[data-note-editor-counter]") : null;
+    if (!counter) {
+      return;
+    }
+    var length = textarea.value.length;
+    counter.textContent = length + " / " + NOTE_MAX_LENGTH;
+    counter.classList.toggle("limit-reached", length >= NOTE_MAX_LENGTH);
+    counter.classList.toggle("over-limit", length > NOTE_MAX_LENGTH);
+    if (length <= NOTE_MAX_LENGTH) {
+      textarea.classList.remove("is-invalid");
+    }
+  }
+
+  function showRosterNoteError(textarea, message) {
+    var editor = textarea.closest(".roster-note-editor");
+    var error = editor ? editor.querySelector(".roster-note-editor-error") : null;
+    if (error) {
+      error.textContent = message;
+      error.hidden = false;
+    }
+  }
+
+  function setRosterNoteEditorBusy(textarea, busy) {
+    var editor = textarea.closest(".roster-note-editor");
+    if (!editor) {
+      return;
+    }
+    elements.rosterBody.querySelectorAll("[data-edit-note-id]").forEach(function (button) {
+      button.disabled = busy;
+    });
+    editor.querySelectorAll("textarea, button").forEach(function (control) {
+      control.disabled = busy;
+    });
+    var saveButton = editor.querySelector("[data-save-note-id]");
+    if (saveButton) {
+      saveButton.textContent = busy ? "Saving…" : "Save";
+      saveButton.setAttribute("aria-busy", busy ? "true" : "false");
+    }
+  }
+
+  function getRosterNoteTextarea(checkInId) {
+    return elements.rosterBody.querySelector('[data-note-editor-id="' + checkInId + '"]');
+  }
+
+  function findCheckIn(checkInId) {
+    return state.checkIns.find(function (entry) {
+      return entry.id === checkInId;
+    });
+  }
+
+  function canEditRosterNotes() {
+    return databaseReady && state.active && !state.finalized && isWeatherNet();
+  }
+
+  function resetNoteEditorState() {
+    noteEditorState.editingCheckInId = "";
+    noteEditorState.savingCheckInId = "";
+  }
+
+  function getErrorMessage(error) {
+    return error && error.message ? error.message : DATABASE_ERROR_MESSAGE;
   }
 
   function createBadge(text, className) {
