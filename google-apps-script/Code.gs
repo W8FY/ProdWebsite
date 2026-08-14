@@ -464,6 +464,7 @@ function buildFinalReport_(net, checkIns) {
   const sortedCheckIns = sortCheckIns_(checkIns);
   const netType = requireNetType_(net.net_type);
   const netTypeName = getNetTypeName_(netType);
+  const durationMinutes = calculateDurationMinutes_(net.start_time, net.end_time);
   const totals = {
     total: sortedCheckIns.length,
     traffic: 0,
@@ -495,14 +496,15 @@ function buildFinalReport_(net, checkIns) {
     netControl: net.net_control_callsign,
     startTime: net.start_time,
     endTime: net.end_time,
+    durationMinutes: durationMinutes,
     checkIns: sortedCheckIns.map(publicRecord_),
     groups: groups,
     totals: totals,
-    text: buildTextReport_(net, groups, totals, netTypeName)
+    text: buildTextReport_(net, groups, totals, netTypeName, durationMinutes)
   };
 }
 
-function buildTextReport_(net, groups, totals, netTypeName) {
+function buildTextReport_(net, groups, totals, netTypeName, durationMinutes) {
   const lines = [
     'W8FY AMATEUR RADIO NET REPORT',
     '',
@@ -510,7 +512,8 @@ function buildTextReport_(net, groups, totals, netTypeName) {
     'Net Date: ' + net.net_date,
     'Net Control: ' + net.net_control_callsign,
     'Start Time: ' + net.start_time,
-    'End Time: ' + (net.end_time || '—')
+    'End Time: ' + (net.end_time || '—'),
+    'Net Duration: ' + durationMinutes + ' minutes'
   ];
 
   const includeNotes = requireNetType_(net.net_type) === 'weather_special';
@@ -886,6 +889,15 @@ function requireTime_(value, fieldName) {
     throw new PublicError(fieldName + ' must use 24-hour HH:MM.');
   }
   return time;
+}
+
+function calculateDurationMinutes_(startTime, endTime) {
+  const startParts = requireTime_(startTime, 'startTime').split(':');
+  const endParts = requireTime_(endTime, 'endTime').split(':');
+  const startMinutes = Number(startParts[0]) * 60 + Number(startParts[1]);
+  const endMinutes = Number(endParts[0]) * 60 + Number(endParts[1]);
+  const elapsedMinutes = endMinutes - startMinutes;
+  return elapsedMinutes < 0 ? elapsedMinutes + 1440 : elapsedMinutes;
 }
 
 function currentTime_() {

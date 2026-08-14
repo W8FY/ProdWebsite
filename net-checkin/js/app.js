@@ -960,6 +960,7 @@
       "Net Control: " + netState.netControlCallsign,
       "Start Time: " + formatTime(netState.startTime),
       "End Time: " + formatTime(netState.endTime),
+      "Net Duration: " + calculateDurationMinutes(netState.startTime, netState.endTime) + " minutes",
       "",
       "--------------------------------",
       "",
@@ -1231,6 +1232,19 @@
     var parts = value.split(":");
     var hour = Number(parts[0]);
     return (hour % 12 || 12) + ":" + parts[1] + (hour >= 12 ? " PM" : " AM");
+  }
+
+  function calculateDurationMinutes(startTime, endTime) {
+    var timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    var startMatch = cleanText(startTime).match(timePattern);
+    var endMatch = cleanText(endTime).match(timePattern);
+    if (!startMatch || !endMatch) {
+      return 0;
+    }
+    var startMinutes = Number(startMatch[1]) * 60 + Number(startMatch[2]);
+    var endMinutes = Number(endMatch[1]) * 60 + Number(endMatch[2]);
+    var elapsedMinutes = endMinutes - startMinutes;
+    return elapsedMinutes < 0 ? elapsedMinutes + 1440 : elapsedMinutes;
   }
 
   function formatDateTime(value) {
