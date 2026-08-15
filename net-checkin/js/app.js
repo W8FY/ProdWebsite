@@ -5,6 +5,7 @@
   var DATABASE_ERROR_MESSAGE = "Unable to connect to the net database. Please check your internet connection and try again.";
   var NOTE_MAX_LENGTH = 80;
   var LOOKUP_DELAY_MS = 300;
+  var FINALIZED_INACTIVITY_MS = 30 * 60 * 1000;
   var DEFAULT_NET_TYPE = "two_meter_ncs";
   var NET_TYPE_NAMES = {
     current: "Current Net",
@@ -23,6 +24,8 @@
   var state = createEmptyState();
   var databaseReady = false;
   var pdfDownloadBusy = false;
+  var finalizedInactivityTimer = null;
+  var finalizedActivityListenersBound = false;
   var lookupTrackers = {
     netControl: createLookupTracker(),
     checkIn: createLookupTracker()
@@ -142,6 +145,7 @@
     elements.rosterNoteHeading = document.getElementById("roster-note-heading");
     elements.rosterCount = document.getElementById("roster-count");
     elements.finalizeNetButton = document.getElementById("finalize-net-button");
+    elements.finalizedInactivityNote = document.getElementById("finalized-inactivity-note");
     elements.finalReportSection = document.getElementById("final-report-section");
     elements.finalReport = document.getElementById("final-report");
     elements.emailStatusPanel = document.getElementById("email-status-panel");
@@ -168,6 +172,7 @@
     elements.retryEmailButton.addEventListener("click", retryEmail);
     elements.downloadReportPdfButton.addEventListener("click", downloadFinalReportPdf);
     elements.startNewNetButton.addEventListener("click", startNewNet);
+    bindFinalizedActivityListeners();
     elements.endTime.addEventListener("change", function () {
       if (state.active && !state.finalized) {
         state.endTime = cleanText(elements.endTime.value);
@@ -699,6 +704,7 @@
       renderStatus();
       renderEmailStatus();
       setInterfaceLocking();
+      restartFinalizedInactivityTimer();
     }
   }
 
@@ -723,6 +729,7 @@
       pdfDownloadBusy = false;
       setButtonBusy(elements.downloadReportPdfButton, false, "Download Final Report PDF");
       setInterfaceLocking();
+      restartFinalizedInactivityTimer();
     }
   }
 
@@ -735,6 +742,12 @@
       return;
     }
 
+    resetToStartNetScreen();
+  }
+
+  function resetToStartNetScreen() {
+    stopFinalizedInactivityTimer();
+
     clearLastNetId();
     resetNoteEditorState();
     pdfDownloadBusy = false;
@@ -743,11 +756,62 @@
     elements.netForm.reset();
     resetCheckInForm();
     resetLookupTracker("netControl", elements.netControlNameStatus);
+    clearNetValidation();
     clearMessage(elements.netFormMessage);
     clearMessage(elements.checkinFormMessage);
     renderApplication();
     elements.netControlCallsign.focus();
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function bindFinalizedActivityListeners() {
+    if (finalizedActivityListenersBound) {
+      return;
+    }
+
+    ["pointerdown", "click", "keydown", "touchstart"].forEach(function (eventName) {
+      document.addEventListener(eventName, handleFinalizedActivity, { passive: true });
+    });
+    window.addEventListener("scroll", handleFinalizedActivity, { passive: true });
+    finalizedActivityListenersBound = true;
+  }
+
+  function handleFinalizedActivity() {
+    if (state.finalized) {
+      restartFinalizedInactivityTimer();
+    }
+  }
+
+  function finalizedOperationBusy() {
+    return pdfDownloadBusy || state.emailStatus === "sending";
+  }
+
+  function restartFinalizedInactivityTimer() {
+    stopFinalizedInactivityTimer();
+    if (!state.finalized) {
+      return;
+    }
+
+    finalizedInactivityTimer = window.setTimeout(handleFinalizedInactivityTimeout, FINALIZED_INACTIVITY_MS);
+  }
+
+  function stopFinalizedInactivityTimer() {
+    if (finalizedInactivityTimer !== null) {
+      window.clearTimeout(finalizedInactivityTimer);
+      finalizedInactivityTimer = null;
+    }
+  }
+
+  function handleFinalizedInactivityTimeout() {
+    finalizedInactivityTimer = null;
+    if (!state.finalized) {
+      return;
+    }
+    if (finalizedOperationBusy()) {
+      return;
+    }
+
+    resetToStartNetScreen();
   }
 
   function renderApplication() {
@@ -759,6 +823,11 @@
     renderFinalReport();
     renderEmailStatus();
     setInterfaceLocking();
+    if (state.finalized) {
+      restartFinalizedInactivityTimer();
+    } else {
+      stopFinalizedInactivityTimer();
+    }
   }
 
   function renderNetTypeFeatures() {
@@ -853,10 +922,12 @@
     });
 
     elements.finalizeNetButton.disabled = !databaseReady || !state.active || state.finalized || Boolean(noteEditorState.savingCheckInId);
+    elements.startNewNetButton.hidden = !state.finalized;
+    elements.finalizedInactivityNote.hidden = !state.finalized;
     elements.retryEmailButton.disabled = !databaseReady || !state.finalized || state.emailSent || state.emailStatus === "sending";
     elements.downloadReportPdfButton.hidden = !state.finalized;
     elements.downloadReportPdfButton.disabled = !databaseReady || !state.finalized || pdfDownloadBusy;
-    elements.startNewNetButton.disabled = !state.finalized || pdfDownloadBusy;
+    elements.startNewNetButton.disabled = !state.finalized || pdfDownloadBusy || state.emailStatus === "sending";
   }
 
   function renderRoster() {

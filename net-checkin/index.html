@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/style.css?v=20260814-site-theme">
+  <link rel="stylesheet" href="css/style.css?v=20260815-auto-new-net-30m">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -292,8 +292,12 @@
             </div>
 
             <div class="net-actions">
-              <button id="finalize-net-button" class="btn btn-warning btn-lg action-button" type="button">Finalize Net</button>
+              <div class="net-action-buttons">
+                <button id="finalize-net-button" class="btn btn-warning btn-lg action-button" type="button">Finalize Net</button>
+                <button id="start-new-net-button" class="btn btn-primary btn-lg action-button" type="button" hidden>Start New Net</button>
+              </div>
               <p class="stage-note">Finalizing locks the net, displays the final report, and asks the Google backend to email it.</p>
+              <p id="finalized-inactivity-note" class="stage-note finalized-inactivity-note" hidden>This screen will return to Start Net after 30 minutes of inactivity.</p>
             </div>
           </section>
         </div>
@@ -343,7 +347,6 @@
       <pre id="final-report" class="final-report" tabindex="0"></pre>
       <div class="final-report-actions">
         <button id="download-report-pdf-button" class="btn btn-outline-primary btn-lg action-button" type="button" hidden>Download Final Report PDF</button>
-        <button id="start-new-net-button" class="btn btn-primary btn-lg action-button" type="button">Start New Net</button>
       </div>
       <p id="pdf-download-status" class="pdf-download-status" role="status" aria-live="polite" hidden></p>
     </section>
@@ -373,6 +376,6 @@
   <script src="js/config.js"></script>
   <script src="js/site-navigation.js?v=20260814-site-theme"></script>
   <script src="js/google-apps-script.js?v=20260814-final-report-pdf"></script>
-  <script src="js/app.js?v=20260814-final-report-pdf"></script>
+  <script src="js/app.js?v=20260815-auto-new-net-30m"></script>
 </body>
 </html>
