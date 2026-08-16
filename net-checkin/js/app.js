@@ -34,6 +34,7 @@
     editingCheckInId: "",
     savingCheckInId: ""
   };
+  var roleSavingCheckInId = "";
 
   // All persistent operations go through the Google Apps Script API module so
   // the form, roster, totals, and report stay independent of the backend.
@@ -70,7 +71,16 @@
         name: checkIn.name,
         stationType: checkIn.stationType,
         traffic: checkIn.traffic,
-        note: checkIn.note
+        note: checkIn.note,
+        isNetControl: checkIn.isNetControl
+      });
+    },
+
+    setNetControlRole: async function (netId, checkInId, isNetControl) {
+      return getDatabaseApi().setNetControlRole({
+        netId: netId,
+        checkInId: checkInId,
+        isNetControl: isNetControl
       });
     },
 
@@ -136,6 +146,8 @@
     elements.checkinCallsign = document.getElementById("checkin-callsign");
     elements.checkinName = document.getElementById("checkin-name");
     elements.checkinNameStatus = document.getElementById("checkin-name-status");
+    elements.checkinNetControlGroup = document.getElementById("checkin-net-control-group");
+    elements.checkinIsNetControl = document.getElementById("checkin-is-net-control");
     elements.checkinNoteGroup = document.getElementById("checkin-note-group");
     elements.checkinNote = document.getElementById("checkin-note");
     elements.checkinNoteCounter = document.getElementById("checkin-note-counter");
@@ -310,14 +322,17 @@
 
   function mapDatabaseNet(netRecord, checkInRecords, report) {
     var mappedCheckIns = (checkInRecords || []).map(mapDatabaseCheckIn).filter(Boolean);
-    var netControl = mappedCheckIns.find(function (entry) { return entry.isNetControl; });
+    var primaryCallsign = normalizeCallsign(netRecord.net_control_callsign);
+    var netControl = mappedCheckIns.find(function (entry) {
+      return entry.isNetControl && entry.callsign === primaryCallsign;
+    });
     return {
       id: cleanText(netRecord.id),
       active: true,
       finalized: Boolean(netRecord.finalized),
       netType: normalizeNetType(netRecord.net_type),
       netDate: cleanText(netRecord.net_date),
-      netControlCallsign: normalizeCallsign(netRecord.net_control_callsign),
+      netControlCallsign: primaryCallsign,
       netControlName: netControl ? netControl.name : "",
       netControlStation: cleanText(netRecord.net_control_station_type),
       netControlTraffic: netRecord.net_control_traffic ? "Yes" : "No",
@@ -442,6 +457,7 @@
     var station = getSelectedValue("checkinStation");
     var traffic = getSelectedValue("checkinTraffic");
     var note = isWeatherNet() ? cleanText(elements.checkinNote.value) : "";
+    var isNetControl = isWeatherNet() && elements.checkinIsNetControl.checked;
     var errors = [];
 
     if (!callsign) {
@@ -488,7 +504,7 @@
         stationType: station,
         traffic: traffic,
         note: note,
-        isNetControl: false
+        isNetControl: isNetControl
       });
       await reloadCurrentNet();
       renderRoster();
@@ -530,6 +546,15 @@
     var removeButton = event.target.closest("[data-remove-id]");
     if (removeButton) {
       removeCheckIn(removeButton.getAttribute("data-remove-id"));
+      return;
+    }
+
+    var roleButton = event.target.closest("[data-net-control-role-id]");
+    if (roleButton) {
+      setNetControlRole(
+        roleButton.getAttribute("data-net-control-role-id"),
+        roleButton.getAttribute("data-net-control-role") === "true"
+      );
     }
   }
 
@@ -611,7 +636,7 @@
   }
 
   async function removeCheckIn(checkInId) {
-    if (!databaseReady || state.finalized || noteEditorState.savingCheckInId) {
+    if (!databaseReady || state.finalized || noteEditorState.savingCheckInId || roleSavingCheckInId) {
       return;
     }
 
@@ -643,8 +668,47 @@
     }
   }
 
+  async function setNetControlRole(checkInId, isNetControl) {
+    if (!canManageNetControlRoles() || roleSavingCheckInId || noteEditorState.savingCheckInId) {
+      return;
+    }
+
+    var entry = findCheckIn(checkInId);
+    if (!entry || isPrimaryNetControl(entry) || entry.isNetControl === isNetControl) {
+      return;
+    }
+
+    var action = isNetControl ? "make " + entry.callsign + " a Net Control" : "remove the Net Control role from " + entry.callsign;
+    if (!window.confirm("Are you sure you want to " + action + "?")) {
+      return;
+    }
+
+    clearMessage(elements.checkinFormMessage);
+    roleSavingCheckInId = checkInId;
+    renderRoster();
+    setInterfaceLocking();
+
+    try {
+      var updatedRecord = await netRepository.setNetControlRole(state.id, checkInId, isNetControl);
+      var updatedEntry = mapDatabaseCheckIn(updatedRecord);
+      if (!updatedEntry || updatedEntry.id !== checkInId) {
+        throw new Error("The database did not return the updated check-in.");
+      }
+      state.checkIns = state.checkIns.map(function (checkIn) {
+        return checkIn.id === checkInId ? updatedEntry : checkIn;
+      });
+      showMessage(elements.checkinFormMessage, entry.callsign + (isNetControl ? " is now a Net Control." : " is no longer a Net Control."), true);
+    } catch (error) {
+      showOperationError(elements.checkinFormMessage, "The Net Control role was not changed.", error);
+    } finally {
+      roleSavingCheckInId = "";
+      renderRoster();
+      setInterfaceLocking();
+    }
+  }
+
   async function finalizeNet() {
-    if (!databaseReady || !state.active || state.finalized || noteEditorState.savingCheckInId) {
+    if (!databaseReady || !state.active || state.finalized || noteEditorState.savingCheckInId || roleSavingCheckInId) {
       return;
     }
 
@@ -832,12 +896,17 @@
 
   function renderNetTypeFeatures() {
     var includeNotes = isWeatherNet();
+    var allowAdditionalNetControls = state.active && !state.finalized && includeNotes;
     elements.checkinNoteGroup.hidden = !includeNotes;
+    elements.checkinNetControlGroup.hidden = !allowAdditionalNetControls;
     elements.rosterNoteHeading.hidden = !includeNotes;
     elements.rosterHeading.textContent = getNetTypeName(state.netType) + " Roster";
     elements.rosterBody.closest("table").classList.toggle("weather-roster", includeNotes);
     if (!includeNotes) {
       elements.checkinNote.value = "";
+    }
+    if (!allowAdditionalNetControls) {
+      elements.checkinIsNetControl.checked = false;
     }
     updateNoteCounter();
   }
@@ -921,7 +990,7 @@
       control.disabled = !databaseReady || !state.active || state.finalized;
     });
 
-    elements.finalizeNetButton.disabled = !databaseReady || !state.active || state.finalized || Boolean(noteEditorState.savingCheckInId);
+    elements.finalizeNetButton.disabled = !databaseReady || !state.active || state.finalized || Boolean(noteEditorState.savingCheckInId) || Boolean(roleSavingCheckInId);
     elements.startNewNetButton.hidden = !state.finalized;
     elements.finalizedInactivityNote.hidden = !state.finalized;
     elements.retryEmailButton.disabled = !databaseReady || !state.finalized || state.emailSent || state.emailStatus === "sending";
@@ -971,23 +1040,57 @@
       }
 
       var actionCell = document.createElement("td");
-      if (entry.isNetControl) {
-        actionCell.appendChild(createBadge("Locked", "badge-locked"));
-      } else {
-        var removeButton = document.createElement("button");
-        removeButton.type = "button";
-        removeButton.className = "btn btn-outline-danger btn-sm remove-checkin-button";
-        removeButton.textContent = "Remove";
-        removeButton.setAttribute("data-remove-id", entry.id);
-        removeButton.setAttribute("aria-label", "Remove " + entry.callsign + " from the net");
-        removeButton.disabled = !databaseReady || state.finalized;
-        actionCell.appendChild(removeButton);
-      }
+      renderRosterActions(actionCell, entry);
       row.appendChild(actionCell);
       elements.rosterBody.appendChild(row);
     });
 
     elements.rosterCount.textContent = sorted.length + (sorted.length === 1 ? " station" : " stations");
+  }
+
+  function renderRosterActions(actionCell, entry) {
+    var actions = document.createElement("div");
+    actions.className = "roster-actions";
+
+    if (canManageNetControlRoles()) {
+      if (isPrimaryNetControl(entry)) {
+        actions.appendChild(createBadge("Primary Net Control", "badge-locked"));
+      } else if (entry.isNetControl) {
+        actions.appendChild(createRoleButton(entry, false, "Remove Net Control Role"));
+      } else {
+        actions.appendChild(createRoleButton(entry, true, "Make Net Control"));
+        actions.appendChild(createRemoveButton(entry));
+      }
+    } else if (entry.isNetControl) {
+      actions.appendChild(createBadge("Locked", "badge-locked"));
+    } else if (!state.finalized) {
+      actions.appendChild(createRemoveButton(entry));
+    }
+
+    actionCell.appendChild(actions);
+  }
+
+  function createRoleButton(entry, isNetControl, label) {
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn btn-outline-primary btn-sm net-control-role-button";
+    button.textContent = roleSavingCheckInId === entry.id ? "Saving…" : label;
+    button.setAttribute("data-net-control-role-id", entry.id);
+    button.setAttribute("data-net-control-role", String(isNetControl));
+    button.setAttribute("aria-label", label + " for " + entry.callsign);
+    button.disabled = Boolean(roleSavingCheckInId) || !databaseReady;
+    return button;
+  }
+
+  function createRemoveButton(entry) {
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn btn-outline-danger btn-sm remove-checkin-button";
+    button.textContent = "Remove";
+    button.setAttribute("data-remove-id", entry.id);
+    button.setAttribute("aria-label", "Remove " + entry.callsign + " from the net");
+    button.disabled = !databaseReady || state.finalized || Boolean(roleSavingCheckInId);
+    return button;
   }
 
   function renderTotals() {
@@ -1065,7 +1168,7 @@
       "",
       "Net Type: " + getNetTypeName(netState.netType),
       "Net Date: " + netState.netDate,
-      "Net Control: " + netState.netControlCallsign,
+      "Net Controls: " + formatNetControls(netState),
       "Start Time: " + formatTime(netState.startTime),
       "End Time: " + formatTime(netState.endTime),
       "Net Duration: " + calculateDurationMinutes(netState.startTime, netState.endTime) + " minutes",
@@ -1089,6 +1192,21 @@
       "SHORT TIME: " + totals["Short Time"]
     );
     return lines.join("\n");
+  }
+
+  function formatNetControls(netState) {
+    return netState.checkIns.filter(function (entry) {
+      return entry.isNetControl;
+    }).sort(function (left, right) {
+      var leftIsPrimary = isPrimaryNetControl(left, netState);
+      var rightIsPrimary = isPrimaryNetControl(right, netState);
+      if (leftIsPrimary !== rightIsPrimary) {
+        return leftIsPrimary ? -1 : 1;
+      }
+      return 0;
+    }).map(function (entry) {
+      return entry.callsign + " - " + (entry.name || "N/A");
+    }).join("; ");
   }
 
   function appendReportGroups(lines, sorted, trafficValue, includeNotes) {
@@ -1292,6 +1410,15 @@
 
   function isWeatherNet() {
     return state.netType === "weather_special";
+  }
+
+  function canManageNetControlRoles() {
+    return databaseReady && state.active && !state.finalized && isWeatherNet();
+  }
+
+  function isPrimaryNetControl(entry, netState) {
+    var currentState = netState || state;
+    return entry.callsign === currentState.netControlCallsign;
   }
 
   function cleanText(value) {

@@ -128,6 +128,9 @@
         data: data
       });
     },
+    setNetControlRole: function (data) {
+      return request("setNetControlRole", { method: "POST", data: data });
+    },
     removeCheckIn: function (data) {
       return request("removeCheckIn", { method: "POST", data: data });
     },

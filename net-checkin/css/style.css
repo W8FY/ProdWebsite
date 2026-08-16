@@ -636,6 +636,14 @@ fieldset .form-label {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.net-control-check {
+  padding: 0.85rem 1rem 0.85rem 2.75rem;
+  background: #eef6fb;
+  border: 1px solid #c7dceb;
+  border-radius: 0.65rem;
+  font-weight: 800;
+}
+
 .option-button {
   min-height: 3rem;
   display: grid;
@@ -921,6 +929,20 @@ fieldset .form-label {
   font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
+}
+
+.roster-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  min-width: 10rem;
+}
+
+.net-control-role-button {
+  min-height: 2.35rem;
+  font-size: 0.75rem;
+  font-weight: 800;
 }
 
 .report-card {

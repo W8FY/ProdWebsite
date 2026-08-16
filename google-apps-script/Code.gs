@@ -64,7 +64,7 @@ const LEGACY_NET_HEADERS = Object.freeze(NET_HEADERS.slice(0, 12));
 const LEGACY_CHECKIN_HEADERS = Object.freeze(CHECKIN_HEADERS.slice(0, 7));
 
 const GET_ACTIONS = Object.freeze(['health', 'getActiveNet', 'getNet', 'lookupCallsign']);
-const POST_ACTIONS = Object.freeze(['createNet', 'addCheckIn', 'updateCheckInNote', 'removeCheckIn', 'finalizeNet', 'sendReport', 'downloadReportPdf']);
+const POST_ACTIONS = Object.freeze(['createNet', 'addCheckIn', 'updateCheckInNote', 'setNetControlRole', 'removeCheckIn', 'finalizeNet', 'sendReport', 'downloadReportPdf']);
 
 /**
  * One-time setup. Run this function from the Apps Script editor while the
@@ -203,6 +203,8 @@ function doPost(e) {
         return withScriptLock_(function () { return addCheckIn_(spreadsheet, data); });
       case 'updateCheckInNote':
         return withScriptLock_(function () { return updateCheckInNote_(spreadsheet, data); });
+      case 'setNetControlRole':
+        return withScriptLock_(function () { return setNetControlRole_(spreadsheet, data); });
       case 'removeCheckIn':
         return withScriptLock_(function () { return removeCheckIn_(spreadsheet, data); });
       case 'finalizeNet':
@@ -285,6 +287,10 @@ function addCheckIn_(spreadsheet, data) {
   const stationType = requireStationType_(readField_(data, ['stationType', 'station_type']));
   const traffic = requireBoolean_(data.traffic, 'traffic');
   const note = requireNote_(data.note, net.net_type);
+  const requestedNetControl = typeof data.isNetControl === 'undefined'
+    ? false
+    : requireBoolean_(data.isNetControl, 'isNetControl');
+  const isNetControl = requireNetType_(net.net_type) === 'weather_special' && requestedNetControl;
   const checkIns = getCheckInsForNet_(spreadsheet, netId);
   if (checkIns.some(function (entry) { return entry.callsign === callsign; })) {
     throw new PublicError(callsign + ' is already checked into this net.');
@@ -296,12 +302,38 @@ function addCheckIn_(spreadsheet, data) {
     callsign: callsign,
     station_type: stationType,
     traffic: traffic,
-    is_net_control: false,
+    is_net_control: isNetControl,
     created_at: new Date(),
     name: name,
     note: note
   };
   appendRecord_(spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet), CHECKIN_HEADERS, record);
+  return publicRecord_(record);
+}
+
+function setNetControlRole_(spreadsheet, data) {
+  const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
+  const checkInId = requireUuid_(readField_(data, ['checkInId', 'checkinId', 'id']), 'checkInId');
+  const isNetControl = requireBoolean_(readField_(data, ['isNetControl', 'is_net_control']), 'isNetControl');
+  const net = requireNet_(spreadsheet, netId);
+  requireOpenNet_(net);
+  if (requireNetType_(net.net_type) !== 'weather_special') {
+    throw new PublicError('Net Control roles can only be changed for Weather/Special nets.');
+  }
+
+  const sheet = spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet);
+  const record = getRecords_(sheet, CHECKIN_HEADERS).find(function (entry) {
+    return entry.id === checkInId && entry.net_id === netId;
+  });
+  if (!record) {
+    throw new PublicError('Check-in not found for this net.');
+  }
+  if (!isNetControl && record.callsign === String(net.net_control_callsign).trim().toUpperCase()) {
+    throw new PublicError('The primary Net Control cannot be demoted.');
+  }
+
+  setRecordCells_(sheet, record._rowNumber, CHECKIN_HEADERS, { is_net_control: isNetControl });
+  record.is_net_control = isNetControl;
   return publicRecord_(record);
 }
 
@@ -516,6 +548,7 @@ function buildNetPayload_(spreadsheet, net, includeReport) {
 
 function buildFinalReport_(net, checkIns) {
   const sortedCheckIns = sortCheckIns_(checkIns);
+  const netControls = buildNetControls_(net, sortedCheckIns);
   const netType = requireNetType_(net.net_type);
   const netTypeName = getNetTypeName_(netType);
   const durationMinutes = calculateDurationMinutes_(net.start_time, net.end_time);
@@ -548,23 +581,40 @@ function buildFinalReport_(net, checkIns) {
     netTypeName: netTypeName,
     netDate: net.net_date,
     netControl: net.net_control_callsign,
+    netControls: netControls.map(publicRecord_),
     startTime: net.start_time,
     endTime: net.end_time,
     durationMinutes: durationMinutes,
     checkIns: sortedCheckIns.map(publicRecord_),
     groups: groups,
     totals: totals,
-    text: buildTextReport_(net, groups, totals, netTypeName, durationMinutes)
+    text: buildTextReport_(net, groups, totals, netTypeName, durationMinutes, netControls)
   };
 }
 
-function buildTextReport_(net, groups, totals, netTypeName, durationMinutes) {
+function buildNetControls_(net, checkIns) {
+  return checkIns.filter(function (entry) { return entry.is_net_control; }).sort(function (left, right) {
+    const primaryCallsign = String(net.net_control_callsign).trim().toUpperCase();
+    const leftIsPrimary = left.callsign === primaryCallsign;
+    const rightIsPrimary = right.callsign === primaryCallsign;
+    if (leftIsPrimary !== rightIsPrimary) return leftIsPrimary ? -1 : 1;
+    return 0;
+  });
+}
+
+function formatNetControls_(netControls) {
+  return netControls.map(function (entry) {
+    return entry.callsign + ' - ' + (entry.name || 'N/A');
+  }).join('; ');
+}
+
+function buildTextReport_(net, groups, totals, netTypeName, durationMinutes, netControls) {
   const lines = [
     'W8FY AMATEUR RADIO NET REPORT',
     '',
     'Net Type: ' + netTypeName,
     'Net Date: ' + net.net_date,
-    'Net Control: ' + net.net_control_callsign,
+    'Net Controls: ' + formatNetControls_(netControls),
     'Start Time: ' + net.start_time,
     'End Time: ' + (net.end_time || '—'),
     'Net Duration: ' + durationMinutes + ' minutes'
