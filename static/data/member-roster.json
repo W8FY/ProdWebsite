@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T19:06:37.065097+00:00",
+  "generatedAt": "2026-08-16T05:59:23.825818+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -340,7 +340,7 @@
       "cardUrl": "/membership-cards/joe-hess-kf8ezw-58.pdf"
     },
     {
-      "call": "KF8BMP",
+      "call": "K8TJJ",
       "name": "Tanner Johnston",
       "lastName": "Johnston",
       "paidThrough": 2026,
@@ -350,7 +350,7 @@
       "races": false,
       "officer": "",
       "officerRank": null,
-      "cardUrl": "/membership-cards/tanner-johnston-kf8bmp-54.pdf"
+      "cardUrl": "/membership-cards/tanner-johnston-k8tjj-54.pdf"
     },
     {
       "call": "W8BHA",
@@ -616,14 +616,14 @@
       "call": "KD9YVI",
       "name": "THAD TURNER",
       "lastName": "TURNER",
-      "paidThrough": null,
-      "paid": false,
+      "paidThrough": 2028,
+      "paid": true,
       "arrl": false,
       "ema": false,
       "races": false,
       "officer": "",
       "officerRank": null,
-      "cardUrl": ""
+      "cardUrl": "/membership-cards/thad-turner-kd9yvi-44.pdf"
     },
     {
       "call": "W8EJC",
