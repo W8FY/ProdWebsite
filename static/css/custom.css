@@ -1042,6 +1042,293 @@ img {
   color: #b3261e;
 }
 
+.wavelog-hero {
+  align-items: center;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(127, 180, 237, 0.22), transparent 230px),
+    #0e2438;
+  border-radius: 8px;
+  color: #d8e3ef;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  padding: 34px;
+  position: relative;
+}
+
+.wavelog-hero h2 {
+  color: #fff;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.12;
+  margin: 0;
+  max-width: 720px;
+}
+
+.wavelog-hero p:not(.wavelog-eyebrow) {
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 16px 0 0;
+  max-width: 720px;
+}
+
+.wavelog-eyebrow,
+.wavelog-card-label {
+  color: #9ec3ed;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.wavelog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.wavelog-button {
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: 4px;
+  color: #fff;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+}
+
+.wavelog-button.primary {
+  background: #467fbf;
+  border-color: #467fbf;
+}
+
+.wavelog-button:hover,
+.wavelog-button:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+.wavelog-button.primary:hover,
+.wavelog-button.primary:focus {
+  background: #356da9;
+}
+
+.wavelog-radio-mark {
+  align-items: end;
+  display: flex;
+  gap: 9px;
+  height: 120px;
+  justify-content: center;
+}
+
+.wavelog-radio-mark span {
+  background: #7fb4ed;
+  border-radius: 999px;
+  display: block;
+  width: 12px;
+}
+
+.wavelog-radio-mark span:nth-child(1) { height: 28%; }
+.wavelog-radio-mark span:nth-child(2) { height: 45%; }
+.wavelog-radio-mark span:nth-child(3) { height: 64%; }
+.wavelog-radio-mark span:nth-child(4) { height: 82%; }
+.wavelog-radio-mark span:nth-child(5) { height: 100%; }
+
+.wavelog-notice {
+  background: #eef5fb;
+  border: 1px solid #d2e2f2;
+  border-left: 4px solid #467fbf;
+  border-radius: 6px;
+  color: #344052;
+  margin-bottom: 30px;
+  padding: 15px 18px;
+}
+
+.wavelog-steps,
+.wavelog-tool-grid,
+.wavelog-doc-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.wavelog-steps {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 18px 0 34px;
+}
+
+.wavelog-steps article,
+.wavelog-tool-card {
+  background: #fff;
+  border: 1px solid #dce4eb;
+  border-radius: 7px;
+  box-shadow: 0 6px 18px rgba(18, 32, 46, 0.07);
+  padding: 20px;
+}
+
+.wavelog-steps article > span {
+  align-items: center;
+  background: #467fbf;
+  border-radius: 999px;
+  color: #fff;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 800;
+  height: 30px;
+  justify-content: center;
+  width: 30px;
+}
+
+.wavelog-steps h3,
+.wavelog-tool-card h3 {
+  color: #0e2438;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 14px 0 8px;
+}
+
+.wavelog-steps p,
+.wavelog-tool-card p {
+  color: #5a6876;
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
+.wavelog-tool-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 18px 0 34px;
+}
+
+.wavelog-tool-card {
+  border-top: 4px solid #467fbf;
+  padding: 24px;
+}
+
+.wavelog-tool-card.accent {
+  border-top-color: #f2b84b;
+}
+
+.wavelog-tool-card .wavelog-card-label {
+  color: #467fbf;
+}
+
+.wavelog-tool-card a {
+  display: inline-block;
+  font-weight: 800;
+  margin-top: 16px;
+}
+
+.waveloggate-directions {
+  counter-reset: waveloggate-step;
+  display: grid;
+  gap: 16px;
+  list-style: none;
+  margin: 18px 0 34px;
+  padding: 0;
+}
+
+.waveloggate-directions > li {
+  background: #fff;
+  border: 1px solid #dce4eb;
+  border-radius: 7px;
+  box-shadow: 0 6px 18px rgba(18, 32, 46, 0.07);
+  counter-increment: waveloggate-step;
+  min-width: 0;
+  padding: 22px 24px 22px 74px;
+  position: relative;
+}
+
+.waveloggate-directions > li::before {
+  align-items: center;
+  background: #467fbf;
+  border-radius: 999px;
+  color: #fff;
+  content: counter(waveloggate-step);
+  display: flex;
+  font-size: 16px;
+  font-weight: 800;
+  height: 38px;
+  justify-content: center;
+  left: 20px;
+  position: absolute;
+  top: 20px;
+  width: 38px;
+}
+
+.waveloggate-directions h4 {
+  color: #0e2438;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.waveloggate-directions p,
+.waveloggate-directions ul {
+  color: #5a6876;
+  line-height: 1.6;
+}
+
+.waveloggate-directions p:last-child,
+.waveloggate-directions ul:last-child {
+  margin-bottom: 0;
+}
+
+.waveloggate-directions li li {
+  margin-bottom: 7px;
+}
+
+.wavelog-doc-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 18px 0 24px;
+}
+
+.wavelog-doc-grid a {
+  background: #f7f9fb;
+  border: 1px solid #dce4eb;
+  border-radius: 6px;
+  color: #344052;
+  display: block;
+  min-height: 130px;
+  padding: 18px;
+  text-decoration: none;
+}
+
+.wavelog-doc-grid a:hover,
+.wavelog-doc-grid a:focus {
+  background: #eef5fb;
+  border-color: #7fb4ed;
+  color: #1f5f9f;
+  text-decoration: none;
+}
+
+.wavelog-doc-grid strong,
+.wavelog-doc-grid span {
+  display: block;
+}
+
+.wavelog-doc-grid strong {
+  font-size: 16px;
+  margin-bottom: 7px;
+}
+
+.wavelog-doc-grid span {
+  color: #667789;
+  line-height: 1.45;
+}
+
+.wavelog-footnote {
+  border-top: 1px solid #dce4eb;
+  color: #667789;
+  font-size: 13px;
+  margin-top: 28px;
+  padding-top: 16px;
+}
+
 .application-side {
   display: grid;
   gap: 14px;
@@ -1110,6 +1397,35 @@ img {
     margin: 8px 0 0;
     text-align: center;
   }
+
+  .wavelog-hero {
+    padding: 26px 22px;
+  }
+
+  .wavelog-hero h2 {
+    font-size: 28px;
+  }
+
+  .wavelog-actions,
+  .wavelog-button {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .wavelog-button {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .wavelog-steps,
+  .wavelog-tool-grid,
+  .wavelog-doc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wavelog-doc-grid a {
+    min-height: 0;
+  }
 }
 
 @media (max-width: 900px) {
@@ -1149,5 +1465,34 @@ img {
   .application-shell,
   .application-grid {
     grid-template-columns: 1fr;
+  }
+
+  .wavelog-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .wavelog-radio-mark {
+    display: none;
+  }
+
+  .wavelog-steps,
+  .wavelog-doc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .wavelog-steps,
+  .wavelog-doc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .waveloggate-directions > li {
+    padding: 64px 18px 20px;
+  }
+
+  .waveloggate-directions > li::before {
+    left: 18px;
+    top: 16px;
   }
 }

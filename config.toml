@@ -215,6 +215,31 @@ pluralizelisttitles = false
     weight     = 2
     parent     = "section.nc"
 
+[[menu.main]]
+   name       = "Wavelog"
+   identifier = "section.wavelog"
+   weight     = 2
+   parent     = "menu.links"
+   post       = 4
+
+[[menu.main]]
+    name       = "Wavelog Jumpstart"
+    url        = "/wavelog/"
+    weight     = 1
+    parent     = "section.wavelog"
+
+[[menu.main]]
+    name       = "Club Wavelog"
+    url        = "https://log.n0sys.net/"
+    weight     = 2
+    parent     = "section.wavelog"
+
+[[menu.main]]
+    name       = "Contesting Dashboard"
+    url        = "https://log-dash.n0sys.net/"
+    weight     = 3
+    parent     = "section.wavelog"
+
 
 
 #

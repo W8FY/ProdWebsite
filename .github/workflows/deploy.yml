@@ -31,6 +31,7 @@ jobs:
         cp net-checkin/index.html public/net-checkin/index.html
         cp net-checkin/css/style.css public/net-checkin/css/style.css
         cp net-checkin/js/config.js public/net-checkin/js/config.js
+        cp net-checkin/js/site-navigation.js public/net-checkin/js/site-navigation.js
         cp net-checkin/js/google-apps-script.js public/net-checkin/js/google-apps-script.js
         cp net-checkin/js/app.js public/net-checkin/js/app.js
         cp static/docs/2026_net_roster.pdf public/static/docs/2026_net_roster.pdf
