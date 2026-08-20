@@ -636,12 +636,93 @@ fieldset .form-label {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.net-control-check {
-  padding: 0.85rem 1rem 0.85rem 2.75rem;
-  background: #eef6fb;
-  border: 1px solid #c7dceb;
-  border-radius: 0.65rem;
+.net-control-access-panel {
+  border-top: 4px solid var(--radio-cyan);
+}
+
+.ownership-status {
+  display: inline-block;
+  padding: 0.45rem 0.7rem;
+  color: #4b5563;
+  background: #eef2f5;
+  border-radius: 999px;
+  font-size: 0.78rem;
   font-weight: 800;
+}
+
+.ownership-status.ownership-valid {
+  color: #0f5132;
+  background: #d1e7dd;
+}
+
+.ownership-status.ownership-read-only {
+  color: #664d03;
+  background: #fff3cd;
+}
+
+.read-only-message {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  color: #664d03;
+  background: #fff3cd;
+  border: 1px solid #ffecb5;
+  border-radius: 0.65rem;
+  font-weight: 750;
+}
+
+.request-control-row {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) auto;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.request-status {
+  min-height: 1.5rem;
+  margin: 0.65rem 0 0;
+  color: var(--muted);
+  font-weight: 650;
+}
+
+.pending-net-control-area {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.pending-net-control-area h3 {
+  margin: 0 0 0.85rem;
+  color: var(--radio-navy);
+  font-size: 1rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.pending-net-control-requests {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.pending-request-item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 0.9rem;
+  background: #f5f8fa;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  font-weight: 700;
+}
+
+.pending-request-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pending-request-empty {
+  margin: 0;
+  color: var(--muted);
 }
 
 .option-button {
@@ -941,12 +1022,6 @@ fieldset .form-label {
   min-width: 10rem;
 }
 
-.net-control-role-button {
-  min-height: 2.35rem;
-  font-size: 0.75rem;
-  font-weight: 800;
-}
-
 .report-card {
   border-top: 4px solid var(--radio-gold);
 }
@@ -1146,6 +1221,19 @@ fieldset .form-label {
 
   .net-action-buttons .btn {
     width: 100%;
+  }
+
+  .request-control-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pending-request-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pending-request-actions .btn {
+    flex: 1;
   }
 
   .pdf-viewer {

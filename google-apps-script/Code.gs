@@ -13,6 +13,9 @@ const W8FY_CONFIG = Object.freeze({
   netsSheet: 'Nets',
   checkInsSheet: 'CheckIns',
   callsignDirectorySheet: 'CallsignDirectory',
+  netControlAccessSheet: 'NetControlAccess',
+  netControlRequestsSheet: 'NetControlRequests',
+  netControlHistorySheet: 'NetControlHistory',
   reportRecipient: 'info@w8fy.org',
   stationTypes: Object.freeze(['Home', 'Mobile', 'EchoLink', 'Short Time']),
   netTypes: Object.freeze(['current', 'two_meter_ncs', 'weather_special']),
@@ -23,7 +26,10 @@ const W8FY_CONFIG = Object.freeze({
   }),
   maxCallsignLength: 20,
   maxNoteLength: 80,
-  lockTimeoutMs: 30000
+  lockTimeoutMs: 30000,
+  requestLifetimeMs: 10 * 60 * 1000,
+  activeAccessLifetimeMs: 30 * 24 * 60 * 60 * 1000,
+  finalizedAccessLifetimeMs: 7 * 24 * 60 * 60 * 1000
 });
 
 const NET_HEADERS = Object.freeze([
@@ -60,11 +66,54 @@ const CALLSIGN_DIRECTORY_HEADERS = Object.freeze([
   'updated_at'
 ]);
 
+const NET_CONTROL_ACCESS_HEADERS = Object.freeze([
+  'net_id',
+  'owner_callsign',
+  'token_hash',
+  'issued_at',
+  'updated_at',
+  'expires_at',
+  'revoked_at'
+]);
+
+const NET_CONTROL_REQUEST_HEADERS = Object.freeze([
+  'id',
+  'net_id',
+  'callsign',
+  'token_hash',
+  'created_at',
+  'expires_at',
+  'status',
+  'decided_at'
+]);
+
+const NET_CONTROL_HISTORY_HEADERS = Object.freeze([
+  'id',
+  'net_id',
+  'callsign',
+  'started_at',
+  'ended_at'
+]);
+
 const LEGACY_NET_HEADERS = Object.freeze(NET_HEADERS.slice(0, 12));
 const LEGACY_CHECKIN_HEADERS = Object.freeze(CHECKIN_HEADERS.slice(0, 7));
 
 const GET_ACTIONS = Object.freeze(['health', 'getActiveNet', 'getNet', 'lookupCallsign']);
-const POST_ACTIONS = Object.freeze(['createNet', 'addCheckIn', 'updateCheckInNote', 'setNetControlRole', 'removeCheckIn', 'finalizeNet', 'sendReport', 'downloadReportPdf']);
+const POST_ACTIONS = Object.freeze([
+  'createNet',
+  'validateNetControlOwnership',
+  'requestNetControl',
+  'getNetControlRequestStatus',
+  'getPendingNetControlRequests',
+  'decideNetControlRequest',
+  'releaseNetControlOwnership',
+  'addCheckIn',
+  'updateCheckInNote',
+  'removeCheckIn',
+  'finalizeNet',
+  'sendReport',
+  'downloadReportPdf'
+]);
 
 /**
  * One-time setup. Run this function from the Apps Script editor while the
@@ -86,7 +135,7 @@ function setupW8FYDatabase() {
   return {
     success: true,
     message: 'W8FY Net Check-In sheets are ready.',
-    sheets: [W8FY_CONFIG.netsSheet, W8FY_CONFIG.checkInsSheet, W8FY_CONFIG.callsignDirectorySheet]
+    sheets: getApplicationSheetNames_()
   };
 }
 
@@ -109,7 +158,8 @@ function migrateW8FYStage1Schema() {
         changed: false,
         message: 'The W8FY Stage 1 schema is already installed.',
         backupId: '',
-        backupUrl: ''
+        backupUrl: '',
+        sheets: getApplicationSheetNames_()
       };
     }
 
@@ -152,7 +202,7 @@ function migrateW8FYStage1Schema() {
       message: 'W8FY Stage 1 schema installed and legacy data verified unchanged.',
       backupId: backup.getId(),
       backupUrl: backup.getUrl(),
-      sheets: [W8FY_CONFIG.netsSheet, W8FY_CONFIG.checkInsSheet, W8FY_CONFIG.callsignDirectorySheet]
+      sheets: getApplicationSheetNames_()
     };
   });
 }
@@ -169,7 +219,7 @@ function doGet(e) {
         return {
           status: 'ok',
           service: 'W8FY Net Check-In API',
-          sheets: [W8FY_CONFIG.netsSheet, W8FY_CONFIG.checkInsSheet, W8FY_CONFIG.callsignDirectorySheet],
+          sheets: getApplicationSheetNames_(),
           emailEnabled: true,
           pdfEnabled: true,
           callsignLookupEnabled: true,
@@ -200,12 +250,22 @@ function doPost(e) {
     switch (action) {
       case 'createNet':
         return withScriptLock_(function () { return createNet_(spreadsheet, data); });
+      case 'validateNetControlOwnership':
+        return withScriptLock_(function () { return validateNetControlOwnership_(spreadsheet, data); });
+      case 'requestNetControl':
+        return withScriptLock_(function () { return requestNetControl_(spreadsheet, data); });
+      case 'getNetControlRequestStatus':
+        return withScriptLock_(function () { return getNetControlRequestStatus_(spreadsheet, data); });
+      case 'getPendingNetControlRequests':
+        return withScriptLock_(function () { return getPendingNetControlRequests_(spreadsheet, data); });
+      case 'decideNetControlRequest':
+        return withScriptLock_(function () { return decideNetControlRequest_(spreadsheet, data); });
+      case 'releaseNetControlOwnership':
+        return withScriptLock_(function () { return releaseNetControlOwnership_(spreadsheet, data); });
       case 'addCheckIn':
         return withScriptLock_(function () { return addCheckIn_(spreadsheet, data); });
       case 'updateCheckInNote':
         return withScriptLock_(function () { return updateCheckInNote_(spreadsheet, data); });
-      case 'setNetControlRole':
-        return withScriptLock_(function () { return setNetControlRole_(spreadsheet, data); });
       case 'removeCheckIn':
         return withScriptLock_(function () { return removeCheckIn_(spreadsheet, data); });
       case 'finalizeNet':
@@ -236,8 +296,11 @@ function createNet_(spreadsheet, data) {
   const now = new Date();
   const netId = Utilities.getUuid();
   const checkInId = Utilities.getUuid();
+  const ownerToken = generateSecureToken_();
   const netsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netsSheet);
   const checkInsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet);
+  const accessSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlAccessSheet);
+  const historySheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlHistorySheet);
 
   const netRecord = {
     id: netId,
@@ -265,33 +328,52 @@ function createNet_(spreadsheet, data) {
     name: name,
     note: ''
   };
+  const accessRecord = {
+    net_id: netId,
+    owner_callsign: callsign,
+    token_hash: hashToken_(ownerToken),
+    issued_at: now,
+    updated_at: now,
+    expires_at: new Date(now.getTime() + W8FY_CONFIG.activeAccessLifetimeMs),
+    revoked_at: ''
+  };
+  const historyRecord = {
+    id: Utilities.getUuid(),
+    net_id: netId,
+    callsign: callsign,
+    started_at: netDateTime_(netDate, startTime),
+    ended_at: ''
+  };
 
-  appendRecord_(netsSheet, NET_HEADERS, netRecord);
+  const appendedRows = [];
+  let payload;
   try {
-    appendRecord_(checkInsSheet, CHECKIN_HEADERS, controlRecord);
+    appendedRows.push(appendRecordTracked_(netsSheet, NET_HEADERS, netRecord));
+    appendedRows.push(appendRecordTracked_(checkInsSheet, CHECKIN_HEADERS, controlRecord));
+    appendedRows.push(appendRecordTracked_(accessSheet, NET_CONTROL_ACCESS_HEADERS, accessRecord));
+    appendedRows.push(appendRecordTracked_(historySheet, NET_CONTROL_HISTORY_HEADERS, historyRecord));
+    SpreadsheetApp.flush();
+    payload = buildNetPayload_(spreadsheet, netRecord);
   } catch (error) {
-    // Keep the two-sheet create operation consistent if the second append fails.
-    netsSheet.deleteRow(netsSheet.getLastRow());
+    rollbackAppendedRows_(appendedRows);
     throw error;
   }
 
-  return buildNetPayload_(spreadsheet, netRecord);
+  payload.ownerToken = ownerToken;
+  return payload;
 }
 
 function addCheckIn_(spreadsheet, data) {
   const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
   const net = requireNet_(spreadsheet, netId);
   requireOpenNet_(net);
+  requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
 
   const callsign = requireCallsign_(data.callsign);
   const name = normalizeOptionalText_(data.name, 'name');
   const stationType = requireStationType_(readField_(data, ['stationType', 'station_type']));
   const traffic = requireBoolean_(data.traffic, 'traffic');
   const note = requireNote_(data.note, net.net_type);
-  const requestedNetControl = typeof data.isNetControl === 'undefined'
-    ? false
-    : requireBoolean_(data.isNetControl, 'isNetControl');
-  const isNetControl = requireNetType_(net.net_type) === 'weather_special' && requestedNetControl;
   const checkIns = getCheckInsForNet_(spreadsheet, netId);
   if (checkIns.some(function (entry) { return entry.callsign === callsign; })) {
     throw new PublicError(callsign + ' is already checked into this net.');
@@ -303,113 +385,262 @@ function addCheckIn_(spreadsheet, data) {
     callsign: callsign,
     station_type: stationType,
     traffic: traffic,
-    is_net_control: isNetControl,
+    is_net_control: false,
     created_at: new Date(),
     name: name,
     note: note
   };
-  const checkInsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet);
-  appendRecord_(checkInsSheet, CHECKIN_HEADERS, record);
-  if (isNetControl) {
-    try {
-      return completeNetControlHandoff_(
-        spreadsheet,
-        net,
-        record,
-        function () { return buildNetPayload_(spreadsheet, requireNet_(spreadsheet, netId)); }
-      );
-    } catch (error) {
-      try {
-        const appendedRecord = getRecords_(checkInsSheet, CHECKIN_HEADERS).find(function (entry) {
-          return entry.id === record.id && entry.net_id === netId;
-        });
-        if (appendedRecord) {
-          checkInsSheet.deleteRow(appendedRecord._rowNumber);
-          SpreadsheetApp.flush();
-        }
-      } catch (rollbackError) {
-        console.error('W8FY add-and-handoff rollback failed:', rollbackError && rollbackError.stack ? rollbackError.stack : rollbackError);
-      }
-      throw error;
-    }
-  }
+  appendRecord_(spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet), CHECKIN_HEADERS, record);
   return publicRecord_(record);
 }
 
-function setNetControlRole_(spreadsheet, data) {
+function validateNetControlOwnership_(spreadsheet, data) {
   const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
-  const checkInId = requireUuid_(readField_(data, ['checkInId', 'checkinId', 'id']), 'checkInId');
-  const isNetControl = requireBoolean_(readField_(data, ['isNetControl', 'is_net_control']), 'isNetControl');
-  if (!isNetControl) {
-    throw new PublicError('Historical Net Control service cannot be removed.');
-  }
   const net = requireNet_(spreadsheet, netId);
-  requireOpenNet_(net);
-  if (requireNetType_(net.net_type) !== 'weather_special') {
-    throw new PublicError('Net Control roles can only be changed for Weather/Special nets.');
+  const access = findNetControlAccess_(spreadsheet, netId);
+  const token = readField_(data, ['ownerToken', 'owner_token']);
+  if (!access || access.owner_callsign !== String(net.net_control_callsign).trim().toUpperCase() ||
+      !isValidOwnershipToken_(access, token, new Date())) {
+    return { valid: false, netId: netId, ownerCallsign: '' };
   }
-
-  const sheet = spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet);
-  const record = getRecords_(sheet, CHECKIN_HEADERS).find(function (entry) {
-    return entry.id === checkInId && entry.net_id === netId;
-  });
-  if (!record) {
-    throw new PublicError('Check-in not found for this net.');
-  }
-  return completeNetControlHandoff_(
-    spreadsheet,
-    net,
-    record,
-    function () { return buildNetPayload_(spreadsheet, requireNet_(spreadsheet, netId)); }
-  );
+  return {
+    valid: true,
+    netId: netId,
+    ownerCallsign: access.owner_callsign,
+    finalized: Boolean(net.finalized),
+    expiresAt: access.expires_at
+  };
 }
 
-function completeNetControlHandoff_(spreadsheet, net, checkIn, buildResult) {
-  const incomingCallsign = String(checkIn.callsign).trim().toUpperCase();
-  const currentCallsign = String(net.net_control_callsign).trim().toUpperCase();
+function requestNetControl_(spreadsheet, data) {
+  const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
+  const callsign = requireCallsign_(data.callsign);
+  const net = requireNet_(spreadsheet, netId);
+  requireOpenNet_(net);
+  if (!getCheckInsForNet_(spreadsheet, netId).some(function (entry) { return entry.callsign === callsign; })) {
+    throw new PublicError('Only an operator already checked into this net may request Net Control.');
+  }
+  if (callsign === String(net.net_control_callsign).trim().toUpperCase()) {
+    throw new PublicError(callsign + ' is already the current Net Control.');
+  }
+
+  const now = new Date();
+  expirePendingRequests_(spreadsheet, netId, now);
+  const requestsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlRequestsSheet);
+  const existing = getRecords_(requestsSheet, NET_CONTROL_REQUEST_HEADERS).find(function (entry) {
+    return entry.net_id === netId && entry.callsign === callsign && entry.status === 'pending';
+  });
+  if (existing) {
+    throw new PublicError('A pending Net Control request already exists for ' + callsign + '.');
+  }
+
+  const requestToken = generateSecureToken_();
+  const request = {
+    id: Utilities.getUuid(),
+    net_id: netId,
+    callsign: callsign,
+    token_hash: hashToken_(requestToken),
+    created_at: now,
+    expires_at: new Date(now.getTime() + W8FY_CONFIG.requestLifetimeMs),
+    status: 'pending',
+    decided_at: ''
+  };
+  appendRecord_(requestsSheet, NET_CONTROL_REQUEST_HEADERS, request);
+  return {
+    requestId: request.id,
+    netId: netId,
+    callsign: callsign,
+    requestToken: requestToken,
+    status: request.status,
+    createdAt: now.toISOString(),
+    expiresAt: request.expires_at.toISOString()
+  };
+}
+
+function getNetControlRequestStatus_(spreadsheet, data) {
+  const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
+  const requestId = requireUuid_(readField_(data, ['requestId', 'request_id']), 'requestId');
+  const requestToken = requireRawToken_(readField_(data, ['requestToken', 'request_token']), 'requestToken');
+  const sheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlRequestsSheet);
+  let request = getRecords_(sheet, NET_CONTROL_REQUEST_HEADERS).find(function (entry) {
+    return entry.id === requestId && entry.net_id === netId;
+  });
+  if (!request || !constantTimeEqual_(request.token_hash, hashToken_(requestToken))) {
+    throw new PublicError('The Net Control request is invalid or no longer available.');
+  }
+  request = expireRequestIfNeeded_(sheet, request, new Date());
+  return publicNetControlRequest_(request);
+}
+
+function getPendingNetControlRequests_(spreadsheet, data) {
+  const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
+  const net = requireNet_(spreadsheet, netId);
+  requireOpenNet_(net);
+  requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
+  expirePendingRequests_(spreadsheet, netId, new Date());
+  return getRecords_(
+    spreadsheet.getSheetByName(W8FY_CONFIG.netControlRequestsSheet),
+    NET_CONTROL_REQUEST_HEADERS
+  ).filter(function (entry) {
+    return entry.net_id === netId && entry.status === 'pending';
+  }).map(publicNetControlRequest_);
+}
+
+function decideNetControlRequest_(spreadsheet, data) {
+  const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
+  const requestId = requireUuid_(readField_(data, ['requestId', 'request_id']), 'requestId');
+  const decision = normalizeRequestDecision_(data.decision);
+  const net = requireNet_(spreadsheet, netId);
+  requireOpenNet_(net);
+  const access = requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
+  const sheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlRequestsSheet);
+  let request = getRecords_(sheet, NET_CONTROL_REQUEST_HEADERS).find(function (entry) {
+    return entry.id === requestId && entry.net_id === netId;
+  });
+  if (!request) throw new PublicError('Net Control request not found.');
+  request = expireRequestIfNeeded_(sheet, request, new Date());
+  if (request.status !== 'pending') throw new PublicError('This Net Control request is no longer pending.');
+
+  if (decision === 'denied') {
+    const decidedAt = new Date();
+    setRecordCells_(sheet, request._rowNumber, NET_CONTROL_REQUEST_HEADERS, {
+      status: 'denied',
+      decided_at: decidedAt
+    });
+    request.status = 'denied';
+    request.decided_at = decidedAt.toISOString();
+    return { request: publicNetControlRequest_(request), net: null };
+  }
+  return approveNetControlRequest_(spreadsheet, net, access, request);
+}
+
+function releaseNetControlOwnership_(spreadsheet, data) {
+  const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
+  const net = requireNet_(spreadsheet, netId);
+  if (!net.finalized) throw new PublicError('Ownership can only be released after the net is finalized.');
+  const access = requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
+  const now = new Date();
+  setRecordCells_(
+    spreadsheet.getSheetByName(W8FY_CONFIG.netControlAccessSheet),
+    access._rowNumber,
+    NET_CONTROL_ACCESS_HEADERS,
+    { updated_at: now, revoked_at: now }
+  );
+  return { released: true, netId: netId };
+}
+
+function approveNetControlRequest_(spreadsheet, net, access, request) {
+  if (request.callsign === String(net.net_control_callsign).trim().toUpperCase()) {
+    throw new PublicError(request.callsign + ' is already the current Net Control.');
+  }
+  const checkIn = getCheckInsForNet_(spreadsheet, net.id).find(function (entry) {
+    return entry.callsign === request.callsign;
+  });
+  if (!checkIn) throw new PublicError('The requested callsign is no longer checked into this net.');
+
   const netsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netsSheet);
   const checkInsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet);
-  const previouslyServedAsNetControl = Boolean(checkIn.is_net_control);
-  const previousValues = {
-    net_control_callsign: net.net_control_callsign,
-    net_control_station_type: net.net_control_station_type,
-    net_control_traffic: net.net_control_traffic,
-    updated_at: net.updated_at
-  };
-  let netChanged = false;
-  let historyChanged = false;
+  const accessSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlAccessSheet);
+  const requestsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlRequestsSheet);
+  const historySheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlHistorySheet);
+  const handoffAt = floorToMinute_(new Date());
+  const openHistory = findOpenNetControlHistory_(spreadsheet, net.id);
+  if (openHistory && handoffAt.getTime() < dateValue_(openHistory.started_at).getTime()) {
+    throw new PublicError('The Net Control handoff time is earlier than the current service segment.');
+  }
+
+  const snapshots = [
+    captureRow_(netsSheet, net._rowNumber, NET_HEADERS.length),
+    captureRow_(checkInsSheet, checkIn._rowNumber, CHECKIN_HEADERS.length),
+    captureRow_(requestsSheet, request._rowNumber, NET_CONTROL_REQUEST_HEADERS.length)
+  ];
+  if (access) snapshots.push(captureRow_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS.length));
+  if (openHistory) snapshots.push(captureRow_(historySheet, openHistory._rowNumber, NET_CONTROL_HISTORY_HEADERS.length));
+  const appendedRows = [];
 
   try {
-    if (!previouslyServedAsNetControl) {
-      historyChanged = true;
+    if (openHistory) {
+      setRecordCells_(historySheet, openHistory._rowNumber, NET_CONTROL_HISTORY_HEADERS, { ended_at: handoffAt });
+    }
+    if (!checkIn.is_net_control) {
       setRecordCells_(checkInsSheet, checkIn._rowNumber, CHECKIN_HEADERS, { is_net_control: true });
-      checkIn.is_net_control = true;
     }
-    if (incomingCallsign !== currentCallsign) {
-      netChanged = true;
-      setRecordCells_(netsSheet, net._rowNumber, NET_HEADERS, {
-        net_control_callsign: incomingCallsign,
-        net_control_station_type: checkIn.station_type,
-        net_control_traffic: checkIn.traffic,
-        updated_at: new Date()
-      });
+    setRecordCells_(netsSheet, net._rowNumber, NET_HEADERS, {
+      net_control_callsign: checkIn.callsign,
+      net_control_station_type: checkIn.station_type,
+      net_control_traffic: checkIn.traffic,
+      updated_at: handoffAt
+    });
+    appendedRows.push(appendRecordTracked_(historySheet, NET_CONTROL_HISTORY_HEADERS, {
+      id: Utilities.getUuid(),
+      net_id: net.id,
+      callsign: checkIn.callsign,
+      started_at: handoffAt,
+      ended_at: ''
+    }));
+
+    const accessUpdates = {
+      owner_callsign: checkIn.callsign,
+      token_hash: request.token_hash,
+      issued_at: handoffAt,
+      updated_at: handoffAt,
+      expires_at: new Date(handoffAt.getTime() + W8FY_CONFIG.activeAccessLifetimeMs),
+      revoked_at: ''
+    };
+    if (access) {
+      setRecordCells_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS, accessUpdates);
+    } else {
+      accessUpdates.net_id = net.id;
+      appendedRows.push(appendRecordTracked_(accessSheet, NET_CONTROL_ACCESS_HEADERS, accessUpdates));
     }
+    setRecordCells_(requestsSheet, request._rowNumber, NET_CONTROL_REQUEST_HEADERS, {
+      status: 'approved',
+      decided_at: handoffAt
+    });
     SpreadsheetApp.flush();
-    return buildResult();
+    const updatedRequest = Object.assign({}, request, {
+      status: 'approved',
+      decided_at: handoffAt.toISOString()
+    });
+    return {
+      request: publicNetControlRequest_(updatedRequest),
+      net: buildNetPayload_(spreadsheet, requireNet_(spreadsheet, net.id))
+    };
   } catch (error) {
-    try {
-      if (netChanged) {
-        setRecordCells_(netsSheet, net._rowNumber, NET_HEADERS, previousValues);
-      }
-      if (historyChanged) {
-        setRecordCells_(checkInsSheet, checkIn._rowNumber, CHECKIN_HEADERS, { is_net_control: false });
-        checkIn.is_net_control = false;
-      }
-      SpreadsheetApp.flush();
-    } catch (rollbackError) {
-      console.error('W8FY Net Control handoff rollback failed:', rollbackError && rollbackError.stack ? rollbackError.stack : rollbackError);
-    }
+    rollbackAppendedRows_(appendedRows);
+    restoreRows_(snapshots);
     throw error;
+  }
+}
+
+/** Manual editor-only recovery. This function is intentionally absent from doPost(). */
+function recoverActiveNetControlToConfiguredCallsign() {
+  const properties = PropertiesService.getScriptProperties();
+  try {
+    const callsign = requireCallsign_(properties.getProperty('NET_CONTROL_RECOVERY_CALLSIGN'));
+    const spreadsheet = getConfiguredSpreadsheet_();
+    ensureApplicationSheets_(spreadsheet);
+    return withScriptLock_(function () {
+      const net = findActiveNet_(spreadsheet);
+      if (!net) throw new PublicError('No active net is available for recovery.');
+      expirePendingRequests_(spreadsheet, net.id, new Date());
+      const request = getRecords_(
+        spreadsheet.getSheetByName(W8FY_CONFIG.netControlRequestsSheet),
+        NET_CONTROL_REQUEST_HEADERS
+      ).find(function (entry) {
+        return entry.net_id === net.id && entry.callsign === callsign && entry.status === 'pending';
+      });
+      if (!request) throw new PublicError('No unexpired pending request exists for ' + callsign + '.');
+      const result = approveNetControlRequest_(spreadsheet, net, findNetControlAccess_(spreadsheet, net.id), request);
+      return {
+        success: true,
+        netId: net.id,
+        ownerCallsign: callsign,
+        requestStatus: result.request.status
+      };
+    });
+  } finally {
+    properties.deleteProperty('NET_CONTROL_RECOVERY_CALLSIGN');
   }
 }
 
@@ -418,6 +649,7 @@ function updateCheckInNote_(spreadsheet, data) {
   const checkInId = requireUuid_(readField_(data, ['checkInId', 'checkinId', 'id']), 'checkInId');
   const net = requireNet_(spreadsheet, netId);
   requireOpenNet_(net);
+  requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
   if (requireNetType_(net.net_type) !== 'weather_special') {
     throw new PublicError('Notes can only be edited for Weather/Special nets.');
   }
@@ -441,6 +673,7 @@ function removeCheckIn_(spreadsheet, data) {
   const checkInId = requireUuid_(readField_(data, ['checkInId', 'checkinId', 'id']), 'checkInId');
   const net = requireNet_(spreadsheet, netId);
   requireOpenNet_(net);
+  requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
 
   const sheet = spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet);
   const record = getRecords_(sheet, CHECKIN_HEADERS).find(function (entry) {
@@ -461,23 +694,49 @@ function finalizeNet_(spreadsheet, data) {
   const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
   const net = requireNet_(spreadsheet, netId);
   requireOpenNet_(net);
+  const access = requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
   const endTime = requireTime_(readField_(data, ['endTime', 'end_time']) || currentTime_(), 'endTime');
-  const sheet = spreadsheet.getSheetByName(W8FY_CONFIG.netsSheet);
+  const endAt = netEndDateTime_(net.net_date, net.start_time, endTime);
+  const openHistory = findOpenNetControlHistory_(spreadsheet, netId);
+  if (openHistory && endAt.getTime() < dateValue_(openHistory.started_at).getTime()) {
+    throw new PublicError('The final end time cannot be earlier than the current Net Control segment.');
+  }
 
-  setRecordCells_(sheet, net._rowNumber, NET_HEADERS, {
-    end_time: endTime,
-    finalized: true,
-    updated_at: new Date()
-  });
+  const netsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netsSheet);
+  const accessSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlAccessSheet);
+  const historySheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlHistorySheet);
+  const snapshots = [
+    captureRow_(netsSheet, net._rowNumber, NET_HEADERS.length),
+    captureRow_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS.length)
+  ];
+  if (openHistory) snapshots.push(captureRow_(historySheet, openHistory._rowNumber, NET_CONTROL_HISTORY_HEADERS.length));
 
-  const finalizedNet = requireNet_(spreadsheet, netId);
-  return buildNetPayload_(spreadsheet, finalizedNet, true);
+  try {
+    if (openHistory) {
+      setRecordCells_(historySheet, openHistory._rowNumber, NET_CONTROL_HISTORY_HEADERS, { ended_at: endAt });
+    }
+    setRecordCells_(netsSheet, net._rowNumber, NET_HEADERS, {
+      end_time: endTime,
+      finalized: true,
+      updated_at: endAt
+    });
+    setRecordCells_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS, {
+      updated_at: endAt,
+      expires_at: new Date(Date.now() + W8FY_CONFIG.finalizedAccessLifetimeMs)
+    });
+    SpreadsheetApp.flush();
+    return buildNetPayload_(spreadsheet, requireNet_(spreadsheet, netId), true);
+  } catch (error) {
+    restoreRows_(snapshots);
+    throw error;
+  }
 }
 
 /** Sends one authoritative plain-text report for a finalized net. */
 function sendReport_(spreadsheet, data) {
   const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
   const net = requireNet_(spreadsheet, netId);
+  requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
   if (!net.finalized) {
     throw new PublicError('The net must be finalized before its report can be emailed.');
   }
@@ -486,7 +745,7 @@ function sendReport_(spreadsheet, data) {
   }
 
   const checkIns = getCheckInsForNet_(spreadsheet, netId);
-  const report = buildFinalReport_(net, checkIns);
+  const report = buildFinalReport_(net, checkIns, getNetControlHistoryForNet_(spreadsheet, netId));
   const subject = 'W8FY Net Report - ' + net.net_date + ' - ' + net.net_control_callsign;
 
   try {
@@ -530,12 +789,13 @@ function sendReport_(spreadsheet, data) {
 function downloadReportPdf_(spreadsheet, data) {
   const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
   const net = requireNet_(spreadsheet, netId);
+  requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
   if (!net.finalized) {
     throw new PublicError('The net must be finalized before its PDF can be downloaded.');
   }
 
   const checkIns = sortCheckIns_(getCheckInsForNet_(spreadsheet, netId));
-  const report = buildFinalReport_(net, checkIns);
+  const report = buildFinalReport_(net, checkIns, getNetControlHistoryForNet_(spreadsheet, netId));
   return generatePdfReport_(net, report);
 }
 
@@ -617,17 +877,18 @@ function buildNetPayload_(spreadsheet, net, includeReport) {
     checkIns: checkIns.map(publicRecord_)
   };
   if (includeReport || net.finalized) {
-    payload.report = buildFinalReport_(net, checkIns);
+    payload.report = buildFinalReport_(net, checkIns, getNetControlHistoryForNet_(spreadsheet, net.id));
   }
   return payload;
 }
 
-function buildFinalReport_(net, checkIns) {
+function buildFinalReport_(net, checkIns, history) {
   const sortedCheckIns = sortCheckIns_(checkIns);
   const netControls = buildNetControls_(net, sortedCheckIns);
   const netType = requireNetType_(net.net_type);
   const netTypeName = getNetTypeName_(netType);
   const durationMinutes = calculateDurationMinutes_(net.start_time, net.end_time);
+  const timing = buildNetControlTiming_(net, sortedCheckIns, history || [], durationMinutes);
   const totals = {
     total: sortedCheckIns.length,
     traffic: 0,
@@ -661,10 +922,13 @@ function buildFinalReport_(net, checkIns) {
     startTime: net.start_time,
     endTime: net.end_time,
     durationMinutes: durationMinutes,
+    netControlTimes: timing.times,
+    netControlTotalMinutes: timing.totalMinutes,
+    netControlTimingAvailable: timing.available,
     checkIns: sortedCheckIns.map(publicRecord_),
     groups: groups,
     totals: totals,
-    text: buildTextReport_(net, groups, totals, netTypeName, durationMinutes, netControls)
+    text: buildTextReport_(net, groups, totals, netTypeName, durationMinutes, netControls, timing)
   };
 }
 
@@ -680,14 +944,90 @@ function buildNetControls_(net, checkIns) {
 
 function formatNetControls_(net, netControls) {
   const currentCallsign = String(net.net_control_callsign).trim().toUpperCase();
-  const includeHandoffStatus = requireNetType_(net.net_type) === 'weather_special';
+  const includeHandoffStatus = requireNetType_(net.net_type) === 'weather_special' || netControls.length > 1;
   return netControls.map(function (entry) {
     const status = entry.callsign === currentCallsign ? 'CURRENT' : 'FORMER';
     return (includeHandoffStatus ? status + ' - ' : '') + entry.callsign + ' - ' + (entry.name || 'N/A');
   }).join('; ');
 }
 
-function buildTextReport_(net, groups, totals, netTypeName, durationMinutes, netControls) {
+function buildNetControlTiming_(net, checkIns, history, durationMinutes) {
+  const unavailable = { available: false, times: [], totalMinutes: 0 };
+  if (!net.finalized || !history.length) return unavailable;
+
+  const ordered = history.slice().sort(function (left, right) {
+    return dateValue_(left.started_at).getTime() - dateValue_(right.started_at).getTime();
+  });
+  if (ordered.some(function (segment) { return !segment.started_at || !segment.ended_at; })) return unavailable;
+
+  const expectedStart = netDateTime_(net.net_date, net.start_time);
+  const expectedEnd = netEndDateTime_(net.net_date, net.start_time, net.end_time);
+  if (!sameMinute_(dateValue_(ordered[0].started_at), expectedStart) ||
+      !sameMinute_(dateValue_(ordered[ordered.length - 1].ended_at), expectedEnd)) {
+    return unavailable;
+  }
+
+  const totalsByCallsign = {};
+  const firstServiceOrder = [];
+  let totalMinutes = 0;
+  for (let index = 0; index < ordered.length; index += 1) {
+    const segment = ordered[index];
+    const startedAt = dateValue_(segment.started_at);
+    const endedAt = dateValue_(segment.ended_at);
+    if (endedAt.getTime() < startedAt.getTime()) return unavailable;
+    if (index > 0 && !sameMinute_(dateValue_(ordered[index - 1].ended_at), startedAt)) return unavailable;
+    const callsign = typeof segment.callsign === 'string' ? segment.callsign.trim().toUpperCase() : '';
+    if (!new RegExp('^[A-Z0-9/]{1,' + W8FY_CONFIG.maxCallsignLength + '}$').test(callsign)) return unavailable;
+    const minutes = Math.round((endedAt.getTime() - startedAt.getTime()) / 60000);
+    if (!Object.prototype.hasOwnProperty.call(totalsByCallsign, callsign)) {
+      totalsByCallsign[callsign] = 0;
+      firstServiceOrder.push(callsign);
+    }
+    totalsByCallsign[callsign] += minutes;
+    totalMinutes += minutes;
+  }
+  if (totalMinutes !== durationMinutes) return unavailable;
+
+  const currentCallsign = String(net.net_control_callsign).trim().toUpperCase();
+  const orderedCallsigns = firstServiceOrder.slice().sort(function (left, right) {
+    if (left === currentCallsign) return -1;
+    if (right === currentCallsign) return 1;
+    return firstServiceOrder.indexOf(left) - firstServiceOrder.indexOf(right);
+  });
+  return {
+    available: true,
+    totalMinutes: totalMinutes,
+    times: orderedCallsigns.map(function (callsign) {
+      const checkIn = checkIns.find(function (entry) { return entry.callsign === callsign; });
+      return {
+        status: callsign === currentCallsign ? 'CURRENT' : 'FORMER',
+        callsign: callsign,
+        name: checkIn && checkIn.name ? checkIn.name : 'N/A',
+        minutes: totalsByCallsign[callsign]
+      };
+    })
+  };
+}
+
+function appendNetControlTimingText_(lines, timing) {
+  if (!timing.available) {
+    lines.push('Net Control Time: unavailable for this net');
+    return;
+  }
+  lines.push('Net Control Time:');
+  timing.times.forEach(function (entry) {
+    lines.push(
+      entry.status + ' - ' + entry.callsign + ' - ' + entry.name + ' - ' +
+      entry.minutes + ' ' + (entry.minutes === 1 ? 'minute' : 'minutes')
+    );
+  });
+  lines.push(
+    'Total Net Control Time: ' + timing.totalMinutes + ' ' +
+    (timing.totalMinutes === 1 ? 'minute' : 'minutes')
+  );
+}
+
+function buildTextReport_(net, groups, totals, netTypeName, durationMinutes, netControls, timing) {
   const lines = [
     'W8FY AMATEUR RADIO NET REPORT',
     '',
@@ -698,10 +1038,12 @@ function buildTextReport_(net, groups, totals, netTypeName, durationMinutes, net
     'End Time: ' + (net.end_time || '—'),
     'Net Duration: ' + durationMinutes + ' minutes'
   ];
+  appendNetControlTimingText_(lines, timing);
 
   const includeNotes = requireNetType_(net.net_type) === 'weather_special';
-  appendTextGroups_(lines, 'TRAFFIC', groups.traffic, includeNotes, net.net_control_callsign);
-  appendTextGroups_(lines, 'NO TRAFFIC', groups.noTraffic, includeNotes, net.net_control_callsign);
+  const includeHandoffStatus = includeNotes || netControls.length > 1;
+  appendTextGroups_(lines, 'TRAFFIC', groups.traffic, includeNotes, net.net_control_callsign, includeHandoffStatus);
+  appendTextGroups_(lines, 'NO TRAFFIC', groups.noTraffic, includeNotes, net.net_control_callsign, includeHandoffStatus);
   lines.push(
     '',
     '========================================',
@@ -716,7 +1058,7 @@ function buildTextReport_(net, groups, totals, netTypeName, durationMinutes, net
   return lines.join('\n');
 }
 
-function appendTextGroups_(lines, heading, grouped, includeNotes, currentNetControlCallsign) {
+function appendTextGroups_(lines, heading, grouped, includeNotes, currentNetControlCallsign, includeHandoffStatus) {
   const currentCallsign = String(currentNetControlCallsign).trim().toUpperCase();
   lines.push('', '========================================', '', heading, '');
   W8FY_CONFIG.stationTypes.forEach(function (stationType) {
@@ -733,7 +1075,7 @@ function appendTextGroups_(lines, heading, grouped, includeNotes, currentNetCont
           ' — ' + entry.station_type +
           ' — ' + (entry.traffic ? 'Traffic' : 'No Traffic') +
           (entry.is_net_control
-            ? ' — ' + (includeNotes
+            ? ' — ' + (includeHandoffStatus
               ? (entry.callsign === currentCallsign ? 'CURRENT NET CONTROL' : 'FORMER NET CONTROL')
               : 'NET CONTROL')
             : '')
@@ -784,6 +1126,147 @@ function getCheckInsForNet_(spreadsheet, netId) {
     .filter(function (entry) { return entry.net_id === netId; });
 }
 
+function getNetControlHistoryForNet_(spreadsheet, netId) {
+  return getRecords_(spreadsheet.getSheetByName(W8FY_CONFIG.netControlHistorySheet), NET_CONTROL_HISTORY_HEADERS)
+    .filter(function (entry) { return entry.net_id === netId; });
+}
+
+function findOpenNetControlHistory_(spreadsheet, netId) {
+  const open = getNetControlHistoryForNet_(spreadsheet, netId).filter(function (entry) {
+    return !entry.ended_at;
+  });
+  if (open.length > 1) throw new Error('Multiple open Net Control timing segments exist for this net.');
+  return open.length ? open[0] : null;
+}
+
+function findNetControlAccess_(spreadsheet, netId) {
+  return getRecords_(
+    spreadsheet.getSheetByName(W8FY_CONFIG.netControlAccessSheet),
+    NET_CONTROL_ACCESS_HEADERS
+  ).find(function (entry) { return entry.net_id === netId; }) || null;
+}
+
+function requireNetControlOwnership_(spreadsheet, net, value) {
+  const access = findNetControlAccess_(spreadsheet, net.id);
+  if (!access || access.owner_callsign !== String(net.net_control_callsign).trim().toUpperCase() ||
+      !isValidOwnershipToken_(access, value, new Date())) {
+    throw new PublicError('This net is read-only on this device.');
+  }
+  return access;
+}
+
+function isValidOwnershipToken_(access, value, now) {
+  let token;
+  try {
+    token = requireRawToken_(value, 'ownerToken');
+  } catch (error) {
+    return false;
+  }
+  if (access.revoked_at || !access.expires_at || dateValue_(access.expires_at).getTime() <= now.getTime()) return false;
+  return constantTimeEqual_(access.token_hash, hashToken_(token));
+}
+
+function generateSecureToken_() {
+  const entropy = [Utilities.getUuid(), Utilities.getUuid(), Utilities.getUuid(), String(Date.now())].join(':');
+  return Utilities.base64EncodeWebSafe(
+    Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, entropy, Utilities.Charset.UTF_8)
+  ).replace(/=+$/g, '');
+}
+
+function hashToken_(token) {
+  return Utilities.base64EncodeWebSafe(
+    Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, token, Utilities.Charset.UTF_8)
+  ).replace(/=+$/g, '');
+}
+
+function requireRawToken_(value, fieldName) {
+  const token = typeof value === 'string' ? value.trim() : '';
+  if (!/^[A-Za-z0-9_-]{43}$/.test(token)) throw new PublicError(fieldName + ' is invalid.');
+  return token;
+}
+
+function constantTimeEqual_(left, right) {
+  const leftValue = String(left || '');
+  const rightValue = String(right || '');
+  let difference = leftValue.length ^ rightValue.length;
+  const length = Math.max(leftValue.length, rightValue.length);
+  for (let index = 0; index < length; index += 1) {
+    difference |= (leftValue.charCodeAt(index % Math.max(leftValue.length, 1)) || 0) ^
+      (rightValue.charCodeAt(index % Math.max(rightValue.length, 1)) || 0);
+  }
+  return difference === 0;
+}
+
+function expirePendingRequests_(spreadsheet, netId, now) {
+  const sheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlRequestsSheet);
+  getRecords_(sheet, NET_CONTROL_REQUEST_HEADERS).filter(function (entry) {
+    return entry.net_id === netId && entry.status === 'pending';
+  }).forEach(function (entry) {
+    expireRequestIfNeeded_(sheet, entry, now);
+  });
+}
+
+function expireRequestIfNeeded_(sheet, request, now) {
+  if (request.status === 'pending' && dateValue_(request.expires_at).getTime() <= now.getTime()) {
+    setRecordCells_(sheet, request._rowNumber, NET_CONTROL_REQUEST_HEADERS, {
+      status: 'expired',
+      decided_at: now
+    });
+    request.status = 'expired';
+    request.decided_at = now.toISOString();
+  }
+  return request;
+}
+
+function publicNetControlRequest_(request) {
+  return {
+    id: request.id,
+    netId: request.net_id,
+    callsign: request.callsign,
+    createdAt: request.created_at,
+    expiresAt: request.expires_at,
+    status: request.status,
+    decidedAt: request.decided_at || ''
+  };
+}
+
+function normalizeRequestDecision_(value) {
+  const decision = typeof value === 'string' ? value.trim().toLowerCase() : '';
+  if (decision !== 'approved' && decision !== 'denied') {
+    throw new PublicError('Decision must be approved or denied.');
+  }
+  return decision;
+}
+
+function floorToMinute_(value) {
+  const date = dateValue_(value);
+  date.setSeconds(0, 0);
+  return date;
+}
+
+function netDateTime_(netDate, time) {
+  return Utilities.parseDate(
+    requireDate_(netDate, 'netDate') + ' ' + requireTime_(time, 'time'),
+    Session.getScriptTimeZone(),
+    'yyyy-MM-dd HH:mm'
+  );
+}
+
+function netEndDateTime_(netDate, startTime, endTime) {
+  const start = netDateTime_(netDate, startTime);
+  return new Date(start.getTime() + calculateDurationMinutes_(startTime, endTime) * 60000);
+}
+
+function dateValue_(value) {
+  const date = value instanceof Date ? new Date(value.getTime()) : new Date(value);
+  if (isNaN(date.getTime())) throw new Error('Invalid stored timestamp.');
+  return date;
+}
+
+function sameMinute_(left, right) {
+  return floorToMinute_(left).getTime() === floorToMinute_(right).getTime();
+}
+
 function getConfiguredSpreadsheet_() {
   const spreadsheetId = PropertiesService.getScriptProperties()
     .getProperty(W8FY_CONFIG.spreadsheetProperty);
@@ -797,6 +1280,20 @@ function ensureApplicationSheets_(spreadsheet) {
   ensureSheet_(spreadsheet, W8FY_CONFIG.netsSheet, NET_HEADERS, [1, 2, 3, 4, 6, 7, 13]);
   ensureSheet_(spreadsheet, W8FY_CONFIG.checkInsSheet, CHECKIN_HEADERS, [1, 2, 3, 4, 8, 9]);
   ensureSheet_(spreadsheet, W8FY_CONFIG.callsignDirectorySheet, CALLSIGN_DIRECTORY_HEADERS, [1, 2]);
+  ensureSheet_(spreadsheet, W8FY_CONFIG.netControlAccessSheet, NET_CONTROL_ACCESS_HEADERS, [1, 2, 3]);
+  ensureSheet_(spreadsheet, W8FY_CONFIG.netControlRequestsSheet, NET_CONTROL_REQUEST_HEADERS, [1, 2, 3, 4, 7]);
+  ensureSheet_(spreadsheet, W8FY_CONFIG.netControlHistorySheet, NET_CONTROL_HISTORY_HEADERS, [1, 2, 3]);
+}
+
+function getApplicationSheetNames_() {
+  return [
+    W8FY_CONFIG.netsSheet,
+    W8FY_CONFIG.checkInsSheet,
+    W8FY_CONFIG.callsignDirectorySheet,
+    W8FY_CONFIG.netControlAccessSheet,
+    W8FY_CONFIG.netControlRequestsSheet,
+    W8FY_CONFIG.netControlHistorySheet
+  ];
 }
 
 function inspectStage1Migration_(spreadsheet) {
@@ -965,6 +1462,47 @@ function appendRecord_(sheet, headers, record) {
   sheet.appendRow(headers.map(function (header) {
     return Object.prototype.hasOwnProperty.call(record, header) ? record[header] : '';
   }));
+}
+
+function appendRecordTracked_(sheet, headers, record) {
+  const rowNumber = sheet.getLastRow() + 1;
+  appendRecord_(sheet, headers, record);
+  return { sheet: sheet, rowNumber: rowNumber };
+}
+
+function rollbackAppendedRows_(rows) {
+  rows.slice().reverse().forEach(function (entry) {
+    try {
+      if (entry.rowNumber <= entry.sheet.getLastRow()) entry.sheet.deleteRow(entry.rowNumber);
+    } catch (rollbackError) {
+      console.error('W8FY appended-row rollback failed:', rollbackError && rollbackError.stack ? rollbackError.stack : rollbackError);
+    }
+  });
+  try {
+    SpreadsheetApp.flush();
+  } catch (rollbackError) {
+    console.error('W8FY rollback flush failed:', rollbackError && rollbackError.stack ? rollbackError.stack : rollbackError);
+  }
+}
+
+function captureRow_(sheet, rowNumber, width) {
+  return {
+    sheet: sheet,
+    rowNumber: rowNumber,
+    values: sheet.getRange(rowNumber, 1, 1, width).getValues()
+  };
+}
+
+function restoreRows_(snapshots) {
+  try {
+    snapshots.forEach(function (snapshot) {
+      snapshot.sheet.getRange(snapshot.rowNumber, 1, 1, snapshot.values[0].length).setValues(snapshot.values);
+    });
+    SpreadsheetApp.flush();
+  } catch (rollbackError) {
+    console.error('W8FY transaction rollback failed:', rollbackError && rollbackError.stack ? rollbackError.stack : rollbackError);
+    throw new Error('The operation failed and its rollback could not be completed. Administrator review is required.');
+  }
 }
 
 function setRecordCells_(sheet, rowNumber, headers, updates) {

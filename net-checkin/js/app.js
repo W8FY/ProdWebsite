@@ -2,11 +2,15 @@
   "use strict";
 
   var LAST_NET_ID_KEY = "w8fy.netCheckin.lastNetId";
+  var OWNER_TOKEN_KEY_PREFIX = "w8fy.netCheckin.ownerToken.";
+  var REQUEST_TOKEN_KEY_PREFIX = "w8fy.netCheckin.requestToken.";
   var DATABASE_ERROR_MESSAGE = "Unable to connect to the net database. Please check your internet connection and try again.";
   var NOTE_MAX_LENGTH = 80;
   var LOOKUP_DELAY_MS = 300;
   var FINALIZED_INACTIVITY_MS = 30 * 60 * 1000;
   var DEFAULT_NET_TYPE = "two_meter_ncs";
+  var PENDING_REQUEST_POLL_MS = 5000;
+  var INCOMING_STATUS_POLL_MS = 3000;
   var NET_TYPE_NAMES = {
     current: "Current Net",
     two_meter_ncs: "2 Meter NCS Net",
@@ -34,7 +38,13 @@
     editingCheckInId: "",
     savingCheckInId: ""
   };
-  var roleSavingCheckInId = "";
+  var activeOwnerToken = "";
+  var ownershipValidationStatus = "idle";
+  var pendingNetControlRequests = [];
+  var incomingNetControlRequest = null;
+  var pendingRequestPollTimer = null;
+  var incomingStatusPollTimer = null;
+  var requestActionBusy = false;
 
   // All persistent operations go through the Google Apps Script API module so
   // the form, roster, totals, and report stay independent of the backend.
@@ -52,7 +62,8 @@
         netControlName: netData.netControlName,
         netControlStationType: netData.netControlStation,
         netControlTraffic: netData.netControlTraffic,
-        startTime: netData.startTime
+        startTime: netData.startTime,
+        ownerToken: ""
       });
     },
 
@@ -72,20 +83,59 @@
         stationType: checkIn.stationType,
         traffic: checkIn.traffic,
         note: checkIn.note,
-        isNetControl: checkIn.isNetControl
+        ownerToken: activeOwnerToken
       });
     },
 
-    setCurrentNetControl: async function (netId, checkInId) {
-      return getDatabaseApi().setNetControlRole({
+    validateOwnership: async function (netId, ownerToken) {
+      return getDatabaseApi().validateNetControlOwnership({
         netId: netId,
-        checkInId: checkInId,
-        isNetControl: true
+        ownerToken: ownerToken
+      });
+    },
+
+    requestNetControl: async function (netId, callsign) {
+      return getDatabaseApi().requestNetControl({
+        netId: netId,
+        callsign: callsign,
+        ownerToken: ""
+      });
+    },
+
+    getRequestStatus: async function (netId, requestId, requestToken) {
+      return getDatabaseApi().getNetControlRequestStatus({
+        netId: netId,
+        requestId: requestId,
+        requestToken: requestToken,
+        ownerToken: ""
+      });
+    },
+
+    getPendingRequests: async function (netId) {
+      return getDatabaseApi().getPendingNetControlRequests({
+        netId: netId,
+        ownerToken: activeOwnerToken
+      });
+    },
+
+    decideRequest: async function (netId, requestId, decision) {
+      return getDatabaseApi().decideNetControlRequest({
+        netId: netId,
+        requestId: requestId,
+        decision: decision,
+        ownerToken: activeOwnerToken
+      });
+    },
+
+    releaseOwnership: async function (netId, ownerToken) {
+      return getDatabaseApi().releaseNetControlOwnership({
+        netId: netId,
+        ownerToken: ownerToken
       });
     },
 
     removeCheckIn: async function (netId, checkInId) {
-      var result = await getDatabaseApi().removeCheckIn({ netId: netId, checkInId: checkInId });
+      var result = await getDatabaseApi().removeCheckIn({ netId: netId, checkInId: checkInId, ownerToken: activeOwnerToken });
       return Boolean(result && result.removed);
     },
 
@@ -93,20 +143,21 @@
       return getDatabaseApi().updateCheckInNote({
         netId: netId,
         checkInId: checkInId,
-        note: note
+        note: note,
+        ownerToken: activeOwnerToken
       });
     },
 
     finalizeNet: async function (netId, endTime) {
-      return getDatabaseApi().finalizeNet({ netId: netId, endTime: endTime });
+      return getDatabaseApi().finalizeNet({ netId: netId, endTime: endTime, ownerToken: activeOwnerToken });
     },
 
     sendNetReport: async function (netId) {
-      return getDatabaseApi().sendReport({ netId: netId });
+      return getDatabaseApi().sendReport({ netId: netId, ownerToken: activeOwnerToken });
     },
 
     downloadReportPdf: async function (netId) {
-      return getDatabaseApi().downloadReportPdf({ netId: netId });
+      return getDatabaseApi().downloadReportPdf({ netId: netId, ownerToken: activeOwnerToken });
     },
 
     lookupCallsign: async function (callsign) {
@@ -141,13 +192,19 @@
     elements.endTime = document.getElementById("end-time");
     elements.startNetButton = document.getElementById("start-net-button");
     elements.activeNetArea = document.getElementById("active-net-area");
+    elements.ownershipStatus = document.getElementById("ownership-status");
+    elements.readOnlyMessage = document.getElementById("read-only-message");
+    elements.netControlRequestArea = document.getElementById("net-control-request-area");
+    elements.netControlRequestCallsign = document.getElementById("net-control-request-callsign");
+    elements.requestNetControlButton = document.getElementById("request-net-control-button");
+    elements.netControlRequestStatus = document.getElementById("net-control-request-status");
+    elements.pendingNetControlArea = document.getElementById("pending-net-control-area");
+    elements.pendingNetControlRequests = document.getElementById("pending-net-control-requests");
     elements.checkinForm = document.getElementById("checkin-form");
     elements.checkinFormMessage = document.getElementById("checkin-form-message");
     elements.checkinCallsign = document.getElementById("checkin-callsign");
     elements.checkinName = document.getElementById("checkin-name");
     elements.checkinNameStatus = document.getElementById("checkin-name-status");
-    elements.checkinNetControlGroup = document.getElementById("checkin-net-control-group");
-    elements.checkinIsNetControl = document.getElementById("checkin-is-net-control");
     elements.checkinNoteGroup = document.getElementById("checkin-note-group");
     elements.checkinNote = document.getElementById("checkin-note");
     elements.checkinNoteCounter = document.getElementById("checkin-note-counter");
@@ -184,6 +241,8 @@
     elements.retryEmailButton.addEventListener("click", retryEmail);
     elements.downloadReportPdfButton.addEventListener("click", downloadFinalReportPdf);
     elements.startNewNetButton.addEventListener("click", startNewNet);
+    elements.requestNetControlButton.addEventListener("click", submitNetControlRequest);
+    elements.pendingNetControlRequests.addEventListener("click", handlePendingRequestAction);
     bindFinalizedActivityListeners();
     elements.endTime.addEventListener("change", function () {
       if (state.active && !state.finalized) {
@@ -279,6 +338,7 @@
 
     setLastNetId(netPayload.net.id);
     loadNetIntoState(netPayload);
+    await resolveOwnershipForCurrentNet();
   }
 
   function loadNetIntoState(netPayload) {
@@ -296,6 +356,210 @@
       throw new Error("The current net could not be found in the database.");
     }
     loadNetIntoState(netPayload);
+  }
+
+  async function resolveOwnershipForCurrentNet() {
+    stopRequestPollingTimers();
+    activeOwnerToken = state.id ? getOwnerToken(state.id) : "";
+    ownershipValidationStatus = activeOwnerToken ? "pending" : "invalid";
+    incomingNetControlRequest = state.id ? getRequestTokenRecord(state.id) : null;
+    renderNetControlAccess();
+    setInterfaceLocking();
+    if (!activeOwnerToken) {
+      updatePollingTimers();
+      return;
+    }
+
+    try {
+      var result = await netRepository.validateOwnership(state.id, activeOwnerToken);
+      if (result && result.valid) {
+        ownershipValidationStatus = "valid";
+      } else {
+        clearOwnerToken(state.id);
+        activeOwnerToken = "";
+        ownershipValidationStatus = "invalid";
+      }
+    } catch (error) {
+      ownershipValidationStatus = "invalid";
+    }
+    renderNetControlAccess();
+    setInterfaceLocking();
+    updatePollingTimers();
+  }
+
+  async function submitNetControlRequest() {
+    if (!databaseReady || !state.active || state.finalized || hasValidOwnership() || requestActionBusy) return;
+    var callsign = normalizeCallsign(elements.netControlRequestCallsign.value);
+    if (!callsign) {
+      elements.netControlRequestStatus.textContent = "Choose a checked-in callsign.";
+      return;
+    }
+
+    requestActionBusy = true;
+    setButtonBusy(elements.requestNetControlButton, true, "Requesting…");
+    try {
+      var result = await netRepository.requestNetControl(state.id, callsign);
+      if (!result || !result.requestId || !result.requestToken) {
+        throw new Error("The backend did not return the Net Control request.");
+      }
+      incomingNetControlRequest = {
+        id: result.requestId,
+        netId: state.id,
+        callsign: callsign,
+        requestToken: result.requestToken,
+        status: result.status,
+        expiresAt: result.expiresAt
+      };
+      setRequestTokenRecord(state.id, incomingNetControlRequest);
+      elements.netControlRequestStatus.textContent = "Request pending until " + formatDateTime(result.expiresAt) + ".";
+    } catch (error) {
+      elements.netControlRequestStatus.textContent = "The Net Control request failed. " + getErrorMessage(error);
+    } finally {
+      requestActionBusy = false;
+      setButtonBusy(elements.requestNetControlButton, false, "Request Net Control");
+      renderNetControlAccess();
+      setInterfaceLocking();
+      updatePollingTimers();
+    }
+  }
+
+  function handlePendingRequestAction(event) {
+    var button = event.target.closest("[data-request-decision]");
+    if (!button) return;
+    decidePendingNetControlRequest(
+      button.getAttribute("data-request-id"),
+      button.getAttribute("data-request-decision")
+    );
+  }
+
+  async function decidePendingNetControlRequest(requestId, decision) {
+    if (!canEditNet() || requestActionBusy) return;
+    var request = pendingNetControlRequests.find(function (entry) { return entry.id === requestId; });
+    if (!request) return;
+    if (decision === "approved" && !window.confirm(
+      "Approve " + request.callsign + " as the current Net Control? This device will immediately become read-only."
+    )) return;
+
+    requestActionBusy = true;
+    renderNetControlAccess();
+    setInterfaceLocking();
+    try {
+      var result = await netRepository.decideRequest(state.id, requestId, decision);
+      if (decision === "approved") {
+        clearOwnerToken(state.id);
+        activeOwnerToken = "";
+        ownershipValidationStatus = "invalid";
+        pendingNetControlRequests = [];
+        if (result && result.net && result.net.net) loadNetIntoState(result.net);
+        else await reloadCurrentNet();
+        showMessage(elements.checkinFormMessage, request.callsign + " is now the current Net Control. This device is read-only.", true);
+      } else {
+        pendingNetControlRequests = pendingNetControlRequests.filter(function (entry) { return entry.id !== requestId; });
+      }
+    } catch (error) {
+      showOperationError(elements.checkinFormMessage, "The Net Control request decision failed.", error);
+      handleOwnershipFailure(error);
+    } finally {
+      requestActionBusy = false;
+      renderApplication();
+    }
+  }
+
+  async function pollPendingNetControlRequests() {
+    pendingRequestPollTimer = null;
+    if (!canPollPendingRequests()) return;
+    try {
+      var requests = await netRepository.getPendingRequests(state.id);
+      pendingNetControlRequests = Array.isArray(requests) ? requests : [];
+    } catch (error) {
+      handleOwnershipFailure(error);
+    }
+    renderNetControlAccess();
+    schedulePendingRequestPoll();
+  }
+
+  async function pollIncomingNetControlRequest() {
+    incomingStatusPollTimer = null;
+    if (!canPollIncomingRequest()) return;
+    var request = incomingNetControlRequest;
+    try {
+      var result = await netRepository.getRequestStatus(state.id, request.id, request.requestToken);
+      incomingNetControlRequest.status = result.status;
+      incomingNetControlRequest.expiresAt = result.expiresAt;
+      if (result.status === "approved") {
+        setOwnerToken(state.id, request.requestToken);
+        activeOwnerToken = request.requestToken;
+        clearRequestTokenRecord(state.id);
+        incomingNetControlRequest = null;
+        ownershipValidationStatus = "pending";
+        await reloadCurrentNet();
+        await resolveOwnershipForCurrentNet();
+        renderApplication();
+        showMessage(elements.checkinFormMessage, "This device is now the current Net Control and may edit the net.", true);
+        return;
+      }
+      if (result.status === "denied" || result.status === "expired") {
+        elements.netControlRequestStatus.textContent = result.status === "denied"
+          ? "The Net Control request was denied."
+          : "The Net Control request expired after 10 minutes.";
+        clearRequestTokenRecord(state.id);
+        incomingNetControlRequest = null;
+      } else {
+        setRequestTokenRecord(state.id, incomingNetControlRequest);
+      }
+    } catch (error) {
+      if (error && error.isConnectionError) {
+        elements.netControlRequestStatus.textContent = "Request status is temporarily unavailable. Retrying…";
+      } else {
+        clearRequestTokenRecord(state.id);
+        incomingNetControlRequest = null;
+        elements.netControlRequestStatus.textContent = "The saved Net Control request is no longer valid.";
+      }
+    }
+    renderNetControlAccess();
+    scheduleIncomingStatusPoll();
+  }
+
+  function canPollPendingRequests() {
+    return databaseReady && state.active && !state.finalized && hasValidOwnership();
+  }
+
+  function canPollIncomingRequest() {
+    return databaseReady && state.active && !state.finalized && !hasValidOwnership() &&
+      Boolean(incomingNetControlRequest && incomingNetControlRequest.status === "pending");
+  }
+
+  function schedulePendingRequestPoll() {
+    if (pendingRequestPollTimer === null && canPollPendingRequests()) {
+      pendingRequestPollTimer = window.setTimeout(pollPendingNetControlRequests, PENDING_REQUEST_POLL_MS);
+    }
+  }
+
+  function scheduleIncomingStatusPoll() {
+    if (incomingStatusPollTimer === null && canPollIncomingRequest()) {
+      incomingStatusPollTimer = window.setTimeout(pollIncomingNetControlRequest, INCOMING_STATUS_POLL_MS);
+    }
+  }
+
+  function updatePollingTimers() {
+    if (canPollPendingRequests()) schedulePendingRequestPoll();
+    else if (pendingRequestPollTimer !== null) {
+      window.clearTimeout(pendingRequestPollTimer);
+      pendingRequestPollTimer = null;
+      pendingNetControlRequests = [];
+    }
+    if (canPollIncomingRequest()) scheduleIncomingStatusPoll();
+    else if (incomingStatusPollTimer !== null) {
+      window.clearTimeout(incomingStatusPollTimer);
+      incomingStatusPollTimer = null;
+    }
+  }
+
+  function stopRequestPollingTimers() {
+    if (pendingRequestPollTimer !== null) window.clearTimeout(pendingRequestPollTimer);
+    if (incomingStatusPollTimer !== null) window.clearTimeout(incomingStatusPollTimer);
+    pendingRequestPollTimer = null;
+    incomingStatusPollTimer = null;
   }
 
   function createEmptyState() {
@@ -316,6 +580,9 @@
       emailStatus: "idle",
       emailError: "",
       authoritativeReportText: "",
+      netControlTimes: [],
+      netControlTotalMinutes: 0,
+      netControlTimingAvailable: false,
       checkIns: []
     };
   }
@@ -343,6 +610,9 @@
       emailStatus: netRecord.email_sent ? "sent" : (netRecord.finalized ? "failed" : "idle"),
       emailError: "",
       authoritativeReportText: report && typeof report.text === "string" ? report.text : "",
+      netControlTimes: report && Array.isArray(report.netControlTimes) ? report.netControlTimes : [],
+      netControlTotalMinutes: report && Number.isFinite(Number(report.netControlTotalMinutes)) ? Number(report.netControlTotalMinutes) : 0,
+      netControlTimingAvailable: Boolean(report && report.netControlTimingAvailable),
       checkIns: mappedCheckIns
     };
   }
@@ -429,9 +699,16 @@
       if (!createdPayload || !createdPayload.net) {
         throw new Error("The Google database did not return the created net.");
       }
+      if (typeof createdPayload.ownerToken !== "string" || !createdPayload.ownerToken) {
+        throw new Error("The Google database did not return device ownership.");
+      }
       setLastNetId(createdPayload.net.id);
+      setOwnerToken(createdPayload.net.id, createdPayload.ownerToken);
+      activeOwnerToken = createdPayload.ownerToken;
+      ownershipValidationStatus = "valid";
       loadNetIntoState(createdPayload);
       renderApplication();
+      updatePollingTimers();
       elements.checkinCallsign.focus();
     } catch (error) {
       showOperationError(elements.netFormMessage, "The net was not saved.", error);
@@ -446,8 +723,8 @@
     clearMessage(elements.checkinFormMessage);
     clearCheckInValidation();
 
-    if (!databaseReady || !state.active || state.finalized) {
-      showMessage(elements.checkinFormMessage, DATABASE_ERROR_MESSAGE);
+    if (!canEditNet()) {
+      showMessage(elements.checkinFormMessage, "This net is read-only on this device.");
       return;
     }
 
@@ -456,7 +733,6 @@
     var station = getSelectedValue("checkinStation");
     var traffic = getSelectedValue("checkinTraffic");
     var note = isWeatherNet() ? cleanText(elements.checkinNote.value) : "";
-    var isNetControl = isWeatherNet() && elements.checkinIsNetControl.checked;
     var errors = [];
 
     if (!callsign) {
@@ -496,27 +772,19 @@
     setButtonBusy(elements.addCheckinButton, true, "Saving…");
 
     try {
-      var savedResult = await netRepository.addCheckIn(state.id, {
+      await netRepository.addCheckIn(state.id, {
         callsign: callsign,
         name: name,
         stationType: station,
         traffic: traffic,
-        note: note,
-        isNetControl: isNetControl
+        note: note
       });
-      if (isNetControl) {
-        if (!savedResult || !savedResult.net) {
-          throw new Error("The database did not return the completed Net Control handoff.");
-        }
-        loadNetIntoState(savedResult);
-      } else {
-        await reloadCurrentNet();
-      }
+      await reloadCurrentNet();
       renderApplication();
       resetCheckInForm();
       showMessage(
         elements.checkinFormMessage,
-        callsign + (isNetControl ? " was saved and is now the current Net Control." : " was saved to the net."),
+        callsign + " was saved to the net.",
         true
       );
       elements.checkinCallsign.focus();
@@ -526,6 +794,7 @@
       } else {
         showOperationError(elements.checkinFormMessage, callsign + " was not saved.", error);
       }
+      handleOwnershipFailure(error);
     } finally {
       setButtonBusy(elements.addCheckinButton, false, "Add Check-In");
       setInterfaceLocking();
@@ -557,10 +826,6 @@
       return;
     }
 
-    var roleButton = event.target.closest("[data-net-control-role-id]");
-    if (roleButton) {
-      setCurrentNetControl(roleButton.getAttribute("data-net-control-role-id"));
-    }
   }
 
   function handleRosterInput(event) {
@@ -637,11 +902,12 @@
       setRosterNoteEditorBusy(textarea, false);
       setInterfaceLocking();
       showRosterNoteError(textarea, "The note was not saved. " + getErrorMessage(error));
+      handleOwnershipFailure(error);
     }
   }
 
   async function removeCheckIn(checkInId) {
-    if (!databaseReady || !state.active || state.finalized || noteEditorState.savingCheckInId || roleSavingCheckInId) {
+    if (!canEditNet() || noteEditorState.savingCheckInId || requestActionBusy) {
       return;
     }
 
@@ -669,48 +935,13 @@
       showMessage(elements.checkinFormMessage, entry.callsign + " was removed from the net.", true);
     } catch (error) {
       showOperationError(elements.checkinFormMessage, entry.callsign + " was not removed.", error);
-      setInterfaceLocking();
-    }
-  }
-
-  async function setCurrentNetControl(checkInId) {
-    if (!canManageNetControlRoles() || roleSavingCheckInId || noteEditorState.savingCheckInId) {
-      return;
-    }
-
-    var entry = findCheckIn(checkInId);
-    if (!entry || isCurrentNetControl(entry)) {
-      return;
-    }
-
-    if (!window.confirm("Make " + entry.callsign + " the current Net Control? The present controller will remain in the final report as a former Net Control.")) {
-      return;
-    }
-
-    clearMessage(elements.checkinFormMessage);
-    roleSavingCheckInId = checkInId;
-    renderRoster();
-    setInterfaceLocking();
-
-    try {
-      var updatedPayload = await netRepository.setCurrentNetControl(state.id, checkInId);
-      if (!updatedPayload || !updatedPayload.net) {
-        throw new Error("The database did not return the completed Net Control handoff.");
-      }
-      loadNetIntoState(updatedPayload);
-      renderApplication();
-      showMessage(elements.checkinFormMessage, entry.callsign + " is now the current Net Control.", true);
-    } catch (error) {
-      showOperationError(elements.checkinFormMessage, "The current Net Control was not changed.", error);
-    } finally {
-      roleSavingCheckInId = "";
-      renderRoster();
+      handleOwnershipFailure(error);
       setInterfaceLocking();
     }
   }
 
   async function finalizeNet() {
-    if (!databaseReady || !state.active || state.finalized || noteEditorState.savingCheckInId || roleSavingCheckInId) {
+    if (!canEditNet() || noteEditorState.savingCheckInId || requestActionBusy) {
       return;
     }
 
@@ -732,6 +963,7 @@
       await sendFinalizedNetReport();
     } catch (error) {
       showOperationError(elements.checkinFormMessage, "The net was not finalized.", error);
+      handleOwnershipFailure(error);
     } finally {
       setButtonBusy(elements.finalizeNetButton, false, "Finalize Net");
       setInterfaceLocking();
@@ -739,7 +971,7 @@
   }
 
   async function retryEmail() {
-    if (!databaseReady || !state.finalized || state.emailSent || state.emailStatus === "sending") {
+    if (!databaseReady || !hasValidOwnership() || !state.finalized || state.emailSent || state.emailStatus === "sending") {
       return;
     }
     await sendFinalizedNetReport();
@@ -765,6 +997,7 @@
       state.emailSent = false;
       state.emailStatus = "failed";
       state.emailError = error && error.message ? error.message : "The report email could not be sent.";
+      handleOwnershipFailure(error);
     } finally {
       setButtonBusy(elements.retryEmailButton, false, "Retry Email");
       renderStatus();
@@ -775,7 +1008,7 @@
   }
 
   async function downloadFinalReportPdf() {
-    if (!databaseReady || !state.id || !state.finalized || pdfDownloadBusy) {
+    if (!databaseReady || !hasValidOwnership() || !state.id || !state.finalized || pdfDownloadBusy) {
       return;
     }
 
@@ -791,6 +1024,7 @@
       setPdfDownloadStatus("The final report PDF was downloaded successfully.", "success");
     } catch (error) {
       setPdfDownloadStatus("The final report PDF could not be downloaded. " + getErrorMessage(error), "error");
+      handleOwnershipFailure(error);
     } finally {
       pdfDownloadBusy = false;
       setButtonBusy(elements.downloadReportPdfButton, false, "Download Final Report PDF");
@@ -799,7 +1033,7 @@
     }
   }
 
-  function startNewNet() {
+  async function startNewNet() {
     if (!state.finalized) {
       return;
     }
@@ -808,26 +1042,40 @@
       return;
     }
 
-    resetToStartNetScreen();
+    await resetToStartNetScreen();
   }
 
-  function resetToStartNetScreen() {
+  async function resetToStartNetScreen() {
     stopFinalizedInactivityTimer();
-
-    clearLastNetId();
-    resetNoteEditorState();
-    pdfDownloadBusy = false;
-    setPdfDownloadStatus("", "");
-    state = createEmptyState();
-    elements.netForm.reset();
-    resetCheckInForm();
-    resetLookupTracker("netControl", elements.netControlNameStatus);
-    clearNetValidation();
-    clearMessage(elements.netFormMessage);
-    clearMessage(elements.checkinFormMessage);
-    renderApplication();
-    elements.netControlCallsign.focus();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    stopRequestPollingTimers();
+    var netId = state.id;
+    var token = activeOwnerToken;
+    try {
+      if (databaseReady && netId && token) {
+        await netRepository.releaseOwnership(netId, token);
+      }
+    } catch (error) {
+      // Local reset must finish even when protected backend cleanup is unavailable.
+    } finally {
+      clearAllLocalControlTokens();
+      activeOwnerToken = "";
+      ownershipValidationStatus = "idle";
+      pendingNetControlRequests = [];
+      clearLastNetId();
+      resetNoteEditorState();
+      pdfDownloadBusy = false;
+      setPdfDownloadStatus("", "");
+      state = createEmptyState();
+      elements.netForm.reset();
+      resetCheckInForm();
+      resetLookupTracker("netControl", elements.netControlNameStatus);
+      clearNetValidation();
+      clearMessage(elements.netFormMessage);
+      clearMessage(elements.checkinFormMessage);
+      renderApplication();
+      elements.netControlCallsign.focus();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }
 
   function bindFinalizedActivityListeners() {
@@ -888,7 +1136,9 @@
     renderTotals();
     renderFinalReport();
     renderEmailStatus();
+    renderNetControlAccess();
     setInterfaceLocking();
+    updatePollingTimers();
     if (state.finalized) {
       restartFinalizedInactivityTimer();
     } else {
@@ -898,17 +1148,12 @@
 
   function renderNetTypeFeatures() {
     var includeNotes = isWeatherNet();
-    var allowAdditionalNetControls = state.active && !state.finalized && includeNotes;
     elements.checkinNoteGroup.hidden = !includeNotes;
-    elements.checkinNetControlGroup.hidden = !allowAdditionalNetControls;
     elements.rosterNoteHeading.hidden = !includeNotes;
     elements.rosterHeading.textContent = getNetTypeName(state.netType) + " Roster";
     elements.rosterBody.closest("table").classList.toggle("weather-roster", includeNotes);
     if (!includeNotes) {
       elements.checkinNote.value = "";
-    }
-    if (!allowAdditionalNetControls) {
-      elements.checkinIsNetControl.checked = false;
     }
     updateNoteCounter();
   }
@@ -948,6 +1193,97 @@
     }
   }
 
+  function renderNetControlAccess() {
+    if (!elements.ownershipStatus) return;
+    var validationPending = state.active && ownershipValidationStatus === "pending";
+    var owned = hasValidOwnership();
+
+    if (!state.active) {
+      elements.ownershipStatus.textContent = "No active net";
+    } else if (validationPending) {
+      elements.ownershipStatus.textContent = "Checking device access…";
+    } else if (owned) {
+      elements.ownershipStatus.textContent = "Authorized for " + state.netControlCallsign;
+    } else {
+      elements.ownershipStatus.textContent = "Read-only device";
+    }
+    elements.ownershipStatus.classList.toggle("ownership-valid", owned);
+    elements.ownershipStatus.classList.toggle("ownership-read-only", state.active && !owned && !validationPending);
+    elements.readOnlyMessage.hidden = !state.active || owned || validationPending;
+
+    var canRequest = state.active && !state.finalized && !owned && !validationPending;
+    elements.netControlRequestArea.hidden = !canRequest;
+    if (canRequest) renderRequestCallsignOptions();
+
+    var showPending = state.active && !state.finalized && owned;
+    elements.pendingNetControlArea.hidden = !showPending;
+    elements.pendingNetControlRequests.replaceChildren();
+    if (showPending) {
+      if (!pendingNetControlRequests.length) {
+        var empty = document.createElement("p");
+        empty.className = "pending-request-empty";
+        empty.textContent = "No pending requests.";
+        elements.pendingNetControlRequests.appendChild(empty);
+      } else {
+        pendingNetControlRequests.forEach(function (request) {
+          var item = document.createElement("div");
+          item.className = "pending-request-item";
+          var description = document.createElement("span");
+          description.textContent = request.callsign + " — expires " + formatDateTime(request.expiresAt);
+          item.appendChild(description);
+          var actions = document.createElement("div");
+          actions.className = "pending-request-actions";
+          actions.appendChild(createRequestDecisionButton(request, "Approve", "approved", "btn btn-primary btn-sm"));
+          actions.appendChild(createRequestDecisionButton(request, "Deny", "denied", "btn btn-outline-danger btn-sm"));
+          item.appendChild(actions);
+          elements.pendingNetControlRequests.appendChild(item);
+        });
+      }
+    }
+  }
+
+  function renderRequestCallsignOptions() {
+    var selected = elements.netControlRequestCallsign.value;
+    var available = state.checkIns.filter(function (entry) {
+      return !isCurrentNetControl(entry);
+    });
+    elements.netControlRequestCallsign.replaceChildren();
+    var prompt = document.createElement("option");
+    prompt.value = "";
+    prompt.textContent = available.length ? "Select your callsign" : "No eligible check-ins";
+    elements.netControlRequestCallsign.appendChild(prompt);
+    available.forEach(function (entry) {
+      var option = document.createElement("option");
+      option.value = entry.callsign;
+      option.textContent = entry.callsign + " — " + (entry.name || "N/A");
+      elements.netControlRequestCallsign.appendChild(option);
+    });
+    if (available.some(function (entry) { return entry.callsign === selected; })) {
+      elements.netControlRequestCallsign.value = selected;
+    }
+    var pending = incomingNetControlRequest && incomingNetControlRequest.status === "pending";
+    elements.netControlRequestCallsign.disabled = requestActionBusy || pending || !available.length;
+    elements.requestNetControlButton.disabled = requestActionBusy || pending || !available.length;
+    if (pending) {
+      elements.netControlRequestStatus.textContent = incomingNetControlRequest.callsign +
+        " request pending until " + formatDateTime(incomingNetControlRequest.expiresAt) + ".";
+    } else if (!requestActionBusy && /^Request pending/.test(elements.netControlRequestStatus.textContent)) {
+      elements.netControlRequestStatus.textContent = "";
+    }
+  }
+
+  function createRequestDecisionButton(request, label, decision, className) {
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = className;
+    button.textContent = requestActionBusy ? "Saving…" : label;
+    button.setAttribute("data-request-id", request.id);
+    button.setAttribute("data-request-decision", decision);
+    button.setAttribute("aria-label", label + " Net Control request from " + request.callsign);
+    button.disabled = requestActionBusy;
+    return button;
+  }
+
   function setDatabaseStatus(status) {
     elements.databaseStatus.className = "database-status";
     databaseReady = status === "connected";
@@ -982,23 +1318,23 @@
 
     elements.netForm.querySelectorAll("input, select, button").forEach(function (control) {
       if (control === elements.endTime) {
-        control.disabled = !databaseReady || !state.active || state.finalized;
+        control.disabled = !canEditNet() || requestActionBusy;
       } else {
         control.disabled = !databaseReady || state.active;
       }
     });
 
     elements.checkinForm.querySelectorAll("input, textarea, button").forEach(function (control) {
-      control.disabled = !databaseReady || !state.active || state.finalized;
+      control.disabled = !canEditNet() || requestActionBusy;
     });
 
-    elements.finalizeNetButton.disabled = !databaseReady || !state.active || state.finalized || Boolean(noteEditorState.savingCheckInId) || Boolean(roleSavingCheckInId);
+    elements.finalizeNetButton.disabled = !canEditNet() || Boolean(noteEditorState.savingCheckInId) || requestActionBusy;
     elements.startNewNetButton.hidden = !state.finalized;
     elements.finalizedInactivityNote.hidden = !state.finalized;
-    elements.retryEmailButton.hidden = !state.finalized || state.emailSent || state.emailStatus !== "failed";
-    elements.retryEmailButton.disabled = !databaseReady || !state.finalized || state.emailSent || state.emailStatus === "sending";
-    elements.downloadReportPdfButton.hidden = !state.finalized;
-    elements.downloadReportPdfButton.disabled = !databaseReady || !state.finalized || pdfDownloadBusy;
+    elements.retryEmailButton.hidden = !hasValidOwnership() || !state.finalized || state.emailSent || state.emailStatus !== "failed";
+    elements.retryEmailButton.disabled = !databaseReady || !hasValidOwnership() || !state.finalized || state.emailSent || state.emailStatus === "sending";
+    elements.downloadReportPdfButton.hidden = !hasValidOwnership() || !state.finalized;
+    elements.downloadReportPdfButton.disabled = !databaseReady || !hasValidOwnership() || !state.finalized || pdfDownloadBusy;
     elements.startNewNetButton.disabled = !state.finalized || pdfDownloadBusy || state.emailStatus === "sending";
   }
 
@@ -1022,7 +1358,7 @@
       var callsignCell = appendTextCell(row, entry.callsign);
       callsignCell.classList.add("callsign-cell");
       if (entry.isNetControl) {
-        if (isWeatherNet()) {
+        if (hasNetControlHandoff(state)) {
           callsignCell.appendChild(createBadge(
             isCurrentNetControl(entry) ? "CURRENT NET CONTROL" : "FORMER NET CONTROL",
             (isCurrentNetControl(entry) ? "badge-net-control" : "badge-former-net-control") + " ms-2"
@@ -1062,36 +1398,16 @@
     var actions = document.createElement("div");
     actions.className = "roster-actions";
 
-    if (canManageNetControlRoles()) {
-      if (isCurrentNetControl(entry)) {
-        actions.appendChild(createBadge("Current Net Control", "badge-role-status"));
-      } else if (entry.isNetControl) {
-        actions.appendChild(createRoleButton(entry, "Make Current Again"));
-      } else {
-        actions.appendChild(createRoleButton(entry, "Make Current Net Control"));
-        actions.appendChild(createRemoveButton(entry));
-      }
-    } else if (entry.isNetControl) {
+    if (entry.isNetControl) {
       actions.appendChild(createBadge(
         isCurrentNetControl(entry) ? "Current Net Control" : "Former Net Control",
         "badge-role-status"
       ));
-    } else if (!state.finalized) {
+    } else if (canEditNet()) {
       actions.appendChild(createRemoveButton(entry));
     }
 
     actionCell.appendChild(actions);
-  }
-
-  function createRoleButton(entry, label) {
-    var button = document.createElement("button");
-    button.type = "button";
-    button.className = "btn btn-outline-primary btn-sm net-control-role-button";
-    button.textContent = roleSavingCheckInId === entry.id ? "Saving…" : label;
-    button.setAttribute("data-net-control-role-id", entry.id);
-    button.setAttribute("aria-label", label + " for " + entry.callsign);
-    button.disabled = Boolean(roleSavingCheckInId) || !databaseReady;
-    return button;
   }
 
   function createRemoveButton(entry) {
@@ -1101,7 +1417,7 @@
     button.textContent = "Remove";
     button.setAttribute("data-remove-id", entry.id);
     button.setAttribute("aria-label", "Remove " + entry.callsign + " from the net");
-    button.disabled = !databaseReady || state.finalized || Boolean(roleSavingCheckInId);
+    button.disabled = !canEditNet() || requestActionBusy;
     return button;
   }
 
@@ -1183,13 +1499,16 @@
       "Net Controls: " + formatNetControls(netState),
       "Start Time: " + formatTime(netState.startTime),
       "End Time: " + formatTime(netState.endTime),
-      "Net Duration: " + calculateDurationMinutes(netState.startTime, netState.endTime) + " minutes",
+      "Net Duration: " + calculateDurationMinutes(netState.startTime, netState.endTime) + " minutes"
+    ];
+    appendNetControlTimingReport(lines, netState);
+    lines.push(
       "",
       "--------------------------------",
       "",
       "TRAFFIC",
       ""
-    ];
+    );
 
     appendReportGroups(lines, sorted, "Yes", netState);
     lines.push("", "--------------------------------", "", "NO TRAFFIC", "");
@@ -1206,6 +1525,27 @@
     return lines.join("\n");
   }
 
+  function appendNetControlTimingReport(lines, netState) {
+    if (!netState.netControlTimingAvailable) {
+      lines.push("Net Control Time: unavailable for this net");
+      return;
+    }
+    lines.push("Net Control Time:");
+    netState.netControlTimes.slice().sort(function (left, right) {
+      if (left.status === "CURRENT" && right.status !== "CURRENT") return -1;
+      if (right.status === "CURRENT" && left.status !== "CURRENT") return 1;
+      return 0;
+    }).forEach(function (entry) {
+      var minutes = Number(entry.minutes) || 0;
+      lines.push(
+        entry.status + " - " + entry.callsign + " - " + (entry.name || "N/A") + " - " +
+        minutes + " " + (minutes === 1 ? "minute" : "minutes")
+      );
+    });
+    var total = Number(netState.netControlTotalMinutes) || 0;
+    lines.push("Total Net Control Time: " + total + " " + (total === 1 ? "minute" : "minutes"));
+  }
+
   function formatNetControls(netState) {
     return netState.checkIns.filter(function (entry) {
       return entry.isNetControl;
@@ -1218,7 +1558,7 @@
       return 0;
     }).map(function (entry) {
       var status = isCurrentNetControl(entry, netState) ? "CURRENT" : "FORMER";
-      return (netState.netType === "weather_special" ? status + " - " : "") + entry.callsign + " - " + (entry.name || "N/A");
+      return (hasNetControlHandoff(netState) ? status + " - " : "") + entry.callsign + " - " + (entry.name || "N/A");
     }).join("; ");
   }
 
@@ -1238,7 +1578,7 @@
             " - " + (entry.traffic === "Yes" ? "Traffic" : "No Traffic") +
             (includeNotes ? " - Note: " + (entry.note || "N/A") : "") +
             (entry.isNetControl
-              ? "  [" + (includeNotes
+              ? "  [" + (hasNetControlHandoff(netState)
                 ? (isCurrentNetControl(entry, netState) ? "CURRENT NET CONTROL" : "FORMER NET CONTROL")
                 : "NET CONTROL") + "]"
               : "")
@@ -1361,6 +1701,82 @@
     }
   }
 
+  function handleOwnershipFailure(error) {
+    if (!error || !/read-only on this device|ownerToken is invalid/i.test(error.message || "")) return false;
+    if (state.id) clearOwnerToken(state.id);
+    activeOwnerToken = "";
+    ownershipValidationStatus = "invalid";
+    pendingNetControlRequests = [];
+    stopRequestPollingTimers();
+    renderNetControlAccess();
+    renderRoster();
+    setInterfaceLocking();
+    return true;
+  }
+
+  function setOwnerToken(netId, token) {
+    try {
+      window.localStorage.setItem(OWNER_TOKEN_KEY_PREFIX + netId, token);
+    } catch (error) {
+      // The current page can continue; refresh ownership requires localStorage.
+    }
+  }
+
+  function getOwnerToken(netId) {
+    try {
+      return cleanText(window.localStorage.getItem(OWNER_TOKEN_KEY_PREFIX + netId));
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function clearOwnerToken(netId) {
+    try {
+      window.localStorage.removeItem(OWNER_TOKEN_KEY_PREFIX + netId);
+    } catch (error) {
+      // Runtime state is cleared separately.
+    }
+  }
+
+  function setRequestTokenRecord(netId, record) {
+    try {
+      window.localStorage.setItem(REQUEST_TOKEN_KEY_PREFIX + netId, JSON.stringify(record));
+    } catch (error) {
+      // The request remains usable until this page is closed.
+    }
+  }
+
+  function getRequestTokenRecord(netId) {
+    try {
+      var parsed = JSON.parse(window.localStorage.getItem(REQUEST_TOKEN_KEY_PREFIX + netId) || "null");
+      if (!parsed || parsed.netId !== netId || !parsed.id || !parsed.requestToken) return null;
+      return parsed;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function clearRequestTokenRecord(netId) {
+    try {
+      window.localStorage.removeItem(REQUEST_TOKEN_KEY_PREFIX + netId);
+    } catch (error) {
+      // Runtime state is cleared separately.
+    }
+  }
+
+  function clearAllLocalControlTokens() {
+    try {
+      for (var index = window.localStorage.length - 1; index >= 0; index -= 1) {
+        var key = window.localStorage.key(index) || "";
+        if (key.indexOf(OWNER_TOKEN_KEY_PREFIX) === 0 || key.indexOf(REQUEST_TOKEN_KEY_PREFIX) === 0) {
+          window.localStorage.removeItem(key);
+        }
+      }
+    } catch (error) {
+      // Resetting the visible application remains mandatory.
+    }
+  }
+
   function setLastNetId(netId) {
     try {
       window.localStorage.setItem(LAST_NET_ID_KEY, netId);
@@ -1430,13 +1846,24 @@
     return state.netType === "weather_special";
   }
 
-  function canManageNetControlRoles() {
-    return databaseReady && state.active && !state.finalized && isWeatherNet();
+  function hasValidOwnership() {
+    return ownershipValidationStatus === "valid" && Boolean(activeOwnerToken);
+  }
+
+  function canEditNet() {
+    return databaseReady && state.active && !state.finalized && hasValidOwnership();
   }
 
   function isCurrentNetControl(entry, netState) {
     var currentState = netState || state;
     return entry.callsign === currentState.netControlCallsign;
+  }
+
+  function hasNetControlHandoff(netState) {
+    var currentState = netState || state;
+    return currentState.netType === "weather_special" || currentState.checkIns.filter(function (entry) {
+      return entry.isNetControl;
+    }).length > 1;
   }
 
   function cleanText(value) {
@@ -1625,7 +2052,7 @@
   }
 
   function canEditRosterNotes() {
-    return databaseReady && state.active && !state.finalized && isWeatherNet();
+    return canEditNet() && isWeatherNet() && !requestActionBusy;
   }
 
   function resetNoteEditorState() {

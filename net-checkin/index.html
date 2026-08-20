@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/style.css?v=20260820-remove-net-control-auth">
+  <link rel="stylesheet" href="css/style.css?v=20260820-browser-control-timing">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -214,6 +214,31 @@
     </section>
 
     <section id="active-net-area" hidden>
+      <section id="net-control-access-panel" class="app-card net-control-access-panel" aria-labelledby="net-control-access-heading">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="section-kicker">Device access</p>
+            <h2 id="net-control-access-heading">Net Control Access</h2>
+          </div>
+          <span id="ownership-status" class="ownership-status" role="status" aria-live="polite">Checking access…</span>
+        </div>
+        <p id="read-only-message" class="read-only-message" role="status" aria-live="polite" hidden>This net is read-only on this device.</p>
+
+        <div id="net-control-request-area" class="net-control-request-area" hidden>
+          <label class="form-label" for="net-control-request-callsign">Checked-in callsign</label>
+          <div class="request-control-row">
+            <select id="net-control-request-callsign" class="form-select" aria-describedby="net-control-request-status"></select>
+            <button id="request-net-control-button" class="btn btn-outline-primary action-button" type="button">Request Net Control</button>
+          </div>
+          <p id="net-control-request-status" class="request-status" role="status" aria-live="polite"></p>
+        </div>
+
+        <div id="pending-net-control-area" class="pending-net-control-area" hidden>
+          <h3>Pending Net Control Requests</h3>
+          <div id="pending-net-control-requests" class="pending-net-control-requests" aria-live="polite"></div>
+        </div>
+      </section>
+
       <div class="row g-4">
         <div class="col-12 col-xl-5">
           <section class="app-card h-100" aria-labelledby="add-checkin-heading">
@@ -265,11 +290,6 @@
                   <label class="btn option-button" for="checkin-traffic-no">No</label>
                 </div>
               </fieldset>
-
-              <div id="checkin-net-control-group" class="form-check net-control-check mb-4" hidden>
-                <input class="form-check-input" id="checkin-is-net-control" name="checkinIsNetControl" type="checkbox">
-                <label class="form-check-label" for="checkin-is-net-control">Make Current Net Control</label>
-              </div>
 
               <div id="checkin-note-group" class="mb-4" hidden>
                 <div class="note-label-row">
@@ -386,7 +406,7 @@
 
   <script src="js/config.js"></script>
   <script src="js/site-navigation.js?v=20260814-site-theme"></script>
-  <script src="js/google-apps-script.js?v=20260820-remove-net-control-auth"></script>
-  <script src="js/app.js?v=20260820-remove-net-control-auth"></script>
+  <script src="js/google-apps-script.js?v=20260820-browser-control-timing"></script>
+  <script src="js/app.js?v=20260820-browser-control-timing"></script>
 </body>
 </html>

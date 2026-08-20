@@ -128,8 +128,23 @@
         data: data
       });
     },
-    setNetControlRole: function (data) {
-      return request("setNetControlRole", { method: "POST", data: data });
+    validateNetControlOwnership: function (data) {
+      return request("validateNetControlOwnership", { method: "POST", data: data });
+    },
+    requestNetControl: function (data) {
+      return request("requestNetControl", { method: "POST", data: data });
+    },
+    getNetControlRequestStatus: function (data) {
+      return request("getNetControlRequestStatus", { method: "POST", data: data });
+    },
+    getPendingNetControlRequests: function (data) {
+      return request("getPendingNetControlRequests", { method: "POST", data: data });
+    },
+    decideNetControlRequest: function (data) {
+      return request("decideNetControlRequest", { method: "POST", data: data });
+    },
+    releaseNetControlOwnership: function (data) {
+      return request("releaseNetControlOwnership", { method: "POST", data: data });
     },
     removeCheckIn: function (data) {
       return request("removeCheckIn", { method: "POST", data: data });
