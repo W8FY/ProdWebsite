@@ -193,6 +193,7 @@ function doPost(e) {
     const body = parseJsonBody_(e);
     const action = requireAction_(body.action, POST_ACTIONS);
     const data = isPlainObject_(body.data) ? body.data : body;
+
     const spreadsheet = getConfiguredSpreadsheet_();
     ensureApplicationSheets_(spreadsheet);
 
@@ -307,7 +308,31 @@ function addCheckIn_(spreadsheet, data) {
     name: name,
     note: note
   };
-  appendRecord_(spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet), CHECKIN_HEADERS, record);
+  const checkInsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet);
+  appendRecord_(checkInsSheet, CHECKIN_HEADERS, record);
+  if (isNetControl) {
+    try {
+      return completeNetControlHandoff_(
+        spreadsheet,
+        net,
+        record,
+        function () { return buildNetPayload_(spreadsheet, requireNet_(spreadsheet, netId)); }
+      );
+    } catch (error) {
+      try {
+        const appendedRecord = getRecords_(checkInsSheet, CHECKIN_HEADERS).find(function (entry) {
+          return entry.id === record.id && entry.net_id === netId;
+        });
+        if (appendedRecord) {
+          checkInsSheet.deleteRow(appendedRecord._rowNumber);
+          SpreadsheetApp.flush();
+        }
+      } catch (rollbackError) {
+        console.error('W8FY add-and-handoff rollback failed:', rollbackError && rollbackError.stack ? rollbackError.stack : rollbackError);
+      }
+      throw error;
+    }
+  }
   return publicRecord_(record);
 }
 
@@ -315,6 +340,9 @@ function setNetControlRole_(spreadsheet, data) {
   const netId = requireUuid_(readField_(data, ['netId', 'net_id']), 'netId');
   const checkInId = requireUuid_(readField_(data, ['checkInId', 'checkinId', 'id']), 'checkInId');
   const isNetControl = requireBoolean_(readField_(data, ['isNetControl', 'is_net_control']), 'isNetControl');
+  if (!isNetControl) {
+    throw new PublicError('Historical Net Control service cannot be removed.');
+  }
   const net = requireNet_(spreadsheet, netId);
   requireOpenNet_(net);
   if (requireNetType_(net.net_type) !== 'weather_special') {
@@ -328,13 +356,61 @@ function setNetControlRole_(spreadsheet, data) {
   if (!record) {
     throw new PublicError('Check-in not found for this net.');
   }
-  if (!isNetControl && record.callsign === String(net.net_control_callsign).trim().toUpperCase()) {
-    throw new PublicError('The primary Net Control cannot be demoted.');
-  }
+  return completeNetControlHandoff_(
+    spreadsheet,
+    net,
+    record,
+    function () { return buildNetPayload_(spreadsheet, requireNet_(spreadsheet, netId)); }
+  );
+}
 
-  setRecordCells_(sheet, record._rowNumber, CHECKIN_HEADERS, { is_net_control: isNetControl });
-  record.is_net_control = isNetControl;
-  return publicRecord_(record);
+function completeNetControlHandoff_(spreadsheet, net, checkIn, buildResult) {
+  const incomingCallsign = String(checkIn.callsign).trim().toUpperCase();
+  const currentCallsign = String(net.net_control_callsign).trim().toUpperCase();
+  const netsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netsSheet);
+  const checkInsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet);
+  const previouslyServedAsNetControl = Boolean(checkIn.is_net_control);
+  const previousValues = {
+    net_control_callsign: net.net_control_callsign,
+    net_control_station_type: net.net_control_station_type,
+    net_control_traffic: net.net_control_traffic,
+    updated_at: net.updated_at
+  };
+  let netChanged = false;
+  let historyChanged = false;
+
+  try {
+    if (!previouslyServedAsNetControl) {
+      historyChanged = true;
+      setRecordCells_(checkInsSheet, checkIn._rowNumber, CHECKIN_HEADERS, { is_net_control: true });
+      checkIn.is_net_control = true;
+    }
+    if (incomingCallsign !== currentCallsign) {
+      netChanged = true;
+      setRecordCells_(netsSheet, net._rowNumber, NET_HEADERS, {
+        net_control_callsign: incomingCallsign,
+        net_control_station_type: checkIn.station_type,
+        net_control_traffic: checkIn.traffic,
+        updated_at: new Date()
+      });
+    }
+    SpreadsheetApp.flush();
+    return buildResult();
+  } catch (error) {
+    try {
+      if (netChanged) {
+        setRecordCells_(netsSheet, net._rowNumber, NET_HEADERS, previousValues);
+      }
+      if (historyChanged) {
+        setRecordCells_(checkInsSheet, checkIn._rowNumber, CHECKIN_HEADERS, { is_net_control: false });
+        checkIn.is_net_control = false;
+      }
+      SpreadsheetApp.flush();
+    } catch (rollbackError) {
+      console.error('W8FY Net Control handoff rollback failed:', rollbackError && rollbackError.stack ? rollbackError.stack : rollbackError);
+    }
+    throw error;
+  }
 }
 
 function updateCheckInNote_(spreadsheet, data) {
@@ -594,17 +670,20 @@ function buildFinalReport_(net, checkIns) {
 
 function buildNetControls_(net, checkIns) {
   return checkIns.filter(function (entry) { return entry.is_net_control; }).sort(function (left, right) {
-    const primaryCallsign = String(net.net_control_callsign).trim().toUpperCase();
-    const leftIsPrimary = left.callsign === primaryCallsign;
-    const rightIsPrimary = right.callsign === primaryCallsign;
-    if (leftIsPrimary !== rightIsPrimary) return leftIsPrimary ? -1 : 1;
+    const currentCallsign = String(net.net_control_callsign).trim().toUpperCase();
+    const leftIsCurrent = left.callsign === currentCallsign;
+    const rightIsCurrent = right.callsign === currentCallsign;
+    if (leftIsCurrent !== rightIsCurrent) return leftIsCurrent ? -1 : 1;
     return 0;
   });
 }
 
-function formatNetControls_(netControls) {
+function formatNetControls_(net, netControls) {
+  const currentCallsign = String(net.net_control_callsign).trim().toUpperCase();
+  const includeHandoffStatus = requireNetType_(net.net_type) === 'weather_special';
   return netControls.map(function (entry) {
-    return entry.callsign + ' - ' + (entry.name || 'N/A');
+    const status = entry.callsign === currentCallsign ? 'CURRENT' : 'FORMER';
+    return (includeHandoffStatus ? status + ' - ' : '') + entry.callsign + ' - ' + (entry.name || 'N/A');
   }).join('; ');
 }
 
@@ -614,15 +693,15 @@ function buildTextReport_(net, groups, totals, netTypeName, durationMinutes, net
     '',
     'Net Type: ' + netTypeName,
     'Net Date: ' + net.net_date,
-    'Net Controls: ' + formatNetControls_(netControls),
+    'Net Controls: ' + formatNetControls_(net, netControls),
     'Start Time: ' + net.start_time,
     'End Time: ' + (net.end_time || '—'),
     'Net Duration: ' + durationMinutes + ' minutes'
   ];
 
   const includeNotes = requireNetType_(net.net_type) === 'weather_special';
-  appendTextGroups_(lines, 'TRAFFIC', groups.traffic, includeNotes);
-  appendTextGroups_(lines, 'NO TRAFFIC', groups.noTraffic, includeNotes);
+  appendTextGroups_(lines, 'TRAFFIC', groups.traffic, includeNotes, net.net_control_callsign);
+  appendTextGroups_(lines, 'NO TRAFFIC', groups.noTraffic, includeNotes, net.net_control_callsign);
   lines.push(
     '',
     '========================================',
@@ -637,7 +716,8 @@ function buildTextReport_(net, groups, totals, netTypeName, durationMinutes, net
   return lines.join('\n');
 }
 
-function appendTextGroups_(lines, heading, grouped, includeNotes) {
+function appendTextGroups_(lines, heading, grouped, includeNotes, currentNetControlCallsign) {
+  const currentCallsign = String(currentNetControlCallsign).trim().toUpperCase();
   lines.push('', '========================================', '', heading, '');
   W8FY_CONFIG.stationTypes.forEach(function (stationType) {
     lines.push(stationType.toUpperCase());
@@ -652,7 +732,11 @@ function appendTextGroups_(lines, heading, grouped, includeNotes) {
           (includeNotes ? ' - Note: ' + (entry.note || 'N/A') : '') +
           ' — ' + entry.station_type +
           ' — ' + (entry.traffic ? 'Traffic' : 'No Traffic') +
-          (entry.is_net_control ? ' — NET CONTROL' : '')
+          (entry.is_net_control
+            ? ' — ' + (includeNotes
+              ? (entry.callsign === currentCallsign ? 'CURRENT NET CONTROL' : 'FORMER NET CONTROL')
+              : 'NET CONTROL')
+            : '')
         );
       });
     }

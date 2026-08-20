@@ -1,8 +1,8 @@
 (function () {
   "use strict";
 
-  // The Web App URL is public routing information, not a credential. Keep the
-  // committed value as a placeholder and provide the deployed /exec URL at
+  // The Web App URL is public routing information. Keep the committed value
+  // as a placeholder and provide the deployed /exec URL at
   // runtime through window.W8FY_GOOGLE_APPS_SCRIPT_CONFIG.url.
   var runtimeConfig = window.W8FY_GOOGLE_APPS_SCRIPT_CONFIG || {};
   var GOOGLE_APPS_SCRIPT_URL = runtimeConfig.url || "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL";

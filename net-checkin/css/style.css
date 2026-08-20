@@ -905,7 +905,8 @@ fieldset .form-label {
 .badge-station,
 .badge-traffic,
 .badge-net-control,
-.badge-locked {
+.badge-former-net-control,
+.badge-role-status {
   display: inline-block;
   padding: 0.4rem 0.6rem;
   border-radius: 999px;
@@ -922,7 +923,8 @@ fieldset .form-label {
 .badge-traffic { color: #842029; background: #f8d7da; }
 .badge-no-traffic { color: #44515c; background: #e9eef2; }
 .badge-net-control { color: #fff; background: var(--radio-blue); }
-.badge-locked { color: var(--muted); background: #eef2f5; }
+.badge-former-net-control { color: #3f4b55; background: #dce4e9; }
+.badge-role-status { color: var(--muted); background: #eef2f5; }
 
 .remove-checkin-button {
   min-height: 2.35rem;

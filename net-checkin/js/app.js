@@ -76,11 +76,11 @@
       });
     },
 
-    setNetControlRole: async function (netId, checkInId, isNetControl) {
+    setCurrentNetControl: async function (netId, checkInId) {
       return getDatabaseApi().setNetControlRole({
         netId: netId,
         checkInId: checkInId,
-        isNetControl: isNetControl
+        isNetControl: true
       });
     },
 
@@ -247,14 +247,14 @@
 
     try {
       await restoreSavedOrActiveNet();
-      renderApplication();
     } catch (error) {
       console.warn("Google database connected, but the saved net could not be restored. The saved browser pointer was cleared.", error);
       clearLastNetId();
       state = createEmptyState();
-      renderApplication();
       showMessage(elements.netFormMessage, "Google database connected. The previously saved net could not be restored, so the Start Net screen was reset.");
     }
+
+    renderApplication();
   }
 
   async function restoreSavedOrActiveNet() {
@@ -403,7 +403,6 @@
       errors.push("Choose whether Net Control has traffic.");
       document.getElementById("net-control-traffic-group").classList.add("is-invalid-group");
     }
-
     if (errors.length) {
       showMessage(elements.netFormMessage, errors.join(" "));
       focusFirstInvalid(elements.netForm);
@@ -476,7 +475,6 @@
       errors.push("Note must be 80 characters or fewer.");
       elements.checkinNote.classList.add("is-invalid");
     }
-
     if (errors.length) {
       showMessage(elements.checkinFormMessage, errors.join(" "));
       focusFirstInvalid(elements.checkinForm);
@@ -498,7 +496,7 @@
     setButtonBusy(elements.addCheckinButton, true, "Saving…");
 
     try {
-      await netRepository.addCheckIn(state.id, {
+      var savedResult = await netRepository.addCheckIn(state.id, {
         callsign: callsign,
         name: name,
         stationType: station,
@@ -506,11 +504,21 @@
         note: note,
         isNetControl: isNetControl
       });
-      await reloadCurrentNet();
-      renderRoster();
-      renderTotals();
+      if (isNetControl) {
+        if (!savedResult || !savedResult.net) {
+          throw new Error("The database did not return the completed Net Control handoff.");
+        }
+        loadNetIntoState(savedResult);
+      } else {
+        await reloadCurrentNet();
+      }
+      renderApplication();
       resetCheckInForm();
-      showMessage(elements.checkinFormMessage, callsign + " was saved to the net.", true);
+      showMessage(
+        elements.checkinFormMessage,
+        callsign + (isNetControl ? " was saved and is now the current Net Control." : " was saved to the net."),
+        true
+      );
       elements.checkinCallsign.focus();
     } catch (error) {
       if (isDuplicateDatabaseError(error)) {
@@ -551,10 +559,7 @@
 
     var roleButton = event.target.closest("[data-net-control-role-id]");
     if (roleButton) {
-      setNetControlRole(
-        roleButton.getAttribute("data-net-control-role-id"),
-        roleButton.getAttribute("data-net-control-role") === "true"
-      );
+      setCurrentNetControl(roleButton.getAttribute("data-net-control-role-id"));
     }
   }
 
@@ -636,7 +641,7 @@
   }
 
   async function removeCheckIn(checkInId) {
-    if (!databaseReady || state.finalized || noteEditorState.savingCheckInId || roleSavingCheckInId) {
+    if (!databaseReady || !state.active || state.finalized || noteEditorState.savingCheckInId || roleSavingCheckInId) {
       return;
     }
 
@@ -668,18 +673,17 @@
     }
   }
 
-  async function setNetControlRole(checkInId, isNetControl) {
+  async function setCurrentNetControl(checkInId) {
     if (!canManageNetControlRoles() || roleSavingCheckInId || noteEditorState.savingCheckInId) {
       return;
     }
 
     var entry = findCheckIn(checkInId);
-    if (!entry || isPrimaryNetControl(entry) || entry.isNetControl === isNetControl) {
+    if (!entry || isCurrentNetControl(entry)) {
       return;
     }
 
-    var action = isNetControl ? "make " + entry.callsign + " a Net Control" : "remove the Net Control role from " + entry.callsign;
-    if (!window.confirm("Are you sure you want to " + action + "?")) {
+    if (!window.confirm("Make " + entry.callsign + " the current Net Control? The present controller will remain in the final report as a former Net Control.")) {
       return;
     }
 
@@ -689,17 +693,15 @@
     setInterfaceLocking();
 
     try {
-      var updatedRecord = await netRepository.setNetControlRole(state.id, checkInId, isNetControl);
-      var updatedEntry = mapDatabaseCheckIn(updatedRecord);
-      if (!updatedEntry || updatedEntry.id !== checkInId) {
-        throw new Error("The database did not return the updated check-in.");
+      var updatedPayload = await netRepository.setCurrentNetControl(state.id, checkInId);
+      if (!updatedPayload || !updatedPayload.net) {
+        throw new Error("The database did not return the completed Net Control handoff.");
       }
-      state.checkIns = state.checkIns.map(function (checkIn) {
-        return checkIn.id === checkInId ? updatedEntry : checkIn;
-      });
-      showMessage(elements.checkinFormMessage, entry.callsign + (isNetControl ? " is now a Net Control." : " is no longer a Net Control."), true);
+      loadNetIntoState(updatedPayload);
+      renderApplication();
+      showMessage(elements.checkinFormMessage, entry.callsign + " is now the current Net Control.", true);
     } catch (error) {
-      showOperationError(elements.checkinFormMessage, "The Net Control role was not changed.", error);
+      showOperationError(elements.checkinFormMessage, "The current Net Control was not changed.", error);
     } finally {
       roleSavingCheckInId = "";
       renderRoster();
@@ -993,6 +995,7 @@
     elements.finalizeNetButton.disabled = !databaseReady || !state.active || state.finalized || Boolean(noteEditorState.savingCheckInId) || Boolean(roleSavingCheckInId);
     elements.startNewNetButton.hidden = !state.finalized;
     elements.finalizedInactivityNote.hidden = !state.finalized;
+    elements.retryEmailButton.hidden = !state.finalized || state.emailSent || state.emailStatus !== "failed";
     elements.retryEmailButton.disabled = !databaseReady || !state.finalized || state.emailSent || state.emailStatus === "sending";
     elements.downloadReportPdfButton.hidden = !state.finalized;
     elements.downloadReportPdfButton.disabled = !databaseReady || !state.finalized || pdfDownloadBusy;
@@ -1019,7 +1022,14 @@
       var callsignCell = appendTextCell(row, entry.callsign);
       callsignCell.classList.add("callsign-cell");
       if (entry.isNetControl) {
-        callsignCell.appendChild(createBadge("NET CONTROL", "badge-net-control ms-2"));
+        if (isWeatherNet()) {
+          callsignCell.appendChild(createBadge(
+            isCurrentNetControl(entry) ? "CURRENT NET CONTROL" : "FORMER NET CONTROL",
+            (isCurrentNetControl(entry) ? "badge-net-control" : "badge-former-net-control") + " ms-2"
+          ));
+        } else {
+          callsignCell.appendChild(createBadge("NET CONTROL", "badge-net-control ms-2"));
+        }
       }
 
       appendTextCell(row, displaySavedName(entry.name));
@@ -1053,16 +1063,19 @@
     actions.className = "roster-actions";
 
     if (canManageNetControlRoles()) {
-      if (isPrimaryNetControl(entry)) {
-        actions.appendChild(createBadge("Primary Net Control", "badge-locked"));
+      if (isCurrentNetControl(entry)) {
+        actions.appendChild(createBadge("Current Net Control", "badge-role-status"));
       } else if (entry.isNetControl) {
-        actions.appendChild(createRoleButton(entry, false, "Remove Net Control Role"));
+        actions.appendChild(createRoleButton(entry, "Make Current Again"));
       } else {
-        actions.appendChild(createRoleButton(entry, true, "Make Net Control"));
+        actions.appendChild(createRoleButton(entry, "Make Current Net Control"));
         actions.appendChild(createRemoveButton(entry));
       }
     } else if (entry.isNetControl) {
-      actions.appendChild(createBadge("Locked", "badge-locked"));
+      actions.appendChild(createBadge(
+        isCurrentNetControl(entry) ? "Current Net Control" : "Former Net Control",
+        "badge-role-status"
+      ));
     } else if (!state.finalized) {
       actions.appendChild(createRemoveButton(entry));
     }
@@ -1070,13 +1083,12 @@
     actionCell.appendChild(actions);
   }
 
-  function createRoleButton(entry, isNetControl, label) {
+  function createRoleButton(entry, label) {
     var button = document.createElement("button");
     button.type = "button";
     button.className = "btn btn-outline-primary btn-sm net-control-role-button";
     button.textContent = roleSavingCheckInId === entry.id ? "Saving…" : label;
     button.setAttribute("data-net-control-role-id", entry.id);
-    button.setAttribute("data-net-control-role", String(isNetControl));
     button.setAttribute("aria-label", label + " for " + entry.callsign);
     button.disabled = Boolean(roleSavingCheckInId) || !databaseReady;
     return button;
@@ -1179,9 +1191,9 @@
       ""
     ];
 
-    appendReportGroups(lines, sorted, "Yes", netState.netType === "weather_special");
+    appendReportGroups(lines, sorted, "Yes", netState);
     lines.push("", "--------------------------------", "", "NO TRAFFIC", "");
-    appendReportGroups(lines, sorted, "No", netState.netType === "weather_special");
+    appendReportGroups(lines, sorted, "No", netState);
     lines.push(
       "", "--------------------------------", "",
       "TOTAL CHECK-INS: " + totals.total,
@@ -1198,18 +1210,20 @@
     return netState.checkIns.filter(function (entry) {
       return entry.isNetControl;
     }).sort(function (left, right) {
-      var leftIsPrimary = isPrimaryNetControl(left, netState);
-      var rightIsPrimary = isPrimaryNetControl(right, netState);
-      if (leftIsPrimary !== rightIsPrimary) {
-        return leftIsPrimary ? -1 : 1;
+      var leftIsCurrent = isCurrentNetControl(left, netState);
+      var rightIsCurrent = isCurrentNetControl(right, netState);
+      if (leftIsCurrent !== rightIsCurrent) {
+        return leftIsCurrent ? -1 : 1;
       }
       return 0;
     }).map(function (entry) {
-      return entry.callsign + " - " + (entry.name || "N/A");
+      var status = isCurrentNetControl(entry, netState) ? "CURRENT" : "FORMER";
+      return (netState.netType === "weather_special" ? status + " - " : "") + entry.callsign + " - " + (entry.name || "N/A");
     }).join("; ");
   }
 
-  function appendReportGroups(lines, sorted, trafficValue, includeNotes) {
+  function appendReportGroups(lines, sorted, trafficValue, netState) {
+    var includeNotes = netState.netType === "weather_special";
     STATION_TYPES.forEach(function (stationType) {
       lines.push(stationType);
       var matching = sorted.filter(function (entry) {
@@ -1223,7 +1237,11 @@
             " - " + entry.stationType +
             " - " + (entry.traffic === "Yes" ? "Traffic" : "No Traffic") +
             (includeNotes ? " - Note: " + (entry.note || "N/A") : "") +
-            (entry.isNetControl ? "  [NET CONTROL]" : "")
+            (entry.isNetControl
+              ? "  [" + (includeNotes
+                ? (isCurrentNetControl(entry, netState) ? "CURRENT NET CONTROL" : "FORMER NET CONTROL")
+                : "NET CONTROL") + "]"
+              : "")
           );
         });
       } else {
@@ -1416,7 +1434,7 @@
     return databaseReady && state.active && !state.finalized && isWeatherNet();
   }
 
-  function isPrimaryNetControl(entry, netState) {
+  function isCurrentNetControl(entry, netState) {
     var currentState = netState || state;
     return entry.callsign === currentState.netControlCallsign;
   }
