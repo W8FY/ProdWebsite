@@ -741,7 +741,12 @@ function sendReport_(spreadsheet, data) {
     throw new PublicError('The net must be finalized before its report can be emailed.');
   }
   if (net.email_sent) {
-    throw new PublicError('This net report has already been sent.');
+    return {
+      sent: true,
+      alreadySent: true,
+      netId: netId,
+      emailSentAt: net.email_sent_at ? dateValue_(net.email_sent_at).toISOString() : ''
+    };
   }
 
   const checkIns = getCheckInsForNet_(spreadsheet, netId);

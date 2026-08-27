@@ -988,16 +988,47 @@
     renderEmailStatus();
     setButtonBusy(elements.retryEmailButton, true, "Sending…");
 
+    var sendResult = null;
+    var sendError = null;
+
     try {
-      await netRepository.sendNetReport(state.id);
-      await reloadCurrentNet();
-      state.emailStatus = "sent";
-      state.emailError = "";
-    } catch (error) {
-      state.emailSent = false;
-      state.emailStatus = "failed";
-      state.emailError = error && error.message ? error.message : "The report email could not be sent.";
-      handleOwnershipFailure(error);
+      try {
+        sendResult = await netRepository.sendNetReport(state.id);
+        if (!sendResult || sendResult.sent !== true) {
+          sendError = new Error("The database did not confirm that the report email was sent.");
+        }
+      } catch (error) {
+        sendError = error;
+      }
+
+      try {
+        await reloadCurrentNet();
+      } catch (reloadError) {
+        if (!sendError && sendResult && sendResult.sent === true) {
+          state.emailSent = true;
+          state.emailSentAt = cleanText(sendResult.emailSentAt) || state.emailSentAt;
+          state.emailStatus = "sent";
+          state.emailError = "";
+        } else {
+          state.emailStatus = "unknown";
+          state.emailError = "The email result could not be confirmed. Reload the page before trying again.";
+          handleOwnershipFailure(sendError);
+        }
+        return;
+      }
+
+      if (state.emailSent || (!sendError && sendResult && sendResult.sent === true)) {
+        state.emailSent = true;
+        state.emailSentAt = state.emailSentAt || cleanText(sendResult && sendResult.emailSentAt);
+        state.emailStatus = "sent";
+        state.emailError = "";
+      } else {
+        state.emailStatus = "failed";
+        state.emailError = sendError && sendError.message
+          ? sendError.message
+          : "The report email could not be confirmed as sent.";
+        handleOwnershipFailure(sendError);
+      }
     } finally {
       setButtonBusy(elements.retryEmailButton, false, "Retry Email");
       renderStatus();
@@ -1453,6 +1484,9 @@
     } else if (state.emailStatus === "sending") {
       elements.emailStatusTitle.textContent = "Sending report…";
       elements.emailStatusMessage.textContent = "The net is finalized. Please wait while the email is submitted.";
+    } else if (state.emailStatus === "unknown") {
+      elements.emailStatusTitle.textContent = "Email status unknown";
+      elements.emailStatusMessage.textContent = state.emailError || "Reload the page before trying again.";
     } else {
       elements.emailStatusTitle.textContent = "Email status pending";
       elements.emailStatusMessage.textContent = "The report will be emailed after finalization.";
