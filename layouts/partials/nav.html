@@ -32,20 +32,39 @@
           {{ end }}
 
           {{ if .HasChildren }}
-          <li class="dropdown {{ $active }}">
+          <li class="dropdown{{ if eq .Identifier "menu.links" }} links-dropdown{{ end }} {{ $active }}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ .Name }} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              {{ range .Children.ByWeight }}
-                {{ if .HasChildren }}
-                  <li class="dropdown-header">{{ .Name }}</li>
-                  {{ range .Children.ByWeight }}
+            {{ if eq .Identifier "menu.links" }}
+              <ul class="dropdown-menu links-dropdown-menu">
+                {{ range .Children.ByWeight }}
+                  {{ if .HasChildren }}
+                    <li class="links-dropdown-group">
+                      <span class="dropdown-header">{{ .Name }}</span>
+                      <ul class="links-dropdown-list">
+                        {{ range .Children.ByWeight }}
+                          <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                        {{ end }}
+                      </ul>
+                    </li>
+                  {{ else }}
+                    <li class="links-dropdown-group"><a href="{{ .URL }}">{{ .Name }}</a></li>
+                  {{ end }}
+                {{ end }}
+              </ul>
+            {{ else }}
+              <ul class="dropdown-menu">
+                {{ range .Children.ByWeight }}
+                  {{ if .HasChildren }}
+                    <li class="dropdown-header">{{ .Name }}</li>
+                    {{ range .Children.ByWeight }}
+                      <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                    {{ end }}
+                  {{ else }}
                     <li><a href="{{ .URL }}">{{ .Name }}</a></li>
                   {{ end }}
-                {{ else }}
-                  <li><a href="{{ .URL }}">{{ .Name }}</a></li>
                 {{ end }}
-              {{ end }}
-            </ul>
+              </ul>
+            {{ end }}
           </li>
           {{ else }}
           <li class="dropdown {{ $active }}">
