@@ -27,6 +27,8 @@
   var elements = {};
   var state = createEmptyState();
   var databaseReady = false;
+  var connectionBusy = false;
+  var loadActiveNetOffered = false;
   var pdfDownloadBusy = false;
   var finalizedInactivityTimer = null;
   var finalizedActivityListenersBound = false;
@@ -50,8 +52,8 @@
   // the form, roster, totals, and report stay independent of the backend.
   var netRepository = {
     testConnection: async function () {
-      await getDatabaseApi().health();
-      return true;
+      var result = await getDatabaseApi().health();
+      return Boolean(result && result.status === "ok");
     },
 
     createNet: async function (netData) {
@@ -181,6 +183,8 @@
     elements.netStatus = document.getElementById("net-status");
     elements.databaseStatus = document.getElementById("database-status");
     elements.databaseMessage = document.getElementById("database-message");
+    elements.retryConnectionButton = document.getElementById("retry-connection-button");
+    elements.loadActiveNetButton = document.getElementById("load-active-net-button");
     elements.netForm = document.getElementById("net-form");
     elements.netFormMessage = document.getElementById("net-form-message");
     elements.netType = document.getElementById("net-type");
@@ -233,6 +237,8 @@
   }
 
   function bindEvents() {
+    elements.retryConnectionButton.addEventListener("click", function () { connectAndRestore(); });
+    elements.loadActiveNetButton.addEventListener("click", function () { connectAndRestore(true); });
     elements.netForm.addEventListener("submit", startNet);
     elements.checkinForm.addEventListener("submit", addCheckIn);
     elements.rosterBody.addEventListener("click", handleRosterAction);
@@ -281,49 +287,41 @@
     });
   }
 
-  async function connectAndRestore() {
+  async function connectAndRestore(forceActiveNet) {
+    if (connectionBusy) return;
+    connectionBusy = true;
+    stopRequestPollingTimers();
     setDatabaseStatus("checking");
-
-    if (!window.W8FYGoogleAppsScript || !window.W8FYGoogleAppsScript.isConfigured()) {
-      setDatabaseStatus("offline");
-      showMessage(elements.netFormMessage, "Google Apps Script is not configured. Supply the deployed Web App /exec URL in the frontend runtime configuration.");
-      return;
-    }
-
     try {
+      if (!window.W8FYGoogleAppsScript || !window.W8FYGoogleAppsScript.isConfigured()) {
+        throw new Error("Google Apps Script is not configured. Supply the deployed Web App /exec URL in the frontend runtime configuration.");
+      }
       if (!await netRepository.testConnection()) {
         throw new Error("The Google database health check returned an unexpected status.");
       }
+      await restoreSavedOrActiveNet(forceActiveNet === true || loadActiveNetOffered);
+      loadActiveNetOffered = false;
+      clearMessage(elements.netFormMessage);
+      setDatabaseStatus("connected");
     } catch (error) {
-      handleDatabaseFailure();
-      return;
+      handleDatabaseFailure(error);
+    } finally {
+      connectionBusy = false;
+      renderApplication();
     }
-
-    // The read-only query above is the database connectivity result. Restoring
-    // a browser's saved net is a separate operation and must not overwrite a
-    // successful connection status (for example, after test data was reset).
-    setDatabaseStatus("connected");
-
-    try {
-      await restoreSavedOrActiveNet();
-    } catch (error) {
-      console.warn("Google database connected, but the saved net could not be restored. The saved browser pointer was cleared.", error);
-      clearLastNetId();
-      state = createEmptyState();
-      showMessage(elements.netFormMessage, "Google database connected. The previously saved net could not be restored, so the Start Net screen was reset.");
-    }
-
-    renderApplication();
   }
 
-  async function restoreSavedOrActiveNet() {
+  async function restoreSavedOrActiveNet(forceActiveNet) {
     var savedNetId = getLastNetId();
     var netPayload = null;
 
-    if (savedNetId) {
-      netPayload = await netRepository.getNetById(savedNetId);
-      if (!netPayload) {
-        clearLastNetId();
+    if (savedNetId && !forceActiveNet) {
+      try {
+        netPayload = await netRepository.getNetById(savedNetId);
+      } catch (error) {
+        // Only a definitive missing record permits fallback. Network and
+        // deployment failures must leave the saved pointer and tokens intact.
+        if (!error || error.type !== "api" || error.message !== "Net not found.") throw error;
       }
     }
 
@@ -331,14 +329,18 @@
       netPayload = await netRepository.getLatestActiveNet();
     }
 
-    if (!netPayload || !netPayload.net) {
+    if (!netPayload) {
+      clearLastNetId();
       state = createEmptyState();
+      activeOwnerToken = "";
+      ownershipValidationStatus = "invalid";
       return;
     }
+    if (!netPayload.net || !netPayload.net.id) throw new Error("The Google database returned an invalid net response.");
 
-    setLastNetId(netPayload.net.id);
     loadNetIntoState(netPayload);
     await resolveOwnershipForCurrentNet();
+    setLastNetId(netPayload.net.id);
   }
 
   function loadNetIntoState(netPayload) {
@@ -372,6 +374,9 @@
 
     try {
       var result = await netRepository.validateOwnership(state.id, activeOwnerToken);
+      if (!result || typeof result.valid !== "boolean") {
+        throw new Error("The Google database returned an invalid ownership response.");
+      }
       if (result && result.valid) {
         ownershipValidationStatus = "valid";
       } else {
@@ -381,6 +386,7 @@
       }
     } catch (error) {
       ownershipValidationStatus = "invalid";
+      throw error;
     }
     renderNetControlAccess();
     setInterfaceLocking();
@@ -711,7 +717,12 @@
       updatePollingTimers();
       elements.checkinCallsign.focus();
     } catch (error) {
-      showOperationError(elements.netFormMessage, "The net was not saved.", error);
+      if (error && error.type === "api" && error.message === "An active net already exists. Finalize it before starting another net.") {
+        loadActiveNetOffered = true;
+        showMessage(elements.netFormMessage, "An active net already exists. Select Load Active Net to open it. Editing requires validated Net Control ownership.");
+      } else {
+        showOperationError(elements.netFormMessage, "The start request could not be confirmed.", error);
+      }
     } finally {
       setButtonBusy(elements.startNetButton, false, "Start Net");
       setInterfaceLocking();
@@ -1318,6 +1329,8 @@
   function setDatabaseStatus(status) {
     elements.databaseStatus.className = "database-status";
     databaseReady = status === "connected";
+    elements.retryConnectionButton.hidden = status !== "offline";
+    elements.retryConnectionButton.disabled = status === "checking";
 
     if (status === "connected") {
       elements.databaseStatus.classList.add("database-connected");
@@ -1338,12 +1351,14 @@
     setInterfaceLocking();
   }
 
-  function handleDatabaseFailure() {
+  function handleDatabaseFailure(error) {
     setDatabaseStatus("offline");
-    showMessage(elements.netFormMessage, DATABASE_ERROR_MESSAGE);
+    elements.databaseMessage.textContent = "Connection or net restoration failed. " + getErrorMessage(error) + " Use Retry Connection. Saved net details and ownership tokens are retained for retry.";
   }
 
   function setInterfaceLocking() {
+    elements.loadActiveNetButton.hidden = !loadActiveNetOffered;
+    elements.loadActiveNetButton.disabled = connectionBusy;
     elements.activeNetArea.hidden = !state.active;
     elements.finalReportSection.hidden = !state.finalized;
 
@@ -1729,6 +1744,7 @@
 
   function showOperationError(element, prefix, error) {
     var message = error && error.message ? error.message : DATABASE_ERROR_MESSAGE;
+    if (error && error.type === "timeout") prefix = "The operation could not be confirmed.";
     showMessage(element, prefix + " " + message);
     if (error && error.isConnectionError) {
       setDatabaseStatus("offline");

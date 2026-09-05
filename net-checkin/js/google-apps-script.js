@@ -6,6 +6,7 @@
   // runtime through window.W8FY_GOOGLE_APPS_SCRIPT_CONFIG.url.
   var runtimeConfig = window.W8FY_GOOGLE_APPS_SCRIPT_CONFIG || {};
   var GOOGLE_APPS_SCRIPT_URL = runtimeConfig.url || "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL";
+  var REQUEST_TIMEOUT_MS = 20000;
 
   function ApiError(message, type, status) {
     this.name = "GoogleAppsScriptApiError";
@@ -14,6 +15,7 @@
     this.status = status || 0;
     this.isConnectionError = this.type === "configuration"
       || this.type === "network"
+      || this.type === "timeout"
       || this.type === "http"
       || this.type === "invalid-response";
     if (Error.captureStackTrace) Error.captureStackTrace(this, ApiError);
@@ -62,18 +64,32 @@
       });
     }
 
+    var controller = new window.AbortController();
+    fetchOptions.signal = controller.signal;
+    var timer;
     var response;
-    try {
-      response = await window.fetch(url.toString(), fetchOptions);
-    } catch (error) {
-      throw new ApiError("The Google database request could not be reached. Check the network connection and Web App URL.", "network");
-    }
-
     var responseText;
     try {
-      responseText = await response.text();
+      // Race the whole read, even if fetch or the body ignores abort. Never
+      // repeat a request: a timed-out write may already have been applied.
+      await Promise.race([
+        (async function () {
+          response = await window.fetch(url.toString(), fetchOptions);
+          responseText = await response.text();
+        }()),
+        new Promise(function (resolve, reject) {
+          timer = window.setTimeout(function () {
+            reject(new ApiError("The Google database request timed out after 20 seconds." +
+              (fetchOptions.method === "POST" ? " It may already have succeeded. Reconnect and check the roster before trying the operation again." : " Retry Connection to try again."), "timeout"));
+            controller.abort();
+          }, REQUEST_TIMEOUT_MS);
+        })
+      ]);
     } catch (error) {
-      throw new ApiError("The Google database response could not be read.", "network", response.status);
+      if (error instanceof ApiError) throw error;
+      throw new ApiError("The Google database request could not be fetched or read. Check the connection and Web App URL.", "network");
+    } finally {
+      window.clearTimeout(timer);
     }
     if (!response.ok) {
       throw new ApiError("The Google database returned HTTP " + response.status + ".", "http", response.status);

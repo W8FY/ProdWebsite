@@ -861,12 +861,29 @@ function getNetResponse_(spreadsheet, netId) {
 
 function lookupCallsign_(spreadsheet, value) {
   const callsign = requireCallsign_(value);
-  const match = getRecords_(
+  const directoryMatch = getRecords_(
     spreadsheet.getSheetByName(W8FY_CONFIG.callsignDirectorySheet),
     CALLSIGN_DIRECTORY_HEADERS
   ).find(function (entry) {
-    return String(entry.callsign).toUpperCase() === callsign;
+    return entry.callsign === callsign && Boolean(entry.name);
   });
+
+  // Keep explicitly maintained directory names authoritative. Otherwise reuse
+  // the latest nonblank name already saved in any net, including Net Control.
+  let match = directoryMatch;
+  if (!match) {
+    const previousCheckIns = getRecords_(
+      spreadsheet.getSheetByName(W8FY_CONFIG.checkInsSheet), CHECKIN_HEADERS
+    ).filter(function (entry) {
+      return entry.callsign === callsign && Boolean(entry.name);
+    });
+    previousCheckIns.sort(function (left, right) {
+      const leftTime = Date.parse(left.created_at) || 0;
+      const rightTime = Date.parse(right.created_at) || 0;
+      return rightTime - leftTime || right._rowNumber - left._rowNumber;
+    });
+    match = previousCheckIns[0];
+  }
 
   return {
     callsign: callsign,
