@@ -52,7 +52,8 @@ function harness({legacy = true, date = "2026-08-29", start = "10:55", serviceEn
     },
     SpreadsheetApp: {flush(){}, openById: () => spreadsheet},
     PropertiesService: {getScriptProperties: () => ({
-      getProperty: k => properties.get(k) || null, deleteProperty: k => properties.delete(k)
+      getProperty: k => properties.get(k) || null, deleteProperty: k => properties.delete(k),
+      setProperty: (k,v) => properties.set(k,v), getProperties: () => Object.fromEntries(properties)
     })},
     LockService: {getScriptLock: () => ({waitLock(){}, hasLock: () => true, releaseLock(){}})},
     MailApp: {sendEmail: (...args) => emails.push(args)},
@@ -63,6 +64,7 @@ function harness({legacy = true, date = "2026-08-29", start = "10:55", serviceEn
     MimeType: {PDF: "application/pdf"}
   });
   vm.runInContext(source, context);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, '../Admin.gs'), 'utf8'), context);
   const headers = vm.runInContext("({Nets:NET_HEADERS, CheckIns:CHECKIN_HEADERS, CallsignDirectory:CALLSIGN_DIRECTORY_HEADERS, NetControlAccess:NET_CONTROL_ACCESS_HEADERS, NetControlRequests:NET_CONTROL_REQUEST_HEADERS, NetControlHistory:NET_CONTROL_HISTORY_HEADERS, NetAdministration:NET_ADMINISTRATION_HEADERS})",context);
   const net = {id:netId, net_date:date, start_time:start, end_time:"", finalized:false, net_type:"two_meter_ncs",
     net_control_callsign:legacy ? "KA8ZGE" : "KC8QHK", net_control_station_type:"Home", net_control_traffic:false};
@@ -88,6 +90,8 @@ function harness({legacy = true, date = "2026-08-29", start = "10:55", serviceEn
   return {context, spreadsheet, sheets, properties, emails, pdfLines, data, readNet, snapshot,
     injectFailure: () => {failWrite = true;}};
 }
+module.exports = {harness, id, netId, token, now};
+if (require.main === module) {
 let passed = 0;
 function test(name, fn) {fn(); passed++; console.log("PASS " + name);}
 test("legacy recovery failure reproduced; explicit historical finalization preserves records", () => {
@@ -222,3 +226,4 @@ test("manual properties consumed, no API exposure, no email or duplicate finaliz
   assert.equal(vm.runInContext("POST_ACTIONS.includes('finalizeHistoricalNetFromConfiguredEnd')",h.context),false);
 });
 console.log(passed + " historical finalization tests passed");
+}

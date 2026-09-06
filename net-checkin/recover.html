@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://script.google.com https://script.googleusercontent.com; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Recover Net · W8FY</title>
+  <link rel="stylesheet" href="css/recover.css">
+  <script src="js/recover-callback.js"></script>
+</head>
+<body>
+  <main>
+    <a href="index.html">← Return to net roster</a>
+    <header><p class="eyebrow">W8FY · Administrator tools</p><h1>Recover Net</h1>
+      <p>Recover administrative ownership or close a forgotten net with its actual service end.</p></header>
+    <p id="status" role="status" aria-live="polite">Sign in with an authorized Google account.</p>
+    <section id="login"><h2>Administrator sign-in</h2>
+      <p>Google verifies your identity. Only accounts authorized by the backend owner can make changes.</p>
+      <button id="sign-in" type="button">Sign in with Google</button>
+    </section>
+    <div id="session-bar" hidden><span id="identity"></span><button id="sign-out" type="button" class="secondary">Sign out</button></div>
+    <section id="uncertain" hidden><h2>Check the previous result</h2>
+      <p>The request may already have succeeded. Check its authoritative result before taking another action.</p>
+      <button id="reconcile" type="button">Reconcile result</button></section>
+    <section id="net-panel" hidden><h2>Unfinished net</h2><dl id="net-details"></dl>
+      <h3>Check-ins</h3><ul id="checkins"></ul>
+      <button id="reload" type="button" class="secondary">Reload net state</button>
+    </section>
+    <section id="actions" hidden><h2>Choose a recovery action</h2>
+      <label for="kind">Action</label><select id="kind"><option value="recovery">Recover Net Control</option><option value="historical_finalization">Finalize Historical Net</option></select>
+      <div id="ownership-fields"><label for="operator">Checked-in operator</label><select id="operator"></select>
+        <p>The selected operator must first choose <strong>Request Net Control</strong> in their roster browser. Then reload this panel. Administrative recovery records no on-air service.</p></div>
+      <div id="end-fields" hidden>
+        <div class="fields"><div><label for="end-date">Actual ending date</label><input id="end-date" type="date" required></div>
+          <div><label for="end-time">Actual ending time (24-hour)</label><input id="end-time" type="time" required></div>
+          <div><label for="end-zone">Time zone: UTC offset at that date</label><input id="end-zone" type="text" placeholder="e.g. -04:00" pattern="[+-][0-9]{2}:[0-9]{2}" required></div></div>
+        <p>Enter the historical UTC offset explicitly, including daylight saving time. UTC is +00:00. The end must be supported by an operator log or confirmation and less than 24 hours after the original start.</p>
+        <label for="recovery-record">Administrative recovery to exclude from on-air time</label><select id="recovery-record"></select>
+        <p>Select a legacy editor recovery only if you have verified that the segment was administrative, not actual on-air service.</p>
+      </div>
+      <label for="reason">Reason and source of the actual end (when finalizing)</label><textarea id="reason" maxlength="500" rows="3" required></textarea>
+      <button id="prepare" type="button">Review changes</button>
+    </section>
+    <section id="review" hidden tabindex="-1"><h2>Review before confirming</h2><div id="review-text"></div>
+      <label class="confirmation"><input id="confirm" type="checkbox"> I verified these details and explicitly authorize this change.</label>
+      <button id="commit" type="button" disabled>Confirm recovery</button><button id="cancel" class="secondary" type="button">Back</button></section>
+    <section id="completed" hidden><h2>Authoritative result</h2><p id="next-action"></p><pre id="report"></pre></section>
+  </main>
+  <script src="js/config.js?v=20260827-new-apps-script-backend"></script>
+  <script src="js/google-apps-script.js?v=20260906-admin"></script>
+  <script src="js/recover.js?v=20260906-admin"></script>
+</body>
+</html>

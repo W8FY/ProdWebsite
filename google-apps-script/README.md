@@ -1,5 +1,10 @@
 # W8FY Net Check-In — Google Apps Script Backend
 
+For the current authenticated website recovery panel, configuration and deployment
+steps, see [Administrator recovery](ADMIN_RECOVERY.md). The architecture and API
+notes below describe the original backend stage; current `Code.gs` also contains
+ownership, recovery, historical reporting, email and PDF support.
+
 This folder contains the first backend stage for the new architecture:
 
 ```text

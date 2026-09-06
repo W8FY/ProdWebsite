@@ -119,7 +119,9 @@ const POST_ACTIONS = Object.freeze([
   'removeCheckIn',
   'finalizeNet',
   'sendReport',
-  'downloadReportPdf'
+  'downloadReportPdf',
+  'adminBeginLogin', 'adminCompleteLogin', 'adminState', 'adminPrepare',
+  'adminCommit', 'adminStatus', 'adminSignOut'
 ]);
 
 /**
@@ -250,6 +252,8 @@ function doPost(e) {
     const body = parseJsonBody_(e);
     const action = requireAction_(body.action, POST_ACTIONS);
     const data = isPlainObject_(body.data) ? body.data : body;
+
+    if (action.indexOf('admin') === 0) return adminDispatch_(action, data);
 
     const spreadsheet = getConfiguredSpreadsheet_();
     ensureApplicationSheets_(spreadsheet);
@@ -584,10 +588,10 @@ function approveNetControlRequest_(spreadsheet, net, access, request, administra
     });
     if (administrative) {
       appendedRows.push(appendRecordTracked_(administrationSheet, NET_ADMINISTRATION_HEADERS, {
-        id: Utilities.getUuid(), net_id: net.id, kind: 'recovery',
-        recorded_at: handoffAt, actor: Session.getEffectiveUser().getEmail(),
+        id: administrative.operationId || Utilities.getUuid(), net_id: net.id, kind: 'recovery',
+        recorded_at: handoffAt, actor: administrative.actor || Session.getEffectiveUser().getEmail(),
         owner_callsign: checkIn.callsign, recovery_id: request.id,
-        service_end_at: '', reason: 'Editor-only administrative ownership recovery; no on-air service asserted.'
+        service_end_at: '', reason: administrative.reason || 'Editor-only administrative ownership recovery; no on-air service asserted.'
       }));
     } else {
       appendedRows.push(appendRecordTracked_(historySheet, NET_CONTROL_HISTORY_HEADERS, {
@@ -695,7 +699,7 @@ function finalizeHistoricalNetFromConfiguredEnd() {
   }
 }
 
-function finalizeHistoricalNet_(spreadsheet, data) {
+function finalizeHistoricalNet_(spreadsheet, data, administrator) {
   const netId = requireUuid_(data.NET_HISTORICAL_NET_ID, 'NET_HISTORICAL_NET_ID');
   const net = requireNet_(spreadsheet, netId);
   requireOpenNet_(net);
@@ -707,6 +711,10 @@ function finalizeHistoricalNet_(spreadsheet, data) {
   }
   requireDate_(value.slice(0, 10), 'Historical end date');
   requireTime_(value.slice(11, 16), 'Historical end time');
+  const offset = value.slice(19);
+  if (offset !== 'Z' && (!/^[+-](?:0\d|1[0-4]):[0-5]\d$/.test(offset) || (/^[+-]14:/.test(offset) && offset.slice(4) !== '00'))) {
+    throw new PublicError('Historical end UTC offset must be between -14:00 and +14:00.');
+  }
   const endAt = dateValue_(value);
   const now = new Date();
   const startAt = netDateTime_(net.net_date, net.start_time);
@@ -715,24 +723,24 @@ function finalizeHistoricalNet_(spreadsheet, data) {
     throw new PublicError('The supplied service end must be after the net start, less than 24 hours later, and not in the future. Unattended days cannot be counted as service.');
   }
   const access = findNetControlAccess_(spreadsheet, netId);
-  if (!access || access.owner_callsign !== net.net_control_callsign || access.revoked_at) {
+  if (!administrator && (!access || access.owner_callsign !== net.net_control_callsign || access.revoked_at)) {
     throw new PublicError('Recover administrative ownership before historical finalization.');
   }
   const history = getNetControlHistoryForNet_(spreadsheet, netId);
   const administration = getNetAdministration_(spreadsheet, netId);
-  const recoveryId = requireUuid_(data.NET_HISTORICAL_RECOVERY_ID, 'NET_HISTORICAL_RECOVERY_ID');
+  const recoveryId = administrator && !data.NET_HISTORICAL_RECOVERY_ID ? '' : requireUuid_(data.NET_HISTORICAL_RECOVERY_ID, 'NET_HISTORICAL_RECOVERY_ID');
   const recovery = administration.find(function (entry) { return entry.id === recoveryId && entry.kind === 'recovery'; });
   const legacyRecovery = !recovery && history.find(function (entry) { return entry.id === recoveryId; });
   const recoveredAt = recovery ? recovery.recorded_at : legacyRecovery && legacyRecovery.started_at;
   const recoveredCallsign = recovery ? recovery.owner_callsign : legacyRecovery && legacyRecovery.callsign;
-  if (!recoveredAt || recoveredCallsign !== net.net_control_callsign ||
-      !sameMinute_(recoveredAt, access.issued_at) || endAt.getTime() > dateValue_(recoveredAt).getTime() ||
-      (legacyRecovery && legacyRecovery.ended_at)) {
+  if (recoveryId && (!recoveredAt || recoveredCallsign !== net.net_control_callsign ||
+      !access || !sameMinute_(recoveredAt, access.issued_at) || endAt.getTime() > dateValue_(recoveredAt).getTime() ||
+      (legacyRecovery && legacyRecovery.ended_at))) {
     throw new PublicError('Identify the current administrative recovery audit ID (or its legacy open history ID). The actual end must not follow that recovery.');
   }
   const audit = {
-    id: Utilities.getUuid(), net_id: netId, kind: 'historical_finalization', recorded_at: now,
-    actor: Session.getEffectiveUser().getEmail(), owner_callsign: net.net_control_callsign,
+    id: administrator && administrator.operationId || Utilities.getUuid(), net_id: netId, kind: 'historical_finalization', recorded_at: now,
+    actor: administrator && administrator.actor || Session.getEffectiveUser().getEmail(), owner_callsign: net.net_control_callsign,
     recovery_id: recoveryId, service_end_at: endAt, reason: reason
   };
   if (history.some(function (entry) {
@@ -749,16 +757,17 @@ function finalizeHistoricalNet_(spreadsheet, data) {
   if (!buildNetControlTiming_(finalizedNet, getCheckInsForNet_(spreadsheet, netId), projected, duration, endAt).available) {
     throw new PublicError('Service history does not support this end time. Review the original on-air segments; no records were changed.');
   }
+  if (administrator && administrator.validateOnly) return { durationMinutes: duration, endAt: endAt.toISOString() };
   const netsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netsSheet);
   const accessSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlAccessSheet);
   const auditSheet = ensureNetAdministrationSheet_(spreadsheet);
-  const snapshots = [captureRow_(netsSheet, net._rowNumber, NET_HEADERS.length),
-    captureRow_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS.length)];
+  const snapshots = [captureRow_(netsSheet, net._rowNumber, NET_HEADERS.length)];
+  if (access) snapshots.push(captureRow_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS.length));
   const appendedRows = [];
   try {
     appendedRows.push(appendRecordTracked_(auditSheet, NET_ADMINISTRATION_HEADERS, audit));
     setRecordCells_(netsSheet, net._rowNumber, NET_HEADERS, {end_time: finalizedNet.end_time, finalized: true, updated_at: now});
-    setRecordCells_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS, {
+    if (access) setRecordCells_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS, {
       updated_at: now, expires_at: new Date(now.getTime() + W8FY_CONFIG.finalizedAccessLifetimeMs)
     });
     SpreadsheetApp.flush();
@@ -832,7 +841,7 @@ function finalizeNet_(spreadsheet, data) {
   requireOpenNet_(net);
   const access = requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
   if (getNetAdministration_(spreadsheet, netId).some(function (entry) { return entry.kind === 'recovery'; })) {
-    throw new PublicError('Administrative recovery does not establish on-air time. Ask the administrator to run finalizeHistoricalNetFromConfiguredEnd with the actual historical end timestamp.');
+    throw new PublicError('Administrative recovery does not establish on-air time. Ask an administrator to use Recover Net and Finalize Historical Net with the actual historical end. The editor recovery tool remains an emergency fallback.');
   }
   const endTime = requireTime_(readField_(data, ['endTime', 'end_time']) || currentTime_(), 'endTime');
   const endAt = netEndDateTime_(net.net_date, net.start_time, endTime);

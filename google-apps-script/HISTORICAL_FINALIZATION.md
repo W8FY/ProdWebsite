@@ -1,5 +1,9 @@
 # Finalizing an administratively recovered historical net
 
+The authenticated website can now perform recovery and historical finalization;
+see [Administrator recovery](ADMIN_RECOVERY.md). The editor-only instructions
+below remain available as an emergency fallback.
+
 Administrative ownership recovery is not evidence of on-air service. New calls
 to `recoverActiveNetControlToConfiguredCallsign()` still approve an existing,
 unexpired request from a checked-in operator and issue ownership at the real

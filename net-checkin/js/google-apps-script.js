@@ -119,6 +119,9 @@
   }
 
   window.W8FYGoogleAppsScript = {
+    adminRequest: function (action, data) {
+      return request(action, { method: "POST", data: data });
+    },
     isConfigured: isConfigured,
     health: function () {
       return request("health");

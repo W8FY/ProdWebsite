@@ -2,6 +2,10 @@
 
 The W8FY Net Check-In application is a responsive browser tool for conducting an amateur radio net. Net Control can start a session, record and sort check-ins, track traffic and station totals, remove normal check-ins, finalize the net, review a formatted report, and securely email the finalized report.
 
+For the current Apps Script administrator recovery panel, see
+[Administrator recovery setup and workflow](../google-apps-script/ADMIN_RECOVERY.md).
+The Supabase stage notes below are retained as historical documentation.
+
 ## Stage 3
 
 Stage 3 sends the automatic report through the Supabase `send-net-report` Edge Function and Resend. The browser submits only the net UUID. The function retrieves the authoritative net and check-ins from Supabase, verifies the net is finalized, applies the required sorting, generates HTML and plain-text messages, and sends to one server-configured recipient.

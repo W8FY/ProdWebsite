@@ -29,6 +29,10 @@ jobs:
       run: |
         mkdir -p public/net-checkin/css public/net-checkin/js public/static/docs
         cp net-checkin/index.html public/net-checkin/index.html
+        cp net-checkin/recover.html public/net-checkin/recover.html
+        cp net-checkin/css/recover.css public/net-checkin/css/recover.css
+        cp net-checkin/js/recover-callback.js public/net-checkin/js/recover-callback.js
+        cp net-checkin/js/recover.js public/net-checkin/js/recover.js
         cp net-checkin/css/style.css public/net-checkin/css/style.css
         cp net-checkin/js/config.js public/net-checkin/js/config.js
         cp net-checkin/js/site-navigation.js public/net-checkin/js/site-navigation.js
