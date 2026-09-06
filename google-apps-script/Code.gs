@@ -16,6 +16,7 @@ const W8FY_CONFIG = Object.freeze({
   netControlAccessSheet: 'NetControlAccess',
   netControlRequestsSheet: 'NetControlRequests',
   netControlHistorySheet: 'NetControlHistory',
+  netAdministrationSheet: 'NetAdministration',
   reportRecipient: 'info@w8fy.org',
   stationTypes: Object.freeze(['Home', 'Mobile', 'EchoLink', 'Short Time']),
   netTypes: Object.freeze(['current', 'two_meter_ncs', 'weather_special']),
@@ -93,6 +94,12 @@ const NET_CONTROL_HISTORY_HEADERS = Object.freeze([
   'callsign',
   'started_at',
   'ended_at'
+]);
+
+// Append-only administrative audit. It is separate from on-air service history.
+const NET_ADMINISTRATION_HEADERS = Object.freeze([
+  'id', 'net_id', 'kind', 'recorded_at', 'actor', 'owner_callsign',
+  'recovery_id', 'service_end_at', 'reason'
 ]);
 
 const LEGACY_NET_HEADERS = Object.freeze(NET_HEADERS.slice(0, 12));
@@ -529,7 +536,10 @@ function releaseNetControlOwnership_(spreadsheet, data) {
   return { released: true, netId: netId };
 }
 
-function approveNetControlRequest_(spreadsheet, net, access, request) {
+function approveNetControlRequest_(spreadsheet, net, access, request, administrative) {
+  if (!administrative && getNetAdministration_(spreadsheet, net.id).some(function (entry) { return entry.kind === 'recovery'; })) {
+    throw new PublicError('This net was recovered administratively. Complete historical finalization before starting a new on-air net.');
+  }
   if (request.callsign === String(net.net_control_callsign).trim().toUpperCase()) {
     throw new PublicError(request.callsign + ' is already the current Net Control.');
   }
@@ -543,6 +553,7 @@ function approveNetControlRequest_(spreadsheet, net, access, request) {
   const accessSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlAccessSheet);
   const requestsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlRequestsSheet);
   const historySheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlHistorySheet);
+  const administrationSheet = administrative ? ensureNetAdministrationSheet_(spreadsheet) : null;
   const handoffAt = floorToMinute_(new Date());
   const openHistory = findOpenNetControlHistory_(spreadsheet, net.id);
   if (openHistory && handoffAt.getTime() < dateValue_(openHistory.started_at).getTime()) {
@@ -559,10 +570,10 @@ function approveNetControlRequest_(spreadsheet, net, access, request) {
   const appendedRows = [];
 
   try {
-    if (openHistory) {
+    if (openHistory && !administrative) {
       setRecordCells_(historySheet, openHistory._rowNumber, NET_CONTROL_HISTORY_HEADERS, { ended_at: handoffAt });
     }
-    if (!checkIn.is_net_control) {
+    if (!checkIn.is_net_control && !administrative) {
       setRecordCells_(checkInsSheet, checkIn._rowNumber, CHECKIN_HEADERS, { is_net_control: true });
     }
     setRecordCells_(netsSheet, net._rowNumber, NET_HEADERS, {
@@ -571,13 +582,22 @@ function approveNetControlRequest_(spreadsheet, net, access, request) {
       net_control_traffic: checkIn.traffic,
       updated_at: handoffAt
     });
-    appendedRows.push(appendRecordTracked_(historySheet, NET_CONTROL_HISTORY_HEADERS, {
-      id: Utilities.getUuid(),
-      net_id: net.id,
-      callsign: checkIn.callsign,
-      started_at: handoffAt,
-      ended_at: ''
-    }));
+    if (administrative) {
+      appendedRows.push(appendRecordTracked_(administrationSheet, NET_ADMINISTRATION_HEADERS, {
+        id: Utilities.getUuid(), net_id: net.id, kind: 'recovery',
+        recorded_at: handoffAt, actor: Session.getEffectiveUser().getEmail(),
+        owner_callsign: checkIn.callsign, recovery_id: request.id,
+        service_end_at: '', reason: 'Editor-only administrative ownership recovery; no on-air service asserted.'
+      }));
+    } else {
+      appendedRows.push(appendRecordTracked_(historySheet, NET_CONTROL_HISTORY_HEADERS, {
+        id: Utilities.getUuid(),
+        net_id: net.id,
+        callsign: checkIn.callsign,
+        started_at: handoffAt,
+        ended_at: ''
+      }));
+    }
 
     const accessUpdates = {
       owner_callsign: checkIn.callsign,
@@ -631,7 +651,7 @@ function recoverActiveNetControlToConfiguredCallsign() {
         return entry.net_id === net.id && entry.callsign === callsign && entry.status === 'pending';
       });
       if (!request) throw new PublicError('No unexpired pending request exists for ' + callsign + '.');
-      const result = approveNetControlRequest_(spreadsheet, net, findNetControlAccess_(spreadsheet, net.id), request);
+      const result = approveNetControlRequest_(spreadsheet, net, findNetControlAccess_(spreadsheet, net.id), request, true);
       return {
         success: true,
         netId: net.id,
@@ -642,6 +662,122 @@ function recoverActiveNetControlToConfiguredCallsign() {
   } finally {
     properties.deleteProperty('NET_CONTROL_RECOVERY_CALLSIGN');
   }
+}
+
+function ensureNetAdministrationSheet_(spreadsheet) {
+  ensureSheet_(spreadsheet, W8FY_CONFIG.netAdministrationSheet, NET_ADMINISTRATION_HEADERS, [1, 2, 3, 5, 6, 7, 9]);
+  return spreadsheet.getSheetByName(W8FY_CONFIG.netAdministrationSheet);
+}
+
+function getNetAdministration_(spreadsheet, netId) {
+  const sheet = spreadsheet.getSheetByName(W8FY_CONFIG.netAdministrationSheet);
+  if (!sheet) return [];
+  validateExactHeaders_(sheet, NET_ADMINISTRATION_HEADERS);
+  return getRecords_(sheet, NET_ADMINISTRATION_HEADERS).filter(function (entry) { return entry.net_id === netId; });
+}
+
+/** Editor only. Explicitly finalizes one recovered net; never emails a report.
+ * See HISTORICAL_FINALIZATION.md for the four required Script Properties.
+ */
+function finalizeHistoricalNetFromConfiguredEnd() {
+  const properties = PropertiesService.getScriptProperties();
+  const keys = ['NET_HISTORICAL_NET_ID', 'NET_HISTORICAL_END_AT', 'NET_HISTORICAL_RECOVERY_ID', 'NET_HISTORICAL_REASON'];
+  try {
+    const data = {};
+    keys.forEach(function (key) { data[key] = properties.getProperty(key); });
+    return withScriptLock_(function () {
+      const spreadsheet = getConfiguredSpreadsheet_();
+      ensureApplicationSheets_(spreadsheet);
+      return finalizeHistoricalNet_(spreadsheet, data);
+    });
+  } finally {
+    keys.forEach(function (key) { properties.deleteProperty(key); });
+  }
+}
+
+function finalizeHistoricalNet_(spreadsheet, data) {
+  const netId = requireUuid_(data.NET_HISTORICAL_NET_ID, 'NET_HISTORICAL_NET_ID');
+  const net = requireNet_(spreadsheet, netId);
+  requireOpenNet_(net);
+  const reason = normalizeOptionalText_(data.NET_HISTORICAL_REASON, 'NET_HISTORICAL_REASON');
+  if (!reason || reason.length > 500) throw new PublicError('Supply a historical end-time source and recovery explanation (1-500 characters).');
+  const value = data.NET_HISTORICAL_END_AT;
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00(?:Z|[+-]\d{2}:\d{2})$/.test(value)) {
+    throw new PublicError('NET_HISTORICAL_END_AT must be a full minute-precision timestamp with UTC offset, e.g. YYYY-MM-DDTHH:mm:00-04:00.');
+  }
+  requireDate_(value.slice(0, 10), 'Historical end date');
+  requireTime_(value.slice(11, 16), 'Historical end time');
+  const endAt = dateValue_(value);
+  const now = new Date();
+  const startAt = netDateTime_(net.net_date, net.start_time);
+  const duration = (endAt.getTime() - startAt.getTime()) / 60000;
+  if (duration < 0 || duration >= 1440 || endAt.getTime() > now.getTime()) {
+    throw new PublicError('The supplied service end must be after the net start, less than 24 hours later, and not in the future. Unattended days cannot be counted as service.');
+  }
+  const access = findNetControlAccess_(spreadsheet, netId);
+  if (!access || access.owner_callsign !== net.net_control_callsign || access.revoked_at) {
+    throw new PublicError('Recover administrative ownership before historical finalization.');
+  }
+  const history = getNetControlHistoryForNet_(spreadsheet, netId);
+  const administration = getNetAdministration_(spreadsheet, netId);
+  const recoveryId = requireUuid_(data.NET_HISTORICAL_RECOVERY_ID, 'NET_HISTORICAL_RECOVERY_ID');
+  const recovery = administration.find(function (entry) { return entry.id === recoveryId && entry.kind === 'recovery'; });
+  const legacyRecovery = !recovery && history.find(function (entry) { return entry.id === recoveryId; });
+  const recoveredAt = recovery ? recovery.recorded_at : legacyRecovery && legacyRecovery.started_at;
+  const recoveredCallsign = recovery ? recovery.owner_callsign : legacyRecovery && legacyRecovery.callsign;
+  if (!recoveredAt || recoveredCallsign !== net.net_control_callsign ||
+      !sameMinute_(recoveredAt, access.issued_at) || endAt.getTime() > dateValue_(recoveredAt).getTime() ||
+      (legacyRecovery && legacyRecovery.ended_at)) {
+    throw new PublicError('Identify the current administrative recovery audit ID (or its legacy open history ID). The actual end must not follow that recovery.');
+  }
+  const audit = {
+    id: Utilities.getUuid(), net_id: netId, kind: 'historical_finalization', recorded_at: now,
+    actor: Session.getEffectiveUser().getEmail(), owner_callsign: net.net_control_callsign,
+    recovery_id: recoveryId, service_end_at: endAt, reason: reason
+  };
+  if (history.some(function (entry) {
+    return entry.id !== recoveryId && dateValue_(entry.started_at).getTime() >= endAt.getTime();
+  })) {
+    throw new PublicError('Other service segments start at or after the supplied end. Administrator review is required; no service history was discarded.');
+  }
+  const finalizedNet = Object.assign({}, net, {
+    end_time: Utilities.formatDate(endAt, Session.getScriptTimeZone(), 'HH:mm'), finalized: true
+  });
+  // Validate the service-only projection before writing anything. Existing
+  // recovery timestamps and check-in flags are never rewritten or backdated.
+  const projected = historicalServiceHistory_(history, audit);
+  if (!buildNetControlTiming_(finalizedNet, getCheckInsForNet_(spreadsheet, netId), projected, duration, endAt).available) {
+    throw new PublicError('Service history does not support this end time. Review the original on-air segments; no records were changed.');
+  }
+  const netsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netsSheet);
+  const accessSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netControlAccessSheet);
+  const auditSheet = ensureNetAdministrationSheet_(spreadsheet);
+  const snapshots = [captureRow_(netsSheet, net._rowNumber, NET_HEADERS.length),
+    captureRow_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS.length)];
+  const appendedRows = [];
+  try {
+    appendedRows.push(appendRecordTracked_(auditSheet, NET_ADMINISTRATION_HEADERS, audit));
+    setRecordCells_(netsSheet, net._rowNumber, NET_HEADERS, {end_time: finalizedNet.end_time, finalized: true, updated_at: now});
+    setRecordCells_(accessSheet, access._rowNumber, NET_CONTROL_ACCESS_HEADERS, {
+      updated_at: now, expires_at: new Date(now.getTime() + W8FY_CONFIG.finalizedAccessLifetimeMs)
+    });
+    SpreadsheetApp.flush();
+    return buildNetPayload_(spreadsheet, requireNet_(spreadsheet, netId), true);
+  } catch (error) {
+    rollbackAppendedRows_(appendedRows);
+    restoreRows_(snapshots);
+    throw error;
+  }
+}
+
+function historicalServiceHistory_(history, audit) {
+  const endAt = dateValue_(audit.service_end_at);
+  return history.filter(function (entry) {
+    return entry.id !== audit.recovery_id && dateValue_(entry.started_at).getTime() < endAt.getTime();
+  }).map(function (entry) {
+    const end = entry.ended_at ? dateValue_(entry.ended_at) : endAt;
+    return Object.assign({}, entry, { ended_at: end.getTime() > endAt.getTime() ? endAt : end });
+  });
 }
 
 function updateCheckInNote_(spreadsheet, data) {
@@ -695,11 +831,14 @@ function finalizeNet_(spreadsheet, data) {
   const net = requireNet_(spreadsheet, netId);
   requireOpenNet_(net);
   const access = requireNetControlOwnership_(spreadsheet, net, readField_(data, ['ownerToken', 'owner_token']));
+  if (getNetAdministration_(spreadsheet, netId).some(function (entry) { return entry.kind === 'recovery'; })) {
+    throw new PublicError('Administrative recovery does not establish on-air time. Ask the administrator to run finalizeHistoricalNetFromConfiguredEnd with the actual historical end timestamp.');
+  }
   const endTime = requireTime_(readField_(data, ['endTime', 'end_time']) || currentTime_(), 'endTime');
   const endAt = netEndDateTime_(net.net_date, net.start_time, endTime);
   const openHistory = findOpenNetControlHistory_(spreadsheet, netId);
   if (openHistory && endAt.getTime() < dateValue_(openHistory.started_at).getTime()) {
-    throw new PublicError('The final end time cannot be earlier than the current Net Control segment.');
+    throw new PublicError('The final end time cannot be earlier than the current Net Control segment. For an administratively recovered historical net, use finalizeHistoricalNetFromConfiguredEnd with the actual end timestamp; do not change the recovery timestamp.');
   }
 
   const netsSheet = spreadsheet.getSheetByName(W8FY_CONFIG.netsSheet);
@@ -750,7 +889,7 @@ function sendReport_(spreadsheet, data) {
   }
 
   const checkIns = getCheckInsForNet_(spreadsheet, netId);
-  const report = buildFinalReport_(net, checkIns, getNetControlHistoryForNet_(spreadsheet, netId));
+  const report = buildStoredFinalReport_(spreadsheet, net, checkIns);
   const subject = 'W8FY Net Report - ' + net.net_date + ' - ' + net.net_control_callsign;
 
   try {
@@ -800,7 +939,7 @@ function downloadReportPdf_(spreadsheet, data) {
   }
 
   const checkIns = sortCheckIns_(getCheckInsForNet_(spreadsheet, netId));
-  const report = buildFinalReport_(net, checkIns, getNetControlHistoryForNet_(spreadsheet, netId));
+  const report = buildStoredFinalReport_(spreadsheet, net, checkIns);
   return generatePdfReport_(net, report);
 }
 
@@ -899,18 +1038,43 @@ function buildNetPayload_(spreadsheet, net, includeReport) {
     checkIns: checkIns.map(publicRecord_)
   };
   if (includeReport || net.finalized) {
-    payload.report = buildFinalReport_(net, checkIns, getNetControlHistoryForNet_(spreadsheet, net.id));
+    payload.report = buildStoredFinalReport_(spreadsheet, net, checkIns);
   }
   return payload;
 }
 
-function buildFinalReport_(net, checkIns, history) {
+function buildStoredFinalReport_(spreadsheet, net, checkIns) {
+  const audits = getNetAdministration_(spreadsheet, net.id).filter(function (entry) { return entry.kind === 'historical_finalization'; });
+  if (audits.length > 1) throw new Error('Multiple historical finalization audits exist for this net.');
+  return buildFinalReport_(net, checkIns, getNetControlHistoryForNet_(spreadsheet, net.id), audits[0]);
+}
+
+function buildFinalReport_(net, checkIns, history, historicalAudit) {
+  const administrativeOwner = net.net_control_callsign;
+  if (historicalAudit) {
+    history = historicalServiceHistory_(history || [], historicalAudit);
+    const serviceCallsigns = history.map(function (entry) { return entry.callsign; });
+    checkIns = checkIns.map(function (entry) {
+      return Object.assign({}, entry, { is_net_control: serviceCallsigns.indexOf(entry.callsign) !== -1 });
+    });
+    const lastService = history.slice().sort(function (left, right) {
+      return dateValue_(right.started_at).getTime() - dateValue_(left.started_at).getTime();
+    })[0];
+    net = Object.assign({}, net, { net_control_callsign: lastService ? lastService.callsign : '' });
+  }
   const sortedCheckIns = sortCheckIns_(checkIns);
   const netControls = buildNetControls_(net, sortedCheckIns);
   const netType = requireNetType_(net.net_type);
   const netTypeName = getNetTypeName_(netType);
-  const durationMinutes = calculateDurationMinutes_(net.start_time, net.end_time);
-  const timing = buildNetControlTiming_(net, sortedCheckIns, history || [], durationMinutes);
+  const serviceEndAt = historicalAudit ? dateValue_(historicalAudit.service_end_at) : null;
+  const durationMinutes = serviceEndAt
+    ? Math.round((serviceEndAt.getTime() - netDateTime_(net.net_date, net.start_time).getTime()) / 60000)
+    : calculateDurationMinutes_(net.start_time, net.end_time);
+  const timing = buildNetControlTiming_(net, sortedCheckIns, history || [], durationMinutes, serviceEndAt);
+  const administrationNote = historicalAudit
+    ? 'Administrative ownership: ' + administrativeOwner + '. Recovery and unattended time are excluded from on-air service.\n' +
+      'Actual service end: ' + serviceEndAt.toISOString() + '. Historical finalization recorded: ' + dateValue_(historicalAudit.recorded_at).toISOString() + '.'
+    : '';
   const totals = {
     total: sortedCheckIns.length,
     traffic: 0,
@@ -944,13 +1108,16 @@ function buildFinalReport_(net, checkIns, history) {
     startTime: net.start_time,
     endTime: net.end_time,
     durationMinutes: durationMinutes,
+    serviceEndAt: serviceEndAt ? serviceEndAt.toISOString() : '',
+    administrationNote: administrationNote,
     netControlTimes: timing.times,
     netControlTotalMinutes: timing.totalMinutes,
     netControlTimingAvailable: timing.available,
     checkIns: sortedCheckIns.map(publicRecord_),
     groups: groups,
     totals: totals,
-    text: buildTextReport_(net, groups, totals, netTypeName, durationMinutes, netControls, timing)
+    text: buildTextReport_(net, groups, totals, netTypeName, durationMinutes, netControls, timing) +
+      (administrationNote ? '\n\n' + administrationNote : '')
   };
 }
 
@@ -973,7 +1140,7 @@ function formatNetControls_(net, netControls) {
   }).join('; ');
 }
 
-function buildNetControlTiming_(net, checkIns, history, durationMinutes) {
+function buildNetControlTiming_(net, checkIns, history, durationMinutes, serviceEndAt) {
   const unavailable = { available: false, times: [], totalMinutes: 0 };
   if (!net.finalized || !history.length) return unavailable;
 
@@ -983,7 +1150,7 @@ function buildNetControlTiming_(net, checkIns, history, durationMinutes) {
   if (ordered.some(function (segment) { return !segment.started_at || !segment.ended_at; })) return unavailable;
 
   const expectedStart = netDateTime_(net.net_date, net.start_time);
-  const expectedEnd = netEndDateTime_(net.net_date, net.start_time, net.end_time);
+  const expectedEnd = serviceEndAt || netEndDateTime_(net.net_date, net.start_time, net.end_time);
   if (!sameMinute_(dateValue_(ordered[0].started_at), expectedStart) ||
       !sameMinute_(dateValue_(ordered[ordered.length - 1].ended_at), expectedEnd)) {
     return unavailable;
