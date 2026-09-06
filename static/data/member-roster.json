@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-16T06:02:44.808797+00:00",
+  "generatedAt": "2026-09-06T00:05:59.553412+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -148,7 +148,7 @@
       "call": "KC8BMK",
       "name": "GARY DAVIS",
       "lastName": "DAVIS",
-      "paidThrough": 2026,
+      "paidThrough": 2027,
       "paid": true,
       "arrl": false,
       "ema": false,
@@ -161,7 +161,7 @@
       "call": "ASSOC.",
       "name": "RUTH DAVIS",
       "lastName": "DAVIS",
-      "paidThrough": 2026,
+      "paidThrough": 2027,
       "paid": true,
       "arrl": false,
       "ema": false,
@@ -421,14 +421,14 @@
       "call": "WD8ASG",
       "name": "DAN RILEY",
       "lastName": "RILEY",
-      "paidThrough": null,
-      "paid": false,
+      "paidThrough": 2027,
+      "paid": true,
       "arrl": true,
       "ema": false,
       "races": false,
       "officer": "Volunteer Examiner",
       "officerRank": null,
-      "cardUrl": ""
+      "cardUrl": "/membership-cards/dan-riley-wd8asg-29.pdf"
     },
     {
       "call": "K8VGL",
