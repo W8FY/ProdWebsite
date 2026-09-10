@@ -16,10 +16,6 @@ Interested in getting your amateur radio license or upgrading to a higher class?
 
 Please reach out to confirm the next available session or to request an individual appointment.
 
-> **Next Scheduled Session: September 5th at Lima, Ohio 11am**
-         Will be held at the Red Cross building
-- 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede77f91128a332e0558cd/1) This takes you to the registration page.
-
 > **October 3rd: NWOARC Hamfest, 9:00–11:00 a.m.**
 
 Testing will be held at the NWOARC Hamfest. Walk-ins are welcome. Please obtain your FCC Registration Number (FRN) before arriving; this is required for testing and would be appreciated.
@@ -71,7 +67,6 @@ Lima, Ohio 45805
 ## 📩 Questions or Ready to Sign Up?
 
 Contact us at [ka8zge@w8fy.org](mailto:ka8zge@w8fy.org) or 419-771-2061 call or text, to pre-register or ask questions. Walk-ins are welcome, but pre-registration is appreciated.
-- 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede77f91128a332e0558cd/1) This takes you to the registration page.
 
 ---
 
