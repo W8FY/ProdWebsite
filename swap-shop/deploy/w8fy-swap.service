@@ -1,0 +1,25 @@
+[Unit]
+Description=W8FY member Swap Shop
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=w8fy-swap
+Group=w8fy-swap
+WorkingDirectory=/opt/w8fy-swap
+EnvironmentFile=/etc/w8fy-swap/service.env
+ExecStart=/usr/bin/node /opt/w8fy-swap/server.mjs
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/w8fy-swap
+MemoryMax=768M
+TasksMax=64
+
+[Install]
+WantedBy=multi-user.target

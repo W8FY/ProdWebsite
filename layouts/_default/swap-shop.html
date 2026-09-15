@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  {{ partial "headers.html" . }}
+  {{ partial "custom_headers.html" . }}
+  <link rel="stylesheet" href="{{ "css/swap-shop.css" | relURL }}">
+  <script src="{{ "js/swap-shop.js" | relURL }}" defer></script>
+</head>
+<body>
+<div id="all">
+  {{ partial "top.html" . }}
+  {{ partial "nav.html" . }}
+  {{ partial "breadcrumbs.html" . }}
+  <main id="swap-shop" class="container swap-shop">
+    <header class="swap-hero">
+      <p class="swap-eyebrow">W8FY · Member marketplace</p>
+      <h1>Good gear. New adventures.</h1>
+      <p>Browse equipment offered by club members. Contact the seller to arrange payment and pickup directly.</p>
+      <p class="swap-note">Every listing is reviewed by a club administrator. Approval is not an equipment inspection or a guarantee. There is no checkout or payment processing.</p>
+    </header>
+    <p id="swap-message" role="status" aria-live="polite">Connecting to the Swap Shop…</p>
+    <p id="swap-error" role="alert" hidden></p>
+    <section id="swap-login" class="swap-panel" hidden aria-labelledby="login-heading">
+      <h2 id="login-heading">Members: sell your equipment</h2>
+      <p>Use the email on your club membership record. We will email a one-use sign-in code. Your membership email stays private unless you choose to put it in your listing.</p>
+      <form id="swap-request">
+        <label for="swap-email">Membership email</label>
+        <input id="swap-email" type="email" maxlength="254" autocomplete="email" required>
+        <button type="submit">Email a sign-in code</button>
+      </form>
+      <form id="swap-verify" hidden>
+        <label for="swap-code">Eight-digit code from your email</label>
+        <input id="swap-code" inputmode="numeric" pattern="[0-9]{8}" maxlength="8" autocomplete="one-time-code" required>
+        <button type="submit">Verify and sign in</button>
+      </form>
+      <p>Not receiving a code? Check spam, then contact <a href="mailto:info@w8fy.org">info@w8fy.org</a> to check the email on your membership record.</p>
+    </section>
+    <div id="swap-account" class="swap-panel" hidden>
+      <p id="swap-identity"></p>
+      <button id="swap-new" type="button">Create a listing</button>
+      <button id="swap-logout" type="button" class="swap-secondary">Sign out</button>
+    </div>
+    <section id="swap-editor" class="swap-panel" hidden aria-labelledby="editor-heading">
+      <h2 id="editor-heading" tabindex="-1">Submit equipment for review</h2>
+      <p>Submissions and photos stay private until approved. Editing an approved listing hides it immediately and sends the entire listing for approval again.</p>
+      <form id="swap-form">
+        <label for="swap-title">Equipment title</label>
+        <input id="swap-title" name="title" maxlength="120" required>
+        <label for="swap-description">Description</label>
+        <textarea id="swap-description" name="description" rows="5" maxlength="5000" required></textarea>
+        <div class="swap-fields">
+          <div><label for="swap-condition">Condition</label><select id="swap-condition" name="condition" required><option>New</option><option>Like new</option><option selected>Good</option><option>Fair</option><option>For parts</option></select></div>
+          <div><label for="swap-price">Asking price (USD)</label><input id="swap-price" name="price" type="number" min="0" max="9999999.99" step="0.01" required></div>
+        </div>
+        <p id="swap-callsign"></p>
+        <label for="swap-contact">Contact information you want shown publicly</label>
+        <textarea id="swap-contact" name="contact" rows="2" maxlength="500" placeholder="For example: an email address or phone number buyers may use" required></textarea>
+        <label for="swap-photos">Photos (up to five total)</label>
+        <input id="swap-photos" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+        <p>JPEG, PNG or WebP; at most 5 MB and 20 megapixels each. Photos are resized and location metadata is removed. Check the image itself for private details.</p>
+        <div id="swap-kept-photos" class="swap-photos"></div>
+        <label class="swap-consent"><input id="swap-consent" type="checkbox" required> I want the title, description, photos, callsign and contact information above to be public after approval.</label>
+        <button type="submit">Submit for administrator approval</button>
+        <button id="swap-cancel" type="button" class="swap-secondary">Cancel</button>
+      </form>
+    </section>
+    <section aria-labelledby="listings-heading">
+      <div class="swap-toolbar">
+        <h2 id="listings-heading">Browse equipment</h2>
+        <div id="swap-tabs" role="group" aria-label="Listing view">
+          <button type="button" data-scope="public" aria-pressed="true">Browse</button>
+          <button type="button" data-scope="mine" aria-pressed="false" hidden>My listings</button>
+          <button type="button" data-scope="admin" aria-pressed="false" hidden>Administrator moderation</button>
+        </div>
+      </div>
+      <form id="swap-search" class="swap-search">
+        <label for="swap-query">Search equipment or callsign</label>
+        <input id="swap-query" type="search" maxlength="120">
+        <button type="submit">Search</button>
+      </form>
+      <p>Approved listings run for 60 days. Unsold equipment can be renewed only after another administrator approval.</p>
+      <div id="swap-listings" class="swap-grid"></div>
+      <button id="swap-more" type="button" hidden>Load more listings</button>
+    </section>
+    <noscript><p>JavaScript is required to load current listings and verify membership.</p></noscript>
+  </main>
+  {{ partial "footer.html" . }}
+</div>
+{{ partial "scripts.html" . }}
+</body>
+</html>

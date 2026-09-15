@@ -1,0 +1,32 @@
+.swap-shop { padding-bottom: 56px; color: #183344; }
+.swap-shop [hidden] { display: none !important; }
+.swap-hero { border-left: 5px solid #26758f; padding: 24px 30px; margin: 24px 0; background: #eef5f6; border-radius: 4px; }
+.swap-hero h1 { font-size: clamp(30px, 5vw, 46px); text-transform: none; letter-spacing: -1px; }
+.swap-eyebrow { color: #246076; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.swap-note { font-size: 14px; max-width: 820px; }
+.swap-panel { padding: 24px; border: 1px solid #ccdce2; border-radius: 8px; margin: 24px 0; background: #f9fbfc; }
+.swap-shop h2 { font-size: 25px; text-transform: none; letter-spacing: 0; }
+.swap-shop label { display: block; margin-top: 14px; font-weight: 600; }
+.swap-shop input:not([type=checkbox]), .swap-shop textarea, .swap-shop select { display: block; width: 100%; border: 1px solid #9ab0bb; background: white; padding: 10px; border-radius: 4px; color: #183344; }
+.swap-shop input[type=checkbox] { margin-right: 8px; }
+.swap-shop button { background: #205e76; color: white; border: 1px solid #205e76; border-radius: 5px; padding: 10px 16px; margin: 12px 6px 8px 0; font-weight: 600; }
+.swap-shop button:hover { background: #17465a; }
+.swap-shop button:disabled { opacity: .55; cursor: wait; }
+.swap-shop button.swap-secondary, .swap-shop button[aria-pressed=false] { color: #205e76; background: white; }
+.swap-shop :focus-visible { outline: 3px solid #bf6c00; outline-offset: 3px; }
+.swap-fields, .swap-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+.swap-toolbar { margin-top: 32px; }
+.swap-search { max-width: 650px; margin-bottom: 16px; }
+.swap-card { border: 1px solid #ccdce2; border-radius: 8px; padding: 22px; overflow-wrap: anywhere; }
+.swap-card h3 { margin-top: 8px; font-size: 23px; text-transform: none; letter-spacing: 0; }
+.swap-card .swap-price { color: #205e76; font-size: 25px; font-weight: 700; }
+.swap-description, .swap-contact { white-space: pre-wrap; }
+.swap-contact { padding: 12px; background: #eef5f6; border-radius: 4px; }
+.swap-photos { display: flex; gap: 10px; overflow-x: auto; padding: 8px 0; }
+.swap-photos img { width: 150px; height: 120px; object-fit: contain; background: #edf2f4; border-radius: 4px; }
+.swap-photos a:focus-visible { outline-offset: -3px; }
+.swap-status { font-weight: 600; color: #426272; }
+#swap-error { border-left: 4px solid #9f2e26; padding: 14px; color: #81251f; background: #fff1ef; }
+#swap-message { padding: 12px 0; }
+.swap-consent { margin-bottom: 16px; }
+@media(max-width: 700px) { .swap-grid, .swap-fields { grid-template-columns: 1fr; } .swap-hero, .swap-panel { padding: 20px; } }

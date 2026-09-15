@@ -19,6 +19,29 @@ jobs:
       with:
         hugo-version: 'latest'
 
+    - name: Setup Node for Swap Shop tests
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+        cache: npm
+        cache-dependency-path: swap-shop/package-lock.json
+
+    - name: Test Swap Shop backend
+      working-directory: swap-shop
+      run: |
+        npm ci
+        npm test
+        node --check ../static/js/swap-shop.js
+
+    - name: Validate Swap Shop draft template without publishing it
+      run: hugo --buildDrafts --destination "$RUNNER_TEMP/swap-shop-preview"
+
+    - name: Test Swap Shop browser workflows
+      working-directory: swap-shop
+      run: |
+        npx playwright install --with-deps chromium
+        HUGO_PREVIEW_DIR="$RUNNER_TEMP/swap-shop-preview" npm run test:browser
+
     - name: Verify member roster data
       run: test -f static/data/member-roster.json
 
