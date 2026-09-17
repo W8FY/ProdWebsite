@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T00:05:59.553412+00:00",
+  "generatedAt": "2026-09-17T13:55:57.643929+00:00",
   "members": [
     {
       "call": "KE8NRP",
@@ -481,6 +481,19 @@
       "officer": "",
       "officerRank": null,
       "cardUrl": "/membership-cards/ralph-shields-wb8yih-33.pdf"
+    },
+    {
+      "call": "KF8HGH",
+      "name": "ADAM SMAZENKO",
+      "lastName": "SMAZENKO",
+      "paidThrough": 2026,
+      "paid": true,
+      "arrl": false,
+      "ema": false,
+      "races": false,
+      "officer": "",
+      "officerRank": null,
+      "cardUrl": "/membership-cards/adam-smazenko-kf8hgh-61.pdf"
     },
     {
       "call": "NU8P",
