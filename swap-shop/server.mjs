@@ -6,7 +6,7 @@ import nodemailer from 'nodemailer';
 import { Shop, Fault, prepareListing, hash } from './store.mjs';
 
 const PREFIX = '/swap-api';
-export function createServer({ shop, origin, sendCode, secureCookies = true, trustProxy = false }) {
+export function createServer({ shop, origin, sendCode, notifyAdmins = () => {}, secureCookies = true, trustProxy = false }) {
   let uploads = 0;
   const cookieName = secureCookies ? '__Host-w8fySwap' : 'w8fySwapLocal';
   const cookie = (value, age) => `${cookieName}=${value}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${age}${secureCookies ? '; Secure' : ''}`;
@@ -100,7 +100,11 @@ export function createServer({ shop, origin, sendCode, secureCookies = true, tru
         const prepared = await prepareListing(body);
         // Recheck session and membership after asynchronous image work.
         user = shop.user(session);
-        return reply(200, { listing: shop.save(user, prepared, body.id, body.version) });
+        const listing = shop.save(user, prepared, body.id, body.version);
+        await Promise.resolve().then(() => notifyAdmins(listing, Boolean(body.id))).catch(() => {
+          console.error('Swap Shop administrator notification delivery failed. Check SMTP configuration.');
+        });
+        return reply(200, { listing });
       }
       const action = path.match(/^\/swap-api\/listings\/([a-f0-9]{64})\/action$/);
       if (action) return reply(200, { listing: shop.action(user, action[1], body.action, body.version, body.reason) });
@@ -140,9 +144,16 @@ export function startServer() {
     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
     connectionTimeout: 10000, socketTimeout: 15000, tls: { minVersion: 'TLSv1.2' }
   });
-  const shop = new Shop(process.env.SWAP_DB, { admins: process.env.SWAP_ADMINS.split(',') });
+  const admins = process.env.SWAP_ADMINS.split(',').map(address => address.trim()).filter(Boolean);
+  const shop = new Shop(process.env.SWAP_DB, { admins });
   const server = createServer({ shop, origin: origin.origin, secureCookies: origin.protocol === 'https:', trustProxy: process.env.SWAP_TRUST_PROXY === 'true',
-    sendCode: (to, code) => mail.sendMail({ from: process.env.SMTP_FROM, to: { address: to }, subject: 'W8FY Swap Shop sign-in code', text: `Your W8FY Swap Shop code is ${code}. It expires in 10 minutes and can be used once. If you did not request this, ignore this email. Never share this code.` })
+    sendCode: (to, code) => mail.sendMail({ from: process.env.SMTP_FROM, to: { address: to }, subject: 'W8FY Swap Shop sign-in code', text: `Your W8FY Swap Shop code is ${code}. It expires in 10 minutes and can be used once. If you did not request this, ignore this email. Never share this code.` }),
+    notifyAdmins: (listing, edited) => mail.sendMail({
+      from: process.env.SMTP_FROM,
+      bcc: admins.map(address => ({ address })),
+      subject: edited ? 'W8FY Swap Shop listing updated awaiting approval' : 'W8FY Swap Shop new listing awaiting approval',
+      text: `${edited ? 'An updated' : 'A new'} Swap Shop listing is awaiting approval.\n\nCallsign: ${listing.callsign}\nTitle: ${listing.title}\nCondition: ${listing.condition}\nPrice: $${(listing.price_cents / 100).toFixed(2)}\n\nModerate: https://w8fy.org/swap-shop/`
+    })
   });
   server.listen(Number(process.env.PORT || 8787), '127.0.0.1', () => console.log('Swap Shop listening on loopback.'));
   for (const signal of ['SIGINT','SIGTERM']) process.on(signal, () => server.close(() => { shop.db.close(); process.exit(0); }));

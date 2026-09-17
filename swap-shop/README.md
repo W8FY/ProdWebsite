@@ -65,6 +65,13 @@ expiration unchanged. Only an administrator can approve renewal; an expired list
 stays private while waiting. Rejection notes stay private. Sold, withdrawn and removed
 listings cannot be reopened or edited. Members can create a new submission instead.
 
+After each new submission or edit commits successfully, the service emails the
+`SWAP_ADMINS` recipients that a listing is awaiting approval. The notice includes
+only the callsign, title, condition, formatted price and moderation-page link; it
+does not include the seller's authentication email. Delivery uses the configured
+SMTP transport and `SMTP_FROM`. A notification failure is logged generically and
+does not roll back the listing or ask the member to resubmit.
+
 Photos are validated with sharp, restricted to single-frame JPEG/PNG/WebP, at most
 5 MiB each, 20 million pixels, and five per listing. The service decodes, rotates,
 resizes to fit 1600×1600 and re-encodes to JPEG without EXIF/location metadata. Bytes
@@ -123,10 +130,12 @@ not block application startup. No Google OAuth client, browser API
 key or shared member password is needed.
 
 Set `SWAP_ADMINS` to a comma-separated list of real administrator email addresses
-controlled by the people who will moderate. An administrator still must verify an
-emailed code. Do not copy the net tool's administrator configuration. To change or
-revoke administrators, edit this environment file and restart the service. Every
-request then uses the new allowlist, including existing sessions.
+controlled by the people who will moderate. The trimmed list is both the
+administrator allowlist and the recipient list for new and edited listing notices.
+An administrator still must verify an emailed code. Do not copy the net tool's
+administrator configuration. To change or revoke administrators, edit this
+environment file and restart the service. Every request then uses the new allowlist,
+including existing sessions.
 
 Configure SMTP delivery/bounce monitoring with the provider. The service logs a
 generic delivery-failure message without codes or addresses. Sending limits are
@@ -247,6 +256,11 @@ two controlled member mailboxes, one administrator mailbox and one nonmember:
 1. Browse signed out; verify email delivery and sign in. Verify the nonmember cannot
    submit, and that only the roster callsign is shown. Check private email is absent
    from public API results unless deliberately entered as public contact text.
+   Submit and then edit a listing; confirm every configured `SWAP_ADMINS` mailbox
+   receives the correctly labeled notice with callsign, title, condition, formatted
+   price and the production moderation link. Temporarily reject SMTP delivery in
+   staging and confirm the saved listing still appears in the owner's view while
+   the service log contains only the generic notification failure message.
 2. Submit five photos. Try the raw photo URLs signed out and as the other member:
    both must return 404. Review all content/photos as the administrator and approve.
 3. Edit the listing and confirm public content and both old/new photo URLs are

@@ -11,15 +11,20 @@ const member = 'member@example.test', other = 'other@example.test', admin = 'adm
 const photo = (await sharp({ create: { width: 12, height: 10, channels: 3, background: '#123456' } }).png().withMetadata().toBuffer()).toString('base64');
 const fields = { title: 'HF transceiver', description: 'Tested on the air.', condition: 'Good', price: '150.25', contact: 'Call me on the club repeater', photos: [photo] };
 
-async function fixture(t) {
+async function fixture(t, { notifyAdmins } = {}) {
   let time = Date.parse('2026-09-10T12:00:00Z');
   const dir = mkdtempSync(join(tmpdir(), 'w8fy-swap-test-'));
   const shop = new Shop(join(dir, 'shop.sqlite'), { now: () => time, admins: [admin] });
   const rows = [member, other].map((email, i) => ({ email, callsign: i ? 'W8OTHER' : 'W8TEST', valid_until: '2030-01-01T00:00:00Z' }));
   shop.importMembers(rows);
   const mail = [];
+  const notifications = [];
   const origin = 'https://w8fy.test';
-  const server = createServer({ shop, origin, sendCode: (email, code) => mail.push({ email, code }) });
+  const server = createServer({
+    shop, origin,
+    sendCode: (email, code) => mail.push({ email, code }),
+    notifyAdmins: notifyAdmins || ((listing, edited) => notifications.push({ listing, edited }))
+  });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const url = `http://127.0.0.1:${server.address().port}/swap-api`;
   t.after(async () => { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); shop.db.close(); rmSync(dir, { recursive: true, force: true }); });
@@ -36,8 +41,41 @@ async function fixture(t) {
   }
   const submit = async (cookie, body = fields) => { const r = await req('/listings', body, cookie); assert.equal(r.status, 200, JSON.stringify(r.data)); return r.data.listing; };
   const act = (cookie, listing, action, reason) => req(`/listings/${listing.id}/action`, { action, version: listing.version, reason }, cookie);
-  return { shop, mail, req, login, submit, act, advance: ms => { time += ms; }, refresh: () => shop.importMembers(rows) };
+  return { shop, mail, notifications, req, login, submit, act, advance: ms => { time += ms; }, refresh: () => shop.importMembers(rows) };
 }
+
+test('new submissions notify administrators after the listing is saved', async t => {
+  const f = await fixture(t), owner = await f.login(member);
+  const listing = await f.submit(owner);
+  assert.equal(f.notifications.length, 1);
+  assert.equal(f.notifications[0].edited, false);
+  assert.deepEqual(f.notifications[0].listing, listing);
+  assert.equal(f.shop.get('SELECT status FROM listings WHERE id=?', listing.id).status, 'pending');
+});
+
+test('edited and resubmitted listings notify administrators again', async t => {
+  const f = await fixture(t), owner = await f.login(member), moderator = await f.login(admin);
+  const original = await f.submit(owner);
+  const rejected = (await f.act(moderator, original, 'reject', 'Please revise the title.')).data.listing;
+  const edited = await f.submit(owner, { ...fields, id: rejected.id, version: rejected.version, title: 'Updated transceiver' });
+  assert.equal(f.notifications.length, 2);
+  assert.equal(f.notifications[1].edited, true);
+  assert.deepEqual(f.notifications[1].listing, edited);
+});
+
+test('notification failure does not lose the saved listing', async t => {
+  const f = await fixture(t, { notifyAdmins: async () => { throw Error('sensitive delivery detail'); } });
+  const owner = await f.login(member);
+  const originalError = console.error;
+  const errors = [];
+  console.error = (...values) => errors.push(values.join(' '));
+  t.after(() => { console.error = originalError; });
+  const listing = await f.submit(owner);
+  assert.equal(f.shop.get('SELECT status FROM listings WHERE id=?', listing.id).status, 'pending');
+  assert.deepEqual((await f.req('/listings?scope=mine', undefined, owner)).data.listings[0], listing);
+  assert.deepEqual(errors, ['Swap Shop administrator notification delivery failed. Check SMTP configuration.']);
+  assert.equal(errors[0].includes('sensitive delivery detail'), false);
+});
 
 test('email control is required; no roster enumeration, callsign or role impersonation', async t => {
   const f = await fixture(t);
