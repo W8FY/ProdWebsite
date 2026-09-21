@@ -102,7 +102,7 @@ pluralizelisttitles = false
    post       = 1
 
 [[menu.main]]
-    name       = "Hamfest 2026"
+    name       = "Hamfest 2027"
 #    identifier = "menu.club"
     url        = "/hamfest/"
     weight     = 1

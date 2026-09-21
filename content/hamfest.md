@@ -1,17 +1,21 @@
 ---
-title: "W8FY Hamfest"
-date: 2025-07-19
+title: "2027 W8FY Hamfest – 40th Anniversary Celebration"
+date: 2026-09-21
 draft: false
-description: "Details for the W8FY Van Wert Hamfest on Sunday, July 19, 2026, including admission, tables, license testing, and talk-in."
+description: "Celebrate the 40th anniversary of the W8FY Van Wert Hamfest on Sunday, July 18, 2027, with amateur radio, vendors, license testing, prizes, and more."
 keywords: ["W8FY Hamfest", "Van Wert Hamfest", "Ohio hamfest", "amateur radio swap"]
 ---
 The Van Wert Amateur Radio Club hosts an annual **Hamfest** for amateur radio operators, hobbyists, and the general public. Join us for a day of radio, gear, networking, and community!
+
+## 🎉 Celebrating 40 Years!
+
+Join us in 2027 as the Van Wert Amateur Radio Club celebrates 40 years of the W8FY Hamfest! We invite amateur radio operators, families, vendors, and friends from throughout the region to help us mark this special milestone.
 
 ---
 
 ## 📅 Date & Time
 
-**Sunday, July 19th, 2026**  
+**Sunday, July 18, 2027**<br>
 Doors open at **8:00 AM**
 
 ---
@@ -81,7 +85,7 @@ W8FY will have water, soda, donuts, and fruit available with donation.
 
 - Walk-ins welcome
 - Bring your **photo ID**, **FRN**, and **$15 exam fee**
-- 📘 [HamStudy.org](https://hamstudy.org/sessions/69ede8d34e61325a13c22bf6/1) This takes you to the registration page.
+- 📘 [HamStudy.org](https://hamstudy.org/sessions) This takes you to the registration page.
 ---
 
 ## 📞 Contact Us
