@@ -46,7 +46,14 @@ jobs:
       run: test -f static/data/member-roster.json
 
     - name: Build Hugo site
-      run: hugo --baseURL https://w8fy.org/
+      run: |
+        hugo --baseURL https://w8fy.org/
+        cp static/.htaccess public/.htaccess
+
+    - name: Verify canonical domain redirect
+      run: |
+        test -f public/.htaccess
+        grep -Fq 'www\.w8fy\.org' public/.htaccess
 
     - name: Add Net Check-In frontend to published site
       run: |

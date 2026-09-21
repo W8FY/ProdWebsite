@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.w8fy\.org$ [NC]
+RewriteRule ^ https://w8fy.org%{REQUEST_URI} [R=301,L,NE]
