@@ -1,3 +1,46 @@
+/* Flyer content stays selectable; these styles are scoped to the discovery page. */
+.discover-radio { color: #172536; font-size: 17px; line-height: 1.65; padding: 10px 0 40px; }
+.discover-radio h2 { color: #071f43; font-size: 25px; line-height: 1.25; margin: 0 0 18px; letter-spacing: 0; }
+.discover-radio p { margin: 0 0 18px; }
+.discover-intro { display: grid; grid-template-columns: 180px minmax(0, 1fr); align-items: center; gap: 36px; padding: 12px 0 28px; }
+.discover-logo { display: block; width: 180px; max-width: 100%; height: auto; }
+.discover-radio .discover-callsign { color: #071f43; font-size: clamp(48px, 7vw, 78px); font-weight: 800; line-height: 1; margin: 0 0 12px; }
+.discover-intro h2 { font-size: clamp(24px, 3vw, 34px); }
+.discover-intro address { font-style: normal; margin-bottom: 12px; }
+.discover-contact { display: flex; flex-wrap: wrap; gap: 8px 28px; }
+.discover-radio a { color: #173e70; text-decoration: underline; text-underline-offset: 3px; }
+.discover-radio a:hover { color: #b31525; }
+.discover-radio a:focus-visible, .homepage-hero-button:focus-visible { outline: 3px solid #d92030; outline-offset: 4px; }
+.discover-radio .discover-history { display: flex; flex-wrap: wrap; gap: 12px 28px; list-style: none; padding: 22px 0; margin: 0; border-top: 1px solid #d6dce4; font-size: 15px; }
+.discover-banner { background: #071f43; border-left: 6px solid #d92030; color: #fff; padding: 20px 26px; font-size: clamp(22px, 3vw, 30px); font-weight: 800; line-height: 1.3; }
+.discover-overview { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 32px; align-items: center; padding: 36px 0; }
+.discover-overview figure { margin: 0; }
+.discover-overview img { width: 100%; height: auto; display: block; border-radius: 10px; }
+.discover-activities { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 30px; border-top: 1px solid #d6dce4; padding: 32px 0; }
+.discover-radio .discover-activity-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 32px; padding-left: 22px; margin: 0; }
+.discover-activity-list li { padding-left: 4px; }
+.discover-activity-list li::marker { color: #c3192b; }
+.discover-welcome { background: #f3f5f8; border: 1px solid #071f43; border-top: 5px solid #c3192b; border-radius: 8px; padding: 24px; }
+.discover-welcome h2 { font-size: 23px; }
+.discover-welcome p { margin-bottom: 0; }
+.discover-start { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px; border-top: 1px solid #d6dce4; padding: 32px 0; }
+.discover-radio .discover-email { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 20px; background: #b31525; border-radius: 4px; color: #fff; font-weight: 700; text-decoration: none; }
+.discover-radio .discover-email:hover { background: #88101c; }
+.discover-closing { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; text-align: center; border-top: 1px solid #d6dce4; padding-top: 24px; color: #071f43; font-weight: 700; }
+.discover-closing strong { grid-column: 1 / -1; background: #071f43; color: #fff; padding: 16px; font-size: 21px; }
+@media (max-width: 991px) {
+  .discover-activities { grid-template-columns: 1fr; }
+}
+@media (max-width: 767px) {
+  .discover-intro { grid-template-columns: 1fr; gap: 20px; }
+  .discover-logo { width: 130px; }
+  .discover-overview, .discover-start, .discover-closing { grid-template-columns: 1fr; gap: 24px; }
+  .discover-radio .discover-activity-list { grid-template-columns: 1fr; gap: 14px; }
+  .discover-radio .discover-history { gap: 10px; flex-direction: column; }
+  .discover-banner { padding: 18px; }
+  .discover-closing p { margin-bottom: 0; }
+}
+
 .box-image-text .image {
   min-height: 190px;
   max-height: 190px;
