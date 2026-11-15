@@ -1,6 +1,6 @@
 ---
 title: "License Exams"
-date: 2025-06-08
+date: 2026-11-15
 draft: false
 description: "Amateur radio license exam information for Technician, General, and Extra class applicants near Van Wert, Ohio."
 keywords: ["ham radio license exam", "Van Wert amateur radio exam", "FCC amateur radio license"]
@@ -16,12 +16,11 @@ Interested in getting your amateur radio license or upgrading to a higher class?
 
 Please reach out to confirm the next available session or to request an individual appointment.
 
-> **October 3rd: NWOARC Hamfest, 9:00–11:00 a.m.**
+> **December 12, 2026: 12:00–1:00 p.m.**
 
-Testing will be held at the NWOARC Hamfest. Walk-ins are welcome. Please obtain your FCC Registration Number (FRN) before arriving; this is required for testing and would be appreciated.
+Testing will be held at the Red Cross in Lima. Walk-ins are welcome. Please obtain your FCC Registration Number (FRN) before arriving; this is required for testing and would be appreciated.
 
-- **Location:** [2240 Baty Road, Lima, Ohio](https://www.google.com/maps/search/?api=1&query=2240+Baty+Road+Lima+Ohio)
-- 📘 [Register on HamStudy.org](https://hamstudy.org/sessions/6a2fc923ba0f1b5baf528ed2/1)
+- **Location:** [610 South Collett, Lima, Ohio](https://www.google.com/maps/search/?api=1&query=610+South+Collett+Lima+Ohio)
 
 ---
 
@@ -53,7 +52,7 @@ Not sure where to begin? Check out these resources:
 
 ## 📍 Location
 
-   None at this time Lima is our next one.
+Exam sessions may be held at the following locations. The next scheduled session is at the Red Cross in Lima.
 
 **Van Wert County Emergency Management Office**  
 1220 Lincoln Highway  
@@ -71,4 +70,3 @@ Contact us at [ka8zge@w8fy.org](mailto:ka8zge@w8fy.org) or 419-771-2061 call or 
 ---
 
 _Your license is your gateway to the airwaves — we’re here to help you get started!_
-
