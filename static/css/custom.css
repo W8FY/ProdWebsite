@@ -176,6 +176,23 @@
   margin-bottom: 0;
 }
 
+.homepage-features-section .box-simple-highlight {
+  background: #f0f6fc;
+  border: 2px solid #467fbf;
+  border-radius: 8px;
+  box-shadow: 0 8px 22px rgba(38, 55, 70, 0.12);
+  padding: 24px 18px;
+}
+
+.homepage-features-section .box-simple-highlight h3 {
+  color: #263746;
+  font-weight: 800;
+}
+
+.homepage-features-section .box-simple-highlight .icon {
+  color: #467fbf;
+}
+
 .upcoming-events-section {
   padding-top: 28px;
 }

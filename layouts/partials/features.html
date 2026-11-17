@@ -21,7 +21,7 @@
                     {{ $element := index $features $feature_index }}
 
                     <div class="col-md-{{ div 12 $elements }} col-{{ $j }} col-{{ if eq (mod $j 2) 0 }}odd{{ else }}even{{ end }}">
-                        <div class="box-simple">
+                        <div class="box-simple{{ if $element.highlight }} box-simple-highlight{{ end }}">
                             {{ with $element.url }}
                             <a href="{{ $element.url }}">
                             {{ end }}
